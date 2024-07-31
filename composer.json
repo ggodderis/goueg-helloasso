@@ -1,0 +1,15 @@
+{
+    "name": "greg/goueg-helloasso",
+    "autoload": {
+        "psr-4": {
+            "": "class/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Grégory Godderis",
+            "email": "g.godderis@spartoo.com"
+        }
+    ],
+    "require": {}
+}
