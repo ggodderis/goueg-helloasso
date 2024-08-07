@@ -20,7 +20,13 @@ class rest_route_helloasso {
     public function goueg_set_datas( WP_REST_REQUEST $request ){
         $datas = $request->get_params();
         $params = self::get_users_infos();
-        return rest_ensure_response($params);
+
+        $metas = json_decode($datas['metadata'],true);
+
+        file_put_contents(HELLOASSO_ROOT.'filename.txt', print_r($metas, true));
+        //file_put_contents(HELLOASSO_ROOT.'filename.txt', 'toto');
+
+        return rest_ensure_response([$params,$datas]);
     }
 
     /**

@@ -11,6 +11,8 @@ import Errors from './pages/Errors';
 import Cotisation from './pages/Cotisation';
 import Header from './components/Header';
 
+import './css/style_helloasso.css';
+
 const App = () => {
 
     return (

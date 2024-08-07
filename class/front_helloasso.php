@@ -24,6 +24,8 @@ class front_helloasso {
 
         $asset = include $asset_file;
 
+        wp_enqueue_style( 'helloasso-css', HELLOASSO_URL . 'build/index.css',array(),$asset['version'],'all' );
+
         wp_enqueue_script(
             'helloasso-js',
             HELLOASSO_URL.'build/index.js',

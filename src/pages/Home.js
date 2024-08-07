@@ -44,7 +44,7 @@ const Home = () => {
 
     return(
         <>
-        <h1>HOME PAGE DU CHECKOUT</h1>
+        <h1>THE NEW HOME PAGE DU CHECKOUT</h1>
         {
             user.user_login ? 
                 <>
