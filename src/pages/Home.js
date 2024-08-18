@@ -2,9 +2,9 @@ import { React, useEffect, useState } from 'react';
 import useFetch from '../hooks/useFetch';
 import { Link } from 'react-router-dom';
 
-const Home = () => {
+const Home = ({user,handelFetch}) => {
 
-    const [user,handelFetch] = useFetch();
+    //const [user,handelFetch] = useFetch();
  
     // const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_datas";
    //  const [user,setUser] = useState({});
@@ -39,18 +39,18 @@ const Home = () => {
 
 
     useEffect ( () => {
-        console.log( user.user_login );
+        console.log( user.dateOfBirth );
     },[user])
 
     return(
         <>
-        <h1>THE NEW HOME PAGE DU CHECKOUT</h1>
+        <h1>Adhésion au club</h1>
         {
-            user.user_login ? 
+            user.dateOfBirth ? 
                 <>
-                <span>Bonjour, {user.user_login}</span>
+                <span>Bonjour, {user.firstName} {user.lastName}</span>
                 <br />
-                <Link key="1" to="/cotisation">Renouveler mon adhésion</Link>
+                <Link key="1" to="/cotisation" >Renouveler mon adhésion</Link>
                 <br />
                 <a href={"/wp-login.php?action=logout&_wpnonce="+the_ajax_script.logoutNonce+"&redirect_to=page-d-exemple"}>
                     Me connecter avec un autre compte

@@ -3,6 +3,7 @@ import { React, useEffect, useState } from 'react';
 const useFetch = () => {
 
     const [user,setUser] = useState({});
+    const [liste,setListe] = useState({});
 
     const [metas,setMetas] = useState({
                                     cotisation : 'famille',
@@ -20,12 +21,11 @@ const useFetch = () => {
                                 
                                 });
 
-    console.log(metas.cotisation);
 
     const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_datas";
     const data = new FormData();
         data.append('nonce', the_ajax_script.nonce );
-        data.append('metadata', JSON.stringify(metas) );
+        //data.append('metadata', JSON.stringify(metas) );
     
     function handelFetch () {
 
@@ -40,15 +40,16 @@ const useFetch = () => {
             })
             .then( res => res.json()  )
             .then( json => { 
-                console.log(json);
-                setUser( json );
+                console.log(json[1]);
+                setUser( json[0] );
+                setListe( json[1] );
             } )
             .catch( error => { console.log(error) } )
 
     }
 
 
-    return [user,handelFetch];
+    return [user,liste,handelFetch];
 
 
 }

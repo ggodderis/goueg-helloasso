@@ -1,53 +1,20 @@
 <?php
 
+class adhesionInfos {
 
-class rest_route_helloasso {
-
-    public $today;
-    public $birthday;
-    public $annee_derniere;
-    public $annee_en_cours;
+    private $today;
+    private $birthday;
+    private $annee_derniere;
+    private $annee_en_cours;
 
     /**
      * @param datas [] contient toutes les informations de tarifs
      */
-    public $general;
-    public $temporaire;
+    private $general;
+    private $temporaire;
 
-    public function __construct() {
-        add_action('rest_api_init', array(&$this,'create_rest_route') );
-    }
-    /**
-     * Création de la Rest Route pour communication avec React et PHP
-     */
-    public function create_rest_route(){
-
-        register_rest_route('goueg-helloasso/v1', '/set_datas', [
-            'methods' => ['POST'] ,
-            'callback' => [$this,'goueg_set_datas'],
-            'permission_callback' => '__return_true'
-        ]);
-    }
-
-    public function goueg_set_datas( WP_REST_REQUEST $request ){
-        $datas = $request->get_params();
-        $params = getUserInfos::g();
-        //$tarifs = getAllTarifs::g();
-        $tarifs = self::test();
-        //$tarifs = new adhesionInfos('1970-09-03');
+    function __construct($date_de_naissance = '2000-09-03') {
         
-        //$metas = json_decode($datas['metadata'],true);
-
-        //file_put_contents(HELLOASSO_ROOT.'filename.txt', print_r($metas, true));
-        //file_put_contents(HELLOASSO_ROOT.'filename.txt', 'toto');
-
-        return rest_ensure_response([$params,$tarifs]);
-    }
-
-    public function test():array {
-
-        $date_de_naissance = '1970-09-03';
-
         $this->today = new DateTime('now', new DateTimeZone('Europe/Paris') );
         $this->birthday = (clone $this->today)->modify("{$date_de_naissance}");
 
@@ -60,11 +27,14 @@ class rest_route_helloasso {
         $this->general['ffme']['options'] = getAllTarifs::g('wp_options_ffme');
         $this->general['ffr']['licences'] = getAllTarifs::g('wp_licences_ffr');
 
-        self::get_cotisation_club();
+        $this->init();
+    }
 
+    public function init():array {
 
-        return $this->temporaire;
-
+        return $$this->general;
+        die;
+        //self::get_cotisation_club();
     }
 
     /**

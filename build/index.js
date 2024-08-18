@@ -4949,14 +4949,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _pages_Home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pages/Home */ "./src/pages/Home.js");
 /* harmony import */ var _pages_Licence__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/Licence */ "./src/pages/Licence.js");
 /* harmony import */ var _pages_Form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/Form */ "./src/pages/Form.js");
 /* harmony import */ var _pages_Errors__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/Errors */ "./src/pages/Errors.js");
 /* harmony import */ var _pages_Cotisation__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/Cotisation */ "./src/pages/Cotisation.js");
 /* harmony import */ var _components_Header__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Header */ "./src/components/Header.js");
-/* harmony import */ var _css_style_helloasso_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./css/style_helloasso.css */ "./src/css/style_helloasso.css");
+/* harmony import */ var _hooks_useFetch__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./hooks/useFetch */ "./src/hooks/useFetch.js");
+/* harmony import */ var _css_style_helloasso_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./css/style_helloasso.css */ "./src/css/style_helloasso.css");
 
 
 
@@ -4971,20 +4972,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 const App = () => {
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Header__WEBPACK_IMPORTED_MODULE_6__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Routes, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+  const [user, liste, handelFetch] = (0,_hooks_useFetch__WEBPACK_IMPORTED_MODULE_7__["default"])();
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Header__WEBPACK_IMPORTED_MODULE_6__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Routes, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     exact: true,
     path: "/",
-    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Home__WEBPACK_IMPORTED_MODULE_1__["default"], null)
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Home__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      user: user,
+      handelFetch: handelFetch
+    })
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     exact: true,
     path: "/cotisation",
-    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Cotisation__WEBPACK_IMPORTED_MODULE_5__["default"], null)
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Cotisation__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      liste: liste
+    })
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     exact: true,
     path: "/licence",
     element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Licence__WEBPACK_IMPORTED_MODULE_2__["default"], null)
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     exact: true,
     path: "*",
     element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Errors__WEBPACK_IMPORTED_MODULE_4__["default"], null)
@@ -5040,6 +5048,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const useFetch = () => {
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
+  const [liste, setListe] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
   const [metas, setMetas] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     cotisation: 'famille',
     trala: 'pouette',
@@ -5054,11 +5063,11 @@ const useFetch = () => {
       prenom: 'Godderis Rivens'
     }
   });
-  console.log(metas.cotisation);
   const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_datas";
   const data = new FormData();
   data.append('nonce', the_ajax_script.nonce);
-  data.append('metadata', JSON.stringify(metas));
+  //data.append('metadata', JSON.stringify(metas) );
+
   function handelFetch() {
     fetch(ROOT_URL_HELLOASSO, {
       method: 'POST',
@@ -5067,13 +5076,14 @@ const useFetch = () => {
         'X-WP-Nonce': the_ajax_script.rootNonce
       }
     }).then(res => res.json()).then(json => {
-      console.log(json);
-      setUser(json);
+      console.log(json[1]);
+      setUser(json[0]);
+      setListe(json[1]);
     }).catch(error => {
       console.log(error);
     });
   }
-  return [user, handelFetch];
+  return [user, liste, handelFetch];
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useFetch);
 
@@ -5093,9 +5103,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 
-const Cotisation = () => {
+const Cotisation = props => {
   const [cotisation, setCotisation] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [isbutton, setIsbutton] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const {
+    club
+  } = props.liste;
+  console.log(club[1].id);
   function handelClickCotisation(event) {
     const {
       name,
@@ -5108,47 +5122,16 @@ const Cotisation = () => {
   function handelClickValidation(event) {
     console.log('validation', event.target);
   }
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    className: "label_ligne"
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, Object.keys(club).map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    className: "label_ligne",
+    key: i
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "radio",
     onChange: handelClickCotisation,
-    checked: cotisation === "seul",
+    checked: cotisation === club[item].titre,
     name: "type_cotisation",
-    value: "seul"
-  }), "J'adh\xE9re seul"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    className: "label_ligne"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "radio",
-    onChange: handelClickCotisation,
-    checked: cotisation === "famille",
-    name: "type_cotisation",
-    value: "famille"
-  }), "J'adh\xE9re en Famille (2 adultes et un enfant mineur minimum)"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    className: "label_ligne"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "radio",
-    onChange: handelClickCotisation,
-    checked: cotisation === "chomeur",
-    name: "type_cotisation",
-    value: "chomeur"
-  }), "J'adh\xE9re seul et suis ch\xF4meur et adh\xE9rent du club depuis plus d'un an (justificatif \xE0 fournir)"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    className: "label_ligne"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "radio",
-    onChange: handelClickCotisation,
-    checked: cotisation === "membre",
-    name: "type_cotisation",
-    value: "membre"
-  }), "Je suis membre \xE0 vie"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    className: "label_ligne"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "radio",
-    onChange: handelClickCotisation,
-    checked: cotisation === "non_pratiquant",
-    name: "type_cotisation",
-    value: "non_pratiquant"
-  }), "Adh\xE9rent non pratiquant"), isbutton && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    value: club[item].titre
+  }), club[item].label, " - ", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("b", null, club[item].plein_tarif / 100, "\u20AC"))), isbutton && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     type: "button",
     id: "valider",
     onClick: handelClickValidation
@@ -5216,8 +5199,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const Home = () => {
-  const [user, handelFetch] = (0,_hooks_useFetch__WEBPACK_IMPORTED_MODULE_1__["default"])();
+const Home = ({
+  user,
+  handelFetch
+}) => {
+  //const [user,handelFetch] = useFetch();
 
   // const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_datas";
   //  const [user,setUser] = useState({});
@@ -5250,9 +5236,9 @@ const Home = () => {
     handelFetch();
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    console.log(user.user_login);
+    console.log(user.dateOfBirth);
   }, [user]);
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "THE NEW HOME PAGE DU CHECKOUT"), user.user_login ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Bonjour, ", user.user_login), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Adh\xE9sion au club"), user.dateOfBirth ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Bonjour, ", user.firstName, " ", user.lastName), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     key: "1",
     to: "/cotisation"
   }, "Renouveler mon adh\xE9sion"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
