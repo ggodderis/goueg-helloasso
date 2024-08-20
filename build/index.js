@@ -4987,11 +4987,20 @@ const App = () => {
     returnUrl: 'https://www.club-montagne.net/helloasso/return.php',
     containsDonation: true,
     payer: {},
-    metadata: {}
+    metadata: {
+      id: '',
+      cotisation: '',
+      tarif_cotisation: '',
+      licence: '',
+      tarif_licence: ''
+    }
   });
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     console.log(datas);
   }, [datas]);
+  /**
+   * Si c'est une connection direct d'un déjà adhérent
+   */
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (adherent.firstName) {
       setUser(adherent);
