@@ -54,15 +54,9 @@ const useHello = () => {
     }
   } ,[token]);
 
-    // const joke = {
-    //     client_id:"a0fead5a1ba4404eacf4b9de755fb3b9",
-    //     client_secret:"NOfvEhtPEa4CBhrom8Q6nkBIwcZOapxr",
-    //     grant_type:"client_credentials"
-    // };
-
     const datas = new FormData();
-    datas.append("client_id","a0fead5a1ba4404eacf4b9de755fb3b9");
-    datas.append("client_secret","NOfvEhtPEa4CBhrom8Q6nkBIwcZOapxr");
+    datas.append("client_id","");
+    datas.append("client_secret","");
     datas.append("grant_type","client_credentials");
 
     console.log( new URLSearchParams(datas) );
