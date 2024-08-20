@@ -29,7 +29,7 @@ class getUserInfos {
             ];
 
         }else{
-            $array_user = ['error' => 'vide'];
+            $array_user = [];
         }
 
         return $array_user;

@@ -1,4 +1,4 @@
-import React from 'react';
+import {React,useEffect,useState} from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 /**
@@ -17,17 +17,47 @@ import './css/style_helloasso.css';
 
 const App = () => {
 
-    const [user,liste,handelFetch] = useFetch();
+    const adherent = the_ajax_script.infosUser;
+    const [cotisation,setCotisation] = useState('');
+    const [liste,handelFetch] = useFetch();
+    const [user,setUser] = useState({});
+
+    const [datas,setDatas] = useState( {
+        totalAmount: '',
+        initialAmount: '',
+        itemName: '',
+        backUrl: 'https://www.club-montagne.net/helloasso/back.php', 
+        errorUrl: 'https://www.club-montagne.net/helloasso/error.php', 
+        returnUrl: 'https://www.club-montagne.net/helloasso/return.php', 
+        containsDonation: true, 
+        payer: {},
+        metadata: {}
+    } )
+
+    useEffect( () => {
+        console.log(datas);
+    },[datas]);
+
+    useEffect( () => {
+        if( adherent.firstName ){
+            setUser(adherent);
+            // setDatas({...datas,
+            //     totalAmount : 666,
+            //     payer: adherent });
+        }
+    },[]);
 
     return (
         <>
         <Header/>
             <Routes>
                 <Route exact path="/" element={ <Home user={user} handelFetch={handelFetch} /> } />
-                <Route exact path="/cotisation" element={ <Cotisation liste={liste} /> } />
-                <Route exact path="/licence" element={ <Licence /> } />
+                <Route exact path="/cotisation" element={ <Cotisation liste={liste} cotisation={cotisation} setCotisation={setCotisation} /> } />
+                <Route exact path="/licence" element={ <Licence liste={liste} /> } />
                 <Route exact path="*" element={ <Errors /> } />
             </Routes>
+
+        <button type="button" >Valider la commande</button>
         </>
      );
 }

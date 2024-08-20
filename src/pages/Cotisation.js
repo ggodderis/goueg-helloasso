@@ -2,13 +2,14 @@ import { React, useState, useEffect } from 'react';
 
 const Cotisation = (props) => {
 
-    const [cotisation,setCotisation] = useState('');
+    const {cotisation,setCotisation} = props;
     const [isbutton,setIsbutton] = useState(false);
 
     const {club} = props.liste;
 
-    console.log(club[1].id);
+    console.log(props);
     
+
 
     function handelClickCotisation(event){
 
@@ -27,21 +28,20 @@ const Cotisation = (props) => {
 
     return(
        <div>
-        { 
-            
-                Object.keys(club).map((item, i) => (
-
-                    <label className="label_ligne" key={i}>
+        {
+        Object.entries(club).map( ([key,obj]) => (
+                // {"key":{id:1,titre:"ddk"}}
+                <label className="label_ligne" key={key}>
                     <input type="radio"
                         onChange={ handelClickCotisation }
-                        checked={ cotisation === club[item].titre }
-                        name="type_cotisation" value={club[item].titre}/>
-                        {club[item].label} - <b>{club[item].plein_tarif/100}€</b>
-                    </label>
-                 ))
-    
-        }
-
+                        checked={ cotisation === obj.titre }
+                        name="type_cotisation" value={obj.titre}/>
+                        {obj.descriptif} - <b>{obj.plein_tarif/100}€</b>
+                </label>  
+                )
+            )
+        } 
+        
         {
             isbutton && <button type="button" id="valider" onClick={ handelClickValidation }>valider</button>
         }

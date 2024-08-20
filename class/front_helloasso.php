@@ -42,7 +42,8 @@ class front_helloasso {
             'nonce' => wp_create_nonce( 'wp_attachment_mail' ),
             'rootUrl' => esc_url_raw( rest_url() ),
             'rootNonce' => wp_create_nonce( 'wp_rest' ),
-            'logoutNonce' => wp_create_nonce('log-out')
+            'logoutNonce' => wp_create_nonce('log-out'),
+            'infosUser' => getUserInfos::g()
         ) );
         
     }

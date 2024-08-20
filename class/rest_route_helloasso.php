@@ -31,7 +31,7 @@ class rest_route_helloasso {
 
     public function goueg_set_datas( WP_REST_REQUEST $request ){
         $datas = $request->get_params();
-        $params = getUserInfos::g();
+        //$params = getUserInfos::g();
         //$tarifs = getAllTarifs::g();
         $tarifs = self::test();
         //$tarifs = new adhesionInfos('1970-09-03');
@@ -41,7 +41,7 @@ class rest_route_helloasso {
         //file_put_contents(HELLOASSO_ROOT.'filename.txt', print_r($metas, true));
         //file_put_contents(HELLOASSO_ROOT.'filename.txt', 'toto');
 
-        return rest_ensure_response([$params,$tarifs]);
+        return rest_ensure_response($tarifs);
     }
 
     public function test():array {
@@ -185,7 +185,7 @@ class rest_route_helloasso {
                 //                   ↑
                 // Array value which you want to delete
             });
-            $this->temporaire['ffre']['licences'] = $array;
+            $this->temporaire['ffr']['licences'] = $array;
 
         }else{
 
@@ -194,7 +194,7 @@ class rest_route_helloasso {
                 //                   ↑
                 // Array value which you want to delete
             });
-            $this->temporaire['ffre']['licences'] = $array;
+            $this->temporaire['ffr']['licences'] = $array;
         }
 
         return $this->temporaire;

@@ -4974,7 +4974,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const App = () => {
-  const [user, liste, handelFetch] = (0,_hooks_useFetch__WEBPACK_IMPORTED_MODULE_7__["default"])();
+  const adherent = the_ajax_script.infosUser;
+  const [cotisation, setCotisation] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [liste, handelFetch] = (0,_hooks_useFetch__WEBPACK_IMPORTED_MODULE_7__["default"])();
+  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
+  const [datas, setDatas] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    totalAmount: '',
+    initialAmount: '',
+    itemName: '',
+    backUrl: 'https://www.club-montagne.net/helloasso/back.php',
+    errorUrl: 'https://www.club-montagne.net/helloasso/error.php',
+    returnUrl: 'https://www.club-montagne.net/helloasso/return.php',
+    containsDonation: true,
+    payer: {},
+    metadata: {}
+  });
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    console.log(datas);
+  }, [datas]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (adherent.firstName) {
+      setUser(adherent);
+      // setDatas({...datas,
+      //     totalAmount : 666,
+      //     payer: adherent });
+    }
+  }, []);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Header__WEBPACK_IMPORTED_MODULE_6__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Routes, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     exact: true,
     path: "/",
@@ -4986,17 +5011,23 @@ const App = () => {
     exact: true,
     path: "/cotisation",
     element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Cotisation__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      liste: liste
+      liste: liste,
+      cotisation: cotisation,
+      setCotisation: setCotisation
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     exact: true,
     path: "/licence",
-    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Licence__WEBPACK_IMPORTED_MODULE_2__["default"], null)
+    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Licence__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      liste: liste
+    })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
     exact: true,
     path: "*",
     element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Errors__WEBPACK_IMPORTED_MODULE_4__["default"], null)
-  })));
+  })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    type: "button"
+  }, "Valider la commande"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
 
@@ -5047,8 +5078,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 const useFetch = () => {
-  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
-  const [liste, setListe] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
+  const [liste, setListe] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [metas, setMetas] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     cotisation: 'famille',
     trala: 'pouette',
@@ -5065,7 +5095,7 @@ const useFetch = () => {
   });
   const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_datas";
   const data = new FormData();
-  data.append('nonce', the_ajax_script.nonce);
+  //data.append('nonce', the_ajax_script.nonce );
   //data.append('metadata', JSON.stringify(metas) );
 
   function handelFetch() {
@@ -5076,14 +5106,12 @@ const useFetch = () => {
         'X-WP-Nonce': the_ajax_script.rootNonce
       }
     }).then(res => res.json()).then(json => {
-      console.log(json[1]);
-      setUser(json[0]);
-      setListe(json[1]);
+      setListe(json);
     }).catch(error => {
       console.log(error);
     });
   }
-  return [user, liste, handelFetch];
+  return [liste, handelFetch];
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useFetch);
 
@@ -5104,12 +5132,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const Cotisation = props => {
-  const [cotisation, setCotisation] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const {
+    cotisation,
+    setCotisation
+  } = props;
   const [isbutton, setIsbutton] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const {
     club
   } = props.liste;
-  console.log(club[1].id);
+  console.log(props);
   function handelClickCotisation(event) {
     const {
       name,
@@ -5122,16 +5153,18 @@ const Cotisation = props => {
   function handelClickValidation(event) {
     console.log('validation', event.target);
   }
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, Object.keys(club).map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, Object.entries(club).map(([key, obj]) =>
+  // {"key":{id:1,titre:"ddk"}}
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     className: "label_ligne",
-    key: i
+    key: key
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "radio",
     onChange: handelClickCotisation,
-    checked: cotisation === club[item].titre,
+    checked: cotisation === obj.titre,
     name: "type_cotisation",
-    value: club[item].titre
-  }), club[item].label, " - ", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("b", null, club[item].plein_tarif / 100, "\u20AC"))), isbutton && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    value: obj.titre
+  }), obj.descriptif, " - ", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("b", null, obj.plein_tarif / 100, "\u20AC"))), isbutton && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     type: "button",
     id: "valider",
     onClick: handelClickValidation
@@ -5203,49 +5236,41 @@ const Home = ({
   user,
   handelFetch
 }) => {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (user.firstName) {
+      handelFetch();
+    }
+  }, [user]);
+  //console.log( user, user.firstName, user.lastName );
+  // [user].map( item => {
+  //     console.log(item.firstName,user.lastName,user.dateOfBirth);
+
+  // })
   //const [user,handelFetch] = useFetch();
 
   // const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_datas";
   //  const [user,setUser] = useState({});
 
-  // useEffect( () => {
+  // useEffect ( () => {
 
-  //     const data = new FormData();
-  //     data.append('nonce', the_ajax_script.nonce );
+  //     if( user.dateOfBirth ){
+  //         console.log( user.dateOfBirth, 'on fait un appel pour avoir la liste des cotisation et assurances' );
+  //     }else{
+  //         console.log(' on fait rien ..');
 
-  //     fetch( 
-  //         ROOT_URL_HELLOASSO ,
-  //         { 
-  //         method: 'POST',
-  //         body: data,
-  //         headers: {
-  //             'X-WP-Nonce': the_ajax_script.rootNonce
-  //         }
-  //     })
-  //     .then( res => res.json()  )
-  //     .then( json => { 
-  //         console.log(json);
-  //         setUser( json );
-  //     } )
-  //     .catch( error => { console.log(error) } )
+  //     }
+  // },[user])
 
-  //     } ,[]
-
-  // )
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    handelFetch();
-  }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    console.log(user.dateOfBirth);
-  }, [user]);
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Adh\xE9sion au club"), user.dateOfBirth ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Bonjour, ", user.firstName, " ", user.lastName), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Adh\xE9sion au club"), user.firstName ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Bonjour, ", user.firstName, " ", user.lastName), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     key: "1",
     to: "/cotisation"
   }, "Renouveler mon adh\xE9sion"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: "/wp-login.php?action=logout&_wpnonce=" + the_ajax_script.logoutNonce + "&redirect_to=page-d-exemple"
-  }, "Me connecter avec un autre compte")) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+  }, "Me connecter avec un autre compte")) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Je suis d\xE9j\xE0 adh\xE9rent"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: "/member-login?redirect_to=page-d-exemple"
-  }, "connexion"));
+  }, "connexion"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Je suis nouveau adh\xE9rent"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+    href: "/member-login?redirect_to=page-d-exemple"
+  }, "connexion")));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Home);
 
@@ -5265,8 +5290,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 
-const Licence = () => {
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Licence");
+const Licence = props => {
+  console.log(props);
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Licences / Assurances");
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Licence);
 

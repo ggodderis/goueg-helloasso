@@ -1,8 +1,11 @@
 import { React } from 'react';
 
-const Licence = () => {
+const Licence = (props) => {
+
+    console.log( props );
+    
     return(
-        <h1>Licence</h1>
+        <h1>Licences / Assurances</h1>
     )
 }
 export default Licence;
