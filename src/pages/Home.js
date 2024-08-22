@@ -1,33 +1,14 @@
 import { React, useEffect, useState } from 'react';
-import useFetch from '../hooks/useFetch';
 import { Link } from 'react-router-dom';
 
-const Home = ({user,handelFetch}) => {
+const Home = ({user}) => {
 
-    useEffect( () => {
-        if( user.firstName ){
-            handelFetch();
-        }
-    },[user]);
-    //console.log( user, user.firstName, user.lastName );
-    // [user].map( item => {
-    //     console.log(item.firstName,user.lastName,user.dateOfBirth);
-        
-    // })
-    //const [user,handelFetch] = useFetch();
- 
-    // const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_datas";
-   //  const [user,setUser] = useState({});
-
-    // useEffect ( () => {
-
-    //     if( user.dateOfBirth ){
-    //         console.log( user.dateOfBirth, 'on fait un appel pour avoir la liste des cotisation et assurances' );
-    //     }else{
-    //         console.log(' on fait rien ..');
-            
+    // useEffect( () => {
+    //     if( user.firstName ){
+    //         handelFetch();
     //     }
-    // },[user])
+    // },[user]);
+
 
     return(
         <>
@@ -37,19 +18,26 @@ const Home = ({user,handelFetch}) => {
                 <>
                 <span>Bonjour, {user.firstName} {user.lastName}</span>
                 <br />
-                <Link key="1" to="/cotisation" >Renouveler mon adhésion</Link>
+                <Link key="1" to="/cotisation" className='bt_bleu'>Renouveler mon adhésion</Link>
                 <br />
                 <a href={"/wp-login.php?action=logout&_wpnonce="+the_ajax_script.logoutNonce+"&redirect_to=page-d-exemple"}>
                     Me connecter avec un autre compte
                 </a>
                 </>
             ):(
-                <>
-                <h2>Je suis déjà adhérent</h2>
-                <a href="/member-login?redirect_to=page-d-exemple">connexion</a>
-                <h2>Je suis nouveau adhérent</h2>
-                <a href="/member-login?redirect_to=page-d-exemple">connexion</a>
-                </>
+                <div className='content_start'>
+
+                    <div>
+                        <h2 className='titre_adhesion'>Je suis déjà adhérent</h2>
+                        <a href="/member-login?redirect_to=page-d-exemple" className='bt_bleu'>Je m'indentifie</a>
+                    </div>
+
+                    <div>
+                        <h2 className='titre_adhesion'>Je suis nouveau...</h2>
+                        <Link key="2" to="/formulaire" className='bt_bleu_outline'>Je crée un compte</Link>
+                    </div>
+
+                </div>
             )
         }
         

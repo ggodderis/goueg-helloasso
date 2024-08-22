@@ -1,4 +1,65 @@
-.label_ligne {
-    display: block;
+/**
+* Header
+*/
+.link_chemin {
+    display: inline-flex;
     padding: 1rem;
+}
+/**
+* Formulaire
+*/
+.form_inscription {
+    max-width: 700px;
+}
+.label_ligne {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    column-gap: 2rem;
+    margin-bottom: 2rem;
+}
+.label_adresse {
+    display: block;
+    margin-bottom: 2rem;
+}
+.label_radio {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/**
+* Home
+*/
+.content_start {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+.content_start > div {
+    text-align: center;
+}
+.titre_adhesion {
+    font-family: var(--font-condensed);
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--bleu-foncer);
+}
+.bt_bleu, .bt_bleu_outline {
+    display: flex;
+    font-family: var(--font-condensed);
+    font-weight: 600;
+    font-size: 1.1rem;
+    max-width: 250px;
+    text-transform: uppercase;
+    justify-content: center;
+    padding: 0.6rem 1rem;
+    margin: auto;
+    text-decoration: none;
+    color: #ffffff !important;
+    background-color: var(--bleu-foncer);
+    border: 3px solid var(--bleu-foncer);
+    border-radius: 999px;
+}
+.bt_bleu_outline {
+    color: var(--bleu-foncer)!important;
+    background-color: #ffffff;
 }

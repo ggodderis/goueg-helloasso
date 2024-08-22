@@ -1,15 +1,17 @@
 import { React, useEffect, useState } from 'react';
 
-const useFetch = () => {
+const useCotisations = () => {
 
     const [liste,setListe] = useState([]);
-    const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_datas";
+    const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_cotisations";
     
     const data = new FormData();
         //data.append('nonce', the_ajax_script.nonce );
         //data.append('metadata', JSON.stringify(metas) );
     
-    function handelFetch () {
+    function handelCotisation ( date ) {
+
+        data.append('date', date );
 
         fetch( 
             ROOT_URL_HELLOASSO ,
@@ -28,9 +30,7 @@ const useFetch = () => {
 
     }
 
-
-    return [liste,handelFetch];
-
+    return[liste,handelCotisation];
 
 }
-export default useFetch;
+export default useCotisations;

@@ -27,6 +27,12 @@ class rest_route_helloasso {
             'callback' => [$this,'goueg_set_datas'],
             'permission_callback' => '__return_true'
         ]);
+
+        register_rest_route('goueg-helloasso/v1', '/set_cotisations', [
+            'methods' => ['POST'] ,
+            'callback' => [$this,'goueg_set_cotisations'],
+            'permission_callback' => '__return_true'
+        ]);
     }
 
     public function goueg_set_datas( WP_REST_REQUEST $request ){
@@ -44,9 +50,16 @@ class rest_route_helloasso {
         return rest_ensure_response($tarifs);
     }
 
-    public function test():array {
+    public function goueg_set_cotisations( WP_REST_REQUEST $request ){
+        $datas = $request->get_params();
+        $date_de_naissance = $datas['date'];
+        $tarifs = self::test( $date_de_naissance );
+        return rest_ensure_response($tarifs);
+    }
 
-        $date_de_naissance = '1970-09-03';
+    public function test( $date_de_naissance = '' ):array {
+
+        //$date_de_naissance = '1970-09-03';
 
         $this->today = new DateTime('now', new DateTimeZone('Europe/Paris') );
         $this->birthday = (clone $this->today)->modify("{$date_de_naissance}");
@@ -60,10 +73,10 @@ class rest_route_helloasso {
         $this->general['ffme']['options'] = getAllTarifs::g('wp_options_ffme');
         $this->general['ffr']['licences'] = getAllTarifs::g('wp_licences_ffr');
 
-        self::get_cotisation_club();
+        return self::get_cotisation_club();
 
 
-        return $this->temporaire;
+        //return $this->temporaire;
 
     }
 
@@ -127,6 +140,12 @@ class rest_route_helloasso {
         if( self::get_age_mois_septembre() < 25 ){
 
             $array = array_filter($this->general['club'], function ($element) {
+                //unset( $element->demi_tarif );
+                if( self::get_reduction_mai() == 'demi_tarif' && !empty($element->demi_tarif) ) {
+                    $element->tarif = $element->demi_tarif;
+                }else{
+                    $element->tarif = $element->plein_tarif;
+                }
                 return $element->titre !== "A";
                 //                   ↑
                 // Array value which you want to delete
@@ -137,6 +156,12 @@ class rest_route_helloasso {
         }else{
 
             $array = array_filter($this->general['club'], function ($element) {
+                //unset( $element->demi_tarif );
+                if( self::get_reduction_mai() == 'demi_tarif' && !empty($element->demi_tarif) ) {
+                    $element->tarif = $element->demi_tarif;
+                }else{
+                    $element->tarif = $element->plein_tarif;
+                }
                 return $element->titre !== "J";
                 //                   ↑
                 // Array value which you want to delete
@@ -145,7 +170,9 @@ class rest_route_helloasso {
             $this->temporaire['club'] = $array;
         }
 
-        self::get_licence_ffme();
+        return $this->temporaire['club'];
+
+        //self::get_licence_ffme();
     }
 
     private function get_licence_ffme(){
@@ -153,6 +180,11 @@ class rest_route_helloasso {
         if( self::get_age_fin_aout() < 18 ){
 
             $array = array_filter($this->general['ffme']['licences'], function ($element) {
+                if( self::get_reduction_mai() == 'demi_tarif' && !empty($element->demi_tarif) ) {
+                    $element->tarif = $element->demi_tarif;
+                }else{
+                    $element->tarif = $element->plein_tarif;
+                }
                 return $element->titre !== "FA";
                 //                   ↑
                 // Array value which you want to delete
@@ -162,6 +194,11 @@ class rest_route_helloasso {
         }else{
 
             $array = array_filter($this->general['ffme']['licences'], function ($element) {
+                if( self::get_reduction_mai() == 'demi_tarif' && !empty($element->demi_tarif) ) {
+                    $element->tarif = $element->demi_tarif;
+                }else{
+                    $element->tarif = $element->plein_tarif;
+                }
                 return $element->titre !== "FJ";
                 //                   ↑
                 // Array value which you want to delete
@@ -181,6 +218,11 @@ class rest_route_helloasso {
         if( self::get_age_fin_aout() < 26 ){
 
             $array = array_filter($this->general['ffr']['licences'], function ($element) {
+                if( self::get_reduction_mai() == 'demi_tarif' && !empty($element->demi_tarif) ) {
+                    $element->tarif = $element->demi_tarif;
+                }else{
+                    $element->tarif = $element->plein_tarif;
+                }
                 return $element->titre !== "IMPN";
                 //                   ↑
                 // Array value which you want to delete
@@ -190,6 +232,11 @@ class rest_route_helloasso {
         }else{
 
             $array = array_filter($this->general['ffr']['licences'], function ($element) {
+                if( self::get_reduction_mai() == 'demi_tarif' && !empty($element->demi_tarif) ) {
+                    $element->tarif = $element->demi_tarif;
+                }else{
+                    $element->tarif = $element->plein_tarif;
+                }
                 return $element->titre !== "IMPNJ";
                 //                   ↑
                 // Array value which you want to delete

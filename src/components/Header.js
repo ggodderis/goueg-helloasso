@@ -1,14 +1,27 @@
-import { Link } from "react-router-dom"
+import { React, useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = (props) => {
+
+    const {nav} = props;
+    // console.log( 'header', nav );
+    
+
     return(
         <>
         <nav>
-            <Link key="1" to="/">Home</Link>
-            <Link key="2" to="/cotisation">Cotisation</Link>
-            <Link key="3" to="/licence">Licence</Link>
+            {
+                nav.map( (item,i) => (
+                    <Link key={i} to={item.to} className='link_chemin'>{item.label}</Link>
+                ) )
+            }
+            {/* <Link key="1" to="/">Home</Link>
+            <Link key="2" to="/formulaire">Formulaire</Link>
+            <Link key="4" to="/cotisation">Cotisation</Link>
+            <Link key="5" to="/licence">Licence</Link> */}
         </nav>
         </>
     )
+
 }
 export default Header;

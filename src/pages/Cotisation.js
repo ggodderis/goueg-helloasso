@@ -1,46 +1,75 @@
 import { React, useState, useEffect } from 'react';
 
+import useCotisations from '../hooks/useCotisations';
+
 const Cotisation = (props) => {
 
-    const {cotisation,setCotisation} = props;
+    const [liste,handelCotisation] = useCotisations();
     const [isbutton,setIsbutton] = useState(false);
+    const {nav,setNav,user,metadata,handelDatas} = props;
 
-    const {club} = props.liste;
 
-    console.log(props);
+    console.log( 'Cotisation', metadata );
+ 
+
+/**
+ * On regarde si le label Formulaire existe dans nav
+ * si il n'existe pas on l'ajoute
+ */
+    function trouve( name ){
+        return nav.find( (nav) => nav.label === name );
+    }
+
+    useEffect( () => {
+
+        if( trouve('Cotisation') === undefined ){
+            setNav([...nav,
+                { to: '/cotisation', label: 'Cotisation'}
+            ]);
+        }
+
+        handelCotisation(user.dateOfBirth);
+
+    }, []);
     
 
 
     function handelClickCotisation(event){
 
         const {name,value} = event.target;
+        const toto = Object.entries(liste).reduce( (newObject,[key,obj]) => {
+          if( obj.titre === value ) {
+            newObject = obj;
+          }
+          return newObject;
+        },{});
 
-        console.log('validation', name, value );
-        
-        setCotisation(value);
-        setIsbutton(true);
+        //console.log( 'validation', name, value, 'find', toto.tarif, toto.titre );
+        handelDatas('cotisation',toto);
+        // setCotisation(value);
+        // setIsbutton(true);
     }
 
     function handelClickValidation(event){
-        console.log('validation', event.target );
+        console.log('validation', event.target, liste );
+        //handelDatas('cotisation',)
     }
 
-
+//checked={ cotisation === obj.titre }
     return(
        <div>
         {
-        Object.entries(club).map( ([key,obj]) => (
+        Object.entries(liste).map( ([key,obj]) => (
                 // {"key":{id:1,titre:"ddk"}}
-                <label className="label_ligne" key={key}>
+                <label className="label_radio" key={key}>
                     <input type="radio"
                         onChange={ handelClickCotisation }
-                        checked={ cotisation === obj.titre }
                         name="type_cotisation" value={obj.titre}/>
-                        {obj.descriptif} - <b>{obj.plein_tarif/100}€</b>
+                        {obj.descriptif} - <b>{obj.tarif/100}€</b>
                 </label>  
                 )
             )
-        } 
+        }
         
         {
             isbutton && <button type="button" id="valider" onClick={ handelClickValidation }>valider</button>
