@@ -3,6 +3,7 @@ import { React, useEffect, useState } from 'react';
 const useFetch = () => {
 
     const [liste,setListe] = useState([]);
+    
     const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_datas";
     
     const data = new FormData();

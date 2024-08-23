@@ -19,6 +19,7 @@ const Header = (props) => {
             <Link key="2" to="/formulaire">Formulaire</Link>
             <Link key="4" to="/cotisation">Cotisation</Link>
             <Link key="5" to="/licence">Licence</Link> */}
+            <Link key="5" to="/licence">Licence</Link>
         </nav>
         </>
     )

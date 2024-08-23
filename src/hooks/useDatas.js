@@ -15,7 +15,7 @@ const useDatas = () => {
         containsDonation: true, 
         payer: {},
         metadata: {
-            id: '',
+            id: '007',
             cotisation: '',
             tarif_cotisation: '',
             licence: '',
@@ -24,6 +24,12 @@ const useDatas = () => {
         }
     } );
 
+    /**
+     * 
+     * @param  {...any} event 
+     * @event[0] = string
+     * @event[1] = object
+     */
     const handelDatas = (...event) => {
         //console.log( event[0] , event[1].firstName );
         switch( event[0] ){
@@ -32,7 +38,11 @@ const useDatas = () => {
                 break;
             case 'cotisation':
                 console.log('cotisation', event[1].titre, event[1].tarif);
-                
+                setDatas({...datas, metadata: {
+                            ...datas.metadata,
+                            cotisation: event[1].titre,
+                            tarif_cotisation: event[1].tarif
+                        } });
                     //setDatas({...datas, payer: event[1] });
                 break;
         }

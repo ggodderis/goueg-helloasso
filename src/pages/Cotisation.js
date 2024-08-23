@@ -9,10 +9,11 @@ const Cotisation = (props) => {
     const {nav,setNav,user,metadata,handelDatas} = props;
 
 
-    console.log( 'Cotisation', metadata );
+    console.log( 'Cotisation', metadata.cotisation );
  
 
-/**
+/** 
+ * POUR LA NAVIGATION
  * On regarde si le label Formulaire existe dans nav
  * si il n'existe pas on l'ajoute
  */
@@ -43,7 +44,13 @@ const Cotisation = (props) => {
           }
           return newObject;
         },{});
-
+        // const toto = Object.entries(liste).filter( ([key,obj]) => { 
+        //     if( obj.titre === value ){
+        //         return obj;
+        //     }
+        // } )
+        console.log( toto );
+        
         //console.log( 'validation', name, value, 'find', toto.tarif, toto.titre );
         handelDatas('cotisation',toto);
         // setCotisation(value);
@@ -64,7 +71,9 @@ const Cotisation = (props) => {
                 <label className="label_radio" key={key}>
                     <input type="radio"
                         onChange={ handelClickCotisation }
-                        name="type_cotisation" value={obj.titre}/>
+                        name="type_cotisation" value={obj.titre}
+                        checked={ metadata.cotisation === obj.titre }
+                        />
                         {obj.descriptif} - <b>{obj.tarif/100}€</b>
                 </label>  
                 )

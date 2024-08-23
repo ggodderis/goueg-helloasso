@@ -5065,7 +5065,10 @@ const Header = props => {
     key: i,
     to: item.to,
     className: "link_chemin"
-  }, item.label))));
+  }, item.label)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+    key: "5",
+    to: "/licence"
+  }, "Licence")));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Header);
 
@@ -5138,7 +5141,7 @@ const useDatas = () => {
     containsDonation: true,
     payer: {},
     metadata: {
-      id: '',
+      id: '007',
       cotisation: '',
       tarif_cotisation: '',
       licence: '',
@@ -5146,6 +5149,13 @@ const useDatas = () => {
       famille: {}
     }
   });
+
+  /**
+   * 
+   * @param  {...any} event 
+   * @event[0] = string
+   * @event[1] = object
+   */
   const handelDatas = (...event) => {
     //console.log( event[0] , event[1].firstName );
     switch (event[0]) {
@@ -5157,7 +5167,14 @@ const useDatas = () => {
         break;
       case 'cotisation':
         console.log('cotisation', event[1].titre, event[1].tarif);
-
+        setDatas({
+          ...datas,
+          metadata: {
+            ...datas.metadata,
+            cotisation: event[1].titre,
+            tarif_cotisation: event[1].tarif
+          }
+        });
         //setDatas({...datas, payer: event[1] });
         break;
     }
@@ -5235,9 +5252,10 @@ const Cotisation = props => {
     metadata,
     handelDatas
   } = props;
-  console.log('Cotisation', metadata);
+  console.log('Cotisation', metadata.cotisation);
 
-  /**
+  /** 
+   * POUR LA NAVIGATION
    * On regarde si le label Formulaire existe dans nav
    * si il n'existe pas on l'ajoute
    */
@@ -5264,6 +5282,12 @@ const Cotisation = props => {
       }
       return newObject;
     }, {});
+    // const toto = Object.entries(liste).filter( ([key,obj]) => { 
+    //     if( obj.titre === value ){
+    //         return obj;
+    //     }
+    // } )
+    console.log(toto);
 
     //console.log( 'validation', name, value, 'find', toto.tarif, toto.titre );
     handelDatas('cotisation', toto);
@@ -5285,7 +5309,8 @@ const Cotisation = props => {
     type: "radio",
     onChange: handelClickCotisation,
     name: "type_cotisation",
-    value: obj.titre
+    value: obj.titre,
+    checked: metadata.cotisation === obj.titre
   }), obj.descriptif, " - ", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("b", null, obj.tarif / 100, "\u20AC"))), isbutton && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     type: "button",
     id: "valider",
@@ -5515,8 +5540,73 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const Licence = props => {
-  console.log(props);
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Licences / Assurances");
+  //console.log( props );
+
+  const [licences, setLicences] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    descriptif: 'Randonnée pédestre',
+    name: 'RP',
+    checked: false
+  }, {
+    descriptif: 'Raquette à neige',
+    name: 'RN',
+    checked: false
+  }, {
+    descriptif: 'Via ferrata',
+    name: 'VF',
+    checked: false
+  }, {
+    descriptif: 'Canyoning',
+    name: 'CA',
+    checked: false
+  }, {
+    descriptif: 'Ski alpin sur domaine station',
+    name: 'SA',
+    checked: false
+  }, {
+    descriptif: 'Vtt',
+    name: 'VTT',
+    checked: false
+  }, {
+    descriptif: 'Escalade',
+    name: 'ESC',
+    checked: false
+  }, {
+    descriptif: 'Alpinisme',
+    name: 'ALP',
+    checked: false
+  }, {
+    descriptif: 'Ski de randonnée',
+    name: 'SDR',
+    checked: false
+  }]);
+  const [selection, setSelection] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const handelCheckbox = event => {
+    const {
+      name
+    } = event.target;
+    console.log(event);
+    if (selection.indexOf(name) > -1) {
+      console.log('il faut le supprimer');
+      const newSelection = selection.filter(item => {
+        return item !== name;
+      });
+      setSelection(newSelection);
+    } else {
+      setSelection([...selection, name]);
+    }
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    console.log(selection);
+  }, [selection]);
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Licences / Assurances"), licences.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    key: i
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "checkbox",
+    name: item.name,
+    id: item.name,
+    checked: selection.indexOf(item.name) > -1,
+    onChange: handelCheckbox
+  }), item.descriptif), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Licence);
 
