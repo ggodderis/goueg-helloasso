@@ -63,3 +63,23 @@
     color: var(--bleu-foncer)!important;
     background-color: #ffffff;
 }
+
+/**
+* Licences
+*/
+.ligne_licence {
+    display: block;
+    padding: 0 0 0.5rem 0;
+}
+.ligne_licence label {
+    display: flex;
+    align-items: center;
+}
+.sous_ligne_licence {
+    display: block;
+    padding: 0 0 0 1rem;
+}
+.label_sous_ligne_licence {
+    display: flex;
+    align-items: center;
+}

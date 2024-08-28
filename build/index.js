@@ -4977,6 +4977,51 @@ __webpack_require__.r(__webpack_exports__);
 
 const App = () => {
   const adherent = the_ajax_script.infosUser;
+  const [selection, setSelection] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
+    descriptif: 'Randonnée pédestre',
+    name: 'RP',
+    checked: false
+  }, {
+    descriptif: 'Raquette à neige',
+    name: 'RN',
+    checked: false
+  }, {
+    descriptif: 'Via ferrata',
+    name: 'VF',
+    checked: false
+  }, {
+    descriptif: 'Canyoning',
+    name: 'CA',
+    checked: false
+  }, {
+    descriptif: 'Ski alpin sur domaine station',
+    name: 'SKIA',
+    checked: false
+  }, {
+    descriptif: 'Vtt',
+    name: 'VTT',
+    checked: false
+  }, {
+    descriptif: 'Escalade',
+    name: 'ESCA',
+    checked: false
+  }, {
+    descriptif: 'Alpinisme',
+    name: 'ALPI',
+    checked: false,
+    label: 'Pratiquez vous l\'alpinisme à un niveau supérieur à PD ?',
+    labelname: 'ALPI_SUP',
+    labelchecked: false,
+    show: false
+  }, {
+    descriptif: 'Ski de randonnée',
+    name: 'SKIR',
+    checked: false,
+    label: 'Pratiquez vous le Ski de randonnée à un niveau supérieur à PD ?',
+    labelname: 'SKIR_SUP',
+    labelchecked: false,
+    show: false
+  }]);
   const [cotisation, setCotisation] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   // const [liste,handelFetch] = useFetch();
   const [datas, user, metadata, handelDatas] = (0,_hooks_useDatas__WEBPACK_IMPORTED_MODULE_8__["default"])();
@@ -5028,7 +5073,10 @@ const App = () => {
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     exact: true,
     path: "/licence",
-    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Licence__WEBPACK_IMPORTED_MODULE_2__["default"], null)
+    element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Licence__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      selection: selection,
+      setSelection: setSelection
+    })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     exact: true,
     path: "*",
@@ -5252,7 +5300,7 @@ const Cotisation = props => {
     metadata,
     handelDatas
   } = props;
-  console.log('Cotisation', metadata.cotisation);
+  console.log('Cotisation', liste);
 
   /** 
    * POUR LA NAVIGATION
@@ -5540,73 +5588,79 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const Licence = props => {
-  //console.log( props );
-
-  const [licences, setLicences] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
-    descriptif: 'Randonnée pédestre',
-    name: 'RP',
-    checked: false
-  }, {
-    descriptif: 'Raquette à neige',
-    name: 'RN',
-    checked: false
-  }, {
-    descriptif: 'Via ferrata',
-    name: 'VF',
-    checked: false
-  }, {
-    descriptif: 'Canyoning',
-    name: 'CA',
-    checked: false
-  }, {
-    descriptif: 'Ski alpin sur domaine station',
-    name: 'SA',
-    checked: false
-  }, {
-    descriptif: 'Vtt',
-    name: 'VTT',
-    checked: false
-  }, {
-    descriptif: 'Escalade',
-    name: 'ESC',
-    checked: false
-  }, {
-    descriptif: 'Alpinisme',
-    name: 'ALP',
-    checked: false
-  }, {
-    descriptif: 'Ski de randonnée',
-    name: 'SDR',
-    checked: false
-  }]);
-  const [selection, setSelection] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const {
+    selection,
+    setSelection
+  } = props;
   const handelCheckbox = event => {
-    const {
+    let {
       name
     } = event.target;
-    console.log(event);
-    if (selection.indexOf(name) > -1) {
-      console.log('il faut le supprimer');
-      const newSelection = selection.filter(item => {
-        return item !== name;
-      });
-      setSelection(newSelection);
-    } else {
-      setSelection([...selection, name]);
-    }
+    let newselection = selection.map((item, index) => {
+      if (item.name === name) {
+        item.checked = !item.checked;
+        if (item.name === 'SKIR' || item.name === 'ALPI') {
+          item.show = !item.show;
+        }
+      }
+      return item;
+    });
+    setSelection(newselection);
+  };
+  const handelNiveau = event => {
+    let {
+      name
+    } = event.target;
+    let newselection = selection.map((item, index) => {
+      if (item.labelname === name) {
+        item.labelchecked = !item.labelchecked;
+      }
+      return item;
+    });
+    setSelection(newselection);
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    console.log(selection);
+    //     if( selection.indexOf('ESCA') > -1 ){
+    //         console.log('Licence', 'FFME');
+    //         //return false;
+    //     }
+    //     else{
+    //         if( selection.indexOf('ALPI') > -1 || selection.indexOf('SKIR') > -1){
+    //             console.log('Licence', 'choix de niveau Alpinisme ou rando');
+    //         }
+    //         else if( selection.indexOf('VF') > -1 
+    //                     || selection.indexOf('CA') > -1 
+    //                     || selection.indexOf('VTT') > -1 
+    //                     || selection.indexOf('SKIA') > -1 
+    //                     && !suppd ){
+    //             console.log('Licence FFR', 'IMPN', 'IMPNJ', 'IMPNF');
+    //         }else {
+    //             console.log('Licence FFR', 'SIMPLE');
+    //         }
+    //     }
+
+    console.log('useEffect', selection);
   }, [selection]);
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Licences / Assurances"), licences.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Licences / Assurances"), selection.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "ligne_licence"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     key: i
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "checkbox",
     name: item.name,
     id: item.name,
-    checked: selection.indexOf(item.name) > -1,
+    checked: item.checked,
     onChange: handelCheckbox
-  }), item.descriptif), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null))));
+  }), item.descriptif), item.show ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "sous_ligne_licence"
+  }, item.label, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
+    className: "label_sous_ligne_licence"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "checkbox",
+    name: item.labelname,
+    checked: item.labelchecked,
+    onChange: handelNiveau
+  }), " oui")) : '')));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Licence);
 

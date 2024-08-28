@@ -9,7 +9,7 @@ const Cotisation = (props) => {
     const {nav,setNav,user,metadata,handelDatas} = props;
 
 
-    console.log( 'Cotisation', metadata.cotisation );
+    console.log( 'Cotisation', liste );
  
 
 /** 
