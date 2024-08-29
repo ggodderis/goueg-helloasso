@@ -19,6 +19,10 @@ import './css/style_helloasso.css';
 const App = () => {
 
     const adherent = the_ajax_script.infosUser;
+    /**
+     * @param selection []
+     * Contient la liste des différents
+     */
     const [selection,setSelection] = useState([
         {descriptif:'Randonnée pédestre', name: 'RP', checked: false },
         {descriptif:'Raquette à neige', name: 'RN', checked: false },
@@ -31,7 +35,7 @@ const App = () => {
         {descriptif:'Ski de randonnée', name: 'SKIR', checked: false, label: 'Pratiquez vous le Ski de randonnée à un niveau supérieur à PD ?', labelname: 'SKIR_SUP',labelchecked: false, show: false }
 
     ]);
-    const [cotisation,setCotisation] = useState('');
+    // const [cotisation,setCotisation] = useState('');
     // const [liste,handelFetch] = useFetch();
     const [datas,user,metadata,handelDatas] = useDatas();
 
@@ -39,11 +43,6 @@ const App = () => {
         { to: '/', label: 'Home'}
     ]);
 
-
-    useEffect( () => {
-        console.log('from useDatas',datas);
-        // handelDatas('je modifie metadata');
-    },[datas]);
 /**
  * Si c'est une connection direct d'un déjà adhérent
  */
@@ -62,9 +61,9 @@ const App = () => {
         <Header nav={nav} />
             <Routes>
                 <Route exact path="/" element={ <Home user={user} /> } />
-                <Route exact path="/formulaire" element={ <Form nav={nav} setNav={setNav} /> } />
+                <Route exact path="/formulaire" element={ <Form nav={nav} setNav={setNav} user={user} handelDatas={handelDatas}/> } />
                 <Route exact path="/cotisation" element={ <Cotisation nav={nav} setNav={setNav} user={user} metadata={metadata} handelDatas={handelDatas} /> } />
-                <Route exact path="/licence" element={ <Licence selection={selection} setSelection={setSelection} /> } />
+                <Route exact path="/licence" element={ <Licence nav={nav} setNav={setNav} selection={selection} setSelection={setSelection} /> } />
                 <Route exact path="*" element={ <Errors /> } />
             </Routes>
         </>

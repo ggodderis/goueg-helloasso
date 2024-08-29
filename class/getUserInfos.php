@@ -24,6 +24,9 @@ class getUserInfos {
                 'address' => get_user_meta($ID,'billing_address_1', true),
                 'city' => get_user_meta($ID,'billing_city', true),
                 'zipCode' => get_user_meta($ID,'billing_postcode', true),
+                'gda_genre' => get_user_meta($ID,'gda_genre', true),
+                'gda_personne' => get_user_meta($ID,'gda_personne', true),
+                'gda_tel_personne' => get_user_meta($ID,'gda_tel_personne', true),
                 'country' => 'FRA',
                 'companyName' => ''
             ];

@@ -33,6 +33,20 @@ class rest_route_helloasso {
             'callback' => [$this,'goueg_set_cotisations'],
             'permission_callback' => '__return_true'
         ]);
+
+        register_rest_route('goueg-helloasso/v1', '/user_email', [
+            'methods' => ['POST'] ,
+            'callback' => [$this,'goueg_user_email'],
+            'permission_callback' => '__return_true'
+        ]);
+    }
+    /**
+     * On regarde si l'email du nouvel adhérent existe déjà dans les comptes..
+     */
+    public function goueg_user_email( WP_REST_REQUEST $request ){
+        $datas = $request->get_params();
+        $retour = email_exists($datas['email']);
+        return rest_ensure_response(['email' => $retour]);
     }
 
     public function goueg_set_datas( WP_REST_REQUEST $request ){
@@ -54,10 +68,11 @@ class rest_route_helloasso {
         $datas = $request->get_params();
         $date_de_naissance = $datas['date'];
         $tarifs = self::test( $date_de_naissance );
+
         return rest_ensure_response($tarifs);
     }
 
-    public function test( $date_de_naissance = '' ):array {
+    public function test( $date_de_naissance = '1970-09-03' ):array {
 
         //$date_de_naissance = '1970-09-03';
 

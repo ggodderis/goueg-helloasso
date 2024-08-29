@@ -1,9 +1,37 @@
 import { React, useState, useEffect } from 'react';
 
 const Licence = (props) => {
+/**
+ * Récupération en provenance de App.js
+ * de @param selection []
+ */
+    const {nav,setNav,selection,setSelection} = props;
+/**
+ * @param selectlicence [''] contient la selection faite pour les licences
+ * afin de savoir si c'est ffme ou ffr
+ */
+    const [selectlicence,setSelectlicence] = useState([]);
+/** 
+ * POUR LA NAVIGATION
+ * On regarde si le label Formulaire existe dans nav
+ * si il n'existe pas on l'ajoute
+ */
+function trouve( name ){
+    return nav.find( (nav) => nav.label === name );
+}
 
-    const {selection,setSelection} = props;
+useEffect( () => {
 
+    if( trouve('Licence') === undefined ){
+        setNav([...nav,
+            { to: '/licence', label: 'Licence'}
+        ]);
+    }
+}, []);
+
+/**
+ * Mise à jour de selection [] dans App.js
+ */
     const handelCheckbox = (event) => {
 
         let {name} = event.target;
@@ -35,31 +63,57 @@ const Licence = (props) => {
         setSelection(newselection);
         
     }
+/**
+ * 
+ */
 
     useEffect( () => {
+        /**
+         * On stock les informations de selection pour 
+         * savoir quelle licence proposer...
+         */
+        let el = [];
 
-    //     if( selection.indexOf('ESCA') > -1 ){
-    //         console.log('Licence', 'FFME');
-    //         //return false;
-    //     }
-    //     else{
-    //         if( selection.indexOf('ALPI') > -1 || selection.indexOf('SKIR') > -1){
-    //             console.log('Licence', 'choix de niveau Alpinisme ou rando');
-    //         }
-    //         else if( selection.indexOf('VF') > -1 
-    //                     || selection.indexOf('CA') > -1 
-    //                     || selection.indexOf('VTT') > -1 
-    //                     || selection.indexOf('SKIA') > -1 
-    //                     && !suppd ){
-    //             console.log('Licence FFR', 'IMPN', 'IMPNJ', 'IMPNF');
-    //         }else {
-    //             console.log('Licence FFR', 'SIMPLE');
-    //         }
-    //     }
-
-         console.log( 'useEffect', selection );
-        
+        selection.forEach(element => {
+            if( element.checked && !element.labelchecked ){
+                el.push(element.name);
+            }
+            if( element.checked && element.labelchecked ){
+                el.push(element.labelname);
+            }
+        });
+        setSelectlicence(el);
+ 
     },[selection]);
+
+/**
+ * Choix de la licence selon les activitées et le niveau choisi
+ */
+    useEffect( () => {
+
+        if( selectlicence.includes('ESCA') ||
+            selectlicence.includes('ALPI_SUP') ||
+            selectlicence.includes('SKIR_SUP') ){
+
+            console.log('FFME');
+
+        }else{
+            if( selectlicence.includes('ALPI') ||
+                selectlicence.includes('SKIR') ||
+                selectlicence.includes('VTT') ||
+                selectlicence.includes('VF') ||
+                selectlicence.includes('CA') ||
+                selectlicence.includes('SKIA') ){
+
+                    console.log('FFR speciale');
+
+                }else{
+
+                    console.log('FFR normale');
+                }
+        }
+
+    } ,[selectlicence])
 
     return(
         <>

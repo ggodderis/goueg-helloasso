@@ -4977,6 +4977,10 @@ __webpack_require__.r(__webpack_exports__);
 
 const App = () => {
   const adherent = the_ajax_script.infosUser;
+  /**
+   * @param selection []
+   * Contient la liste des différents
+   */
   const [selection, setSelection] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
     descriptif: 'Randonnée pédestre',
     name: 'RP',
@@ -5022,17 +5026,14 @@ const App = () => {
     labelchecked: false,
     show: false
   }]);
-  const [cotisation, setCotisation] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  // const [cotisation,setCotisation] = useState('');
   // const [liste,handelFetch] = useFetch();
   const [datas, user, metadata, handelDatas] = (0,_hooks_useDatas__WEBPACK_IMPORTED_MODULE_8__["default"])();
   const [nav, setNav] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
     to: '/',
     label: 'Home'
   }]);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    console.log('from useDatas', datas);
-    // handelDatas('je modifie metadata');
-  }, [datas]);
+
   /**
    * Si c'est une connection direct d'un déjà adhérent
    */
@@ -5058,7 +5059,9 @@ const App = () => {
     path: "/formulaire",
     element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Form__WEBPACK_IMPORTED_MODULE_3__["default"], {
       nav: nav,
-      setNav: setNav
+      setNav: setNav,
+      user: user,
+      handelDatas: handelDatas
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     exact: true,
@@ -5074,6 +5077,8 @@ const App = () => {
     exact: true,
     path: "/licence",
     element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Licence__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      nav: nav,
+      setNav: setNav,
       selection: selection,
       setSelection: setSelection
     })
@@ -5107,16 +5112,11 @@ const Header = props => {
   const {
     nav
   } = props;
-  // console.log( 'header', nav );
-
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("nav", null, nav.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
     key: i,
     to: item.to,
     className: "link_chemin"
-  }, item.label)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
-    key: "5",
-    to: "/licence"
-  }, "Licence")));
+  }, item.label))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Header);
 
@@ -5139,11 +5139,11 @@ const useCotisations = () => {
   const [liste, setListe] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_cotisations";
   const data = new FormData();
-  //data.append('nonce', the_ajax_script.nonce );
+  data.append('nonce', the_ajax_script.nonce);
   //data.append('metadata', JSON.stringify(metas) );
 
-  function handelCotisation(date) {
-    data.append('date', date);
+  function handelCotisation(dateBirthday) {
+    data.append('date', dateBirthday);
     fetch(ROOT_URL_HELLOASSO, {
       method: 'POST',
       body: data,
@@ -5151,7 +5151,8 @@ const useCotisations = () => {
         'X-WP-Nonce': the_ajax_script.rootNonce
       }
     }).then(res => res.json()).then(json => {
-      setListe(json);
+      console.log(json);
+      setListe(json.club);
     }).catch(error => {
       console.log(error);
     });
@@ -5235,6 +5236,46 @@ const useDatas = () => {
 
 /***/ }),
 
+/***/ "./src/hooks/useEmail.js":
+/*!*******************************!*\
+  !*** ./src/hooks/useEmail.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+const useEmail = () => {
+  const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/user_email";
+  const [isexist, setIsexist] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const data = new FormData();
+  //data.append('nonce', the_ajax_script.nonce );
+  //data.append('metadata', JSON.stringify(metas) );
+
+  function handelUserEmail(userEmail = 'test@test.com') {
+    data.append('email', userEmail);
+    fetch(ROOT_URL_HELLOASSO, {
+      method: 'POST',
+      body: data,
+      headers: {
+        'X-WP-Nonce': the_ajax_script.rootNonce
+      }
+    }).then(res => res.json()).then(json => {
+      setIsexist(json.email);
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+  return [isexist, handelUserEmail];
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useEmail);
+
+/***/ }),
+
 /***/ "./src/hooks/useFetch.js":
 /*!*******************************!*\
   !*** ./src/hooks/useFetch.js ***!
@@ -5286,7 +5327,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _hooks_useCotisations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hooks/useCotisations */ "./src/hooks/useCotisations.js");
+
 
 
 
@@ -5300,7 +5343,8 @@ const Cotisation = props => {
     metadata,
     handelDatas
   } = props;
-  console.log('Cotisation', liste);
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
+  console.log('cotisation', liste);
 
   /** 
    * POUR LA NAVIGATION
@@ -5317,7 +5361,7 @@ const Cotisation = props => {
         label: 'Cotisation'
       }]);
     }
-    handelCotisation(user.dateOfBirth);
+    handelCotisation(user?.dateOfBirth);
   }, []);
   function handelClickCotisation(event) {
     const {
@@ -5340,14 +5384,12 @@ const Cotisation = props => {
     //console.log( 'validation', name, value, 'find', toto.tarif, toto.titre );
     handelDatas('cotisation', toto);
     // setCotisation(value);
-    // setIsbutton(true);
+    setIsbutton(true);
   }
   function handelClickValidation(event) {
     console.log('validation', event.target, liste);
-    //handelDatas('cotisation',)
+    navigate('/licence');
   }
-
-  //checked={ cotisation === obj.titre }
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, Object.entries(liste).map(([key, obj]) =>
   // {"key":{id:1,titre:"ddk"}}
   (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
@@ -5401,16 +5443,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _hooks_useEmail__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hooks/useEmail */ "./src/hooks/useEmail.js");
+
 
 
 
 const Form = props => {
   const {
     nav,
-    setNav
+    setNav,
+    user,
+    handelDatas
   } = props;
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useNavigate)();
+  const [isexist, handelUserEmail] = (0,_hooks_useEmail__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
 
   /**
    * On regarde si le label Formulaire existe dans nav
@@ -5427,27 +5474,38 @@ const Form = props => {
       }]);
     }
   }, []);
+  /** */
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (isexist === false) {
+      navigate('/cotisation');
+    } else {
+      console.log('Adhérent déjà présent !!!!');
+    }
+  }, [isexist]);
   const handelSubmit = event => {
     event.preventDefault();
-    console.log(event);
-    navigate('/cotisation');
+    let champs = new FormData(event.target);
+    let adherent = Object.fromEntries(champs);
+    handelUserEmail(adherent.email);
+    handelDatas('adherent', adherent);
   };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
     onSubmit: handelSubmit,
     className: "form_inscription"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Formulaire d'inscription"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Formulaire d'adh\xE9sion au club"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "label_ligne"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, "Votre nom:", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "text",
     name: "lastName",
     id: "lastName",
-    defaultValue: "",
+    defaultValue: user.lastName,
     required: true
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, "Votre prenom:", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "text",
     name: "firstName",
     id: "firstName",
-    defaultValue: "",
+    defaultValue: user.firstName,
     required: true
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "label_ligne"
@@ -5455,29 +5513,32 @@ const Form = props => {
     type: "email",
     name: "email",
     id: "email",
-    defaultValue: "",
+    defaultValue: user.email,
     required: true
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, "Votre T\xE9l\xE9phone:", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "tel",
     name: "billing_phone",
     id: "billing_phone",
-    defaultValue: "",
+    defaultValue: user.billing_phone,
     required: true
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "label_ligne"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, "Votre genre:", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "radio",
     value: "f",
-    name: "gda_genre"
+    name: "gda_genre",
+    defaultChecked: user.gda_genre === 'f',
+    required: true
   }), "Femme"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "radio",
     value: "h",
-    name: "gda_genre"
+    name: "gda_genre",
+    defaultChecked: user.gda_genre === 'h'
   }), "Homme"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, "Votre date de naissance:", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "date",
     name: "dateOfBirth",
     id: "dateOfBirth",
-    defaultValue: "",
+    defaultValue: user.dateOfBirth,
     required: true
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "label_adresse"
@@ -5485,7 +5546,7 @@ const Form = props => {
     type: "text",
     name: "address",
     id: "address",
-    defaultValue: "",
+    defaultValue: user.address,
     required: true
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "label_ligne"
@@ -5493,13 +5554,13 @@ const Form = props => {
     type: "text",
     name: "city",
     id: "city",
-    defaultValue: "",
+    defaultValue: user.city,
     required: true
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, "Votre code postal:", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "text",
     name: "zipCode",
     id: "zipCode",
-    defaultValue: "",
+    defaultValue: user.zipCode,
     required: true
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h3", null, "Personne \xE0 pr\xE9venir en cas de probl\xE8me:"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "label_ligne"
@@ -5507,13 +5568,13 @@ const Form = props => {
     type: "text",
     name: "gda_personne",
     id: "gda_personne",
-    defaultValue: "marnie godderis",
+    defaultValue: user.gda_personne,
     required: true
   })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, "T\xE9l\xE9phone de la personne:", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "tel",
     name: "gda_tel_personne",
     id: "gda_tel_personne",
-    defaultValue: "0660251254",
+    defaultValue: user.gda_tel_personne,
     required: true
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     type: "submit"
@@ -5588,10 +5649,41 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const Licence = props => {
+  /**
+   * Récupération en provenance de App.js
+   * de @param selection []
+   */
   const {
+    nav,
+    setNav,
     selection,
     setSelection
   } = props;
+  /**
+   * @param selectlicence [''] contient la selection faite pour les licences
+   * afin de savoir si c'est ffme ou ffr
+   */
+  const [selectlicence, setSelectlicence] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  /** 
+   * POUR LA NAVIGATION
+   * On regarde si le label Formulaire existe dans nav
+   * si il n'existe pas on l'ajoute
+   */
+  function trouve(name) {
+    return nav.find(nav => nav.label === name);
+  }
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (trouve('Licence') === undefined) {
+      setNav([...nav, {
+        to: '/licence',
+        label: 'Licence'
+      }]);
+    }
+  }, []);
+
+  /**
+   * Mise à jour de selection [] dans App.js
+   */
   const handelCheckbox = event => {
     let {
       name
@@ -5619,28 +5711,41 @@ const Licence = props => {
     });
     setSelection(newselection);
   };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    //     if( selection.indexOf('ESCA') > -1 ){
-    //         console.log('Licence', 'FFME');
-    //         //return false;
-    //     }
-    //     else{
-    //         if( selection.indexOf('ALPI') > -1 || selection.indexOf('SKIR') > -1){
-    //             console.log('Licence', 'choix de niveau Alpinisme ou rando');
-    //         }
-    //         else if( selection.indexOf('VF') > -1 
-    //                     || selection.indexOf('CA') > -1 
-    //                     || selection.indexOf('VTT') > -1 
-    //                     || selection.indexOf('SKIA') > -1 
-    //                     && !suppd ){
-    //             console.log('Licence FFR', 'IMPN', 'IMPNJ', 'IMPNF');
-    //         }else {
-    //             console.log('Licence FFR', 'SIMPLE');
-    //         }
-    //     }
+  /**
+   * 
+   */
 
-    console.log('useEffect', selection);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    /**
+     * On stock les informations de selection pour 
+     * savoir quelle licence proposer...
+     */
+    let el = [];
+    selection.forEach(element => {
+      if (element.checked && !element.labelchecked) {
+        el.push(element.name);
+      }
+      if (element.checked && element.labelchecked) {
+        el.push(element.labelname);
+      }
+    });
+    setSelectlicence(el);
   }, [selection]);
+
+  /**
+   * Choix de la licence selon les activitées et le niveau choisi
+   */
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (selectlicence.includes('ESCA') || selectlicence.includes('ALPI_SUP') || selectlicence.includes('SKIR_SUP')) {
+      console.log('FFME');
+    } else {
+      if (selectlicence.includes('ALPI') || selectlicence.includes('SKIR') || selectlicence.includes('VTT') || selectlicence.includes('VF') || selectlicence.includes('CA') || selectlicence.includes('SKIA')) {
+        console.log('FFR speciale');
+      } else {
+        console.log('FFR normale');
+      }
+    }
+  }, [selectlicence]);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Licences / Assurances"), selection.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "ligne_licence"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {

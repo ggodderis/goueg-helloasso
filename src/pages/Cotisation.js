@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-
+import { useNavigate } from "react-router-dom";
 import useCotisations from '../hooks/useCotisations';
 
 const Cotisation = (props) => {
@@ -7,10 +7,10 @@ const Cotisation = (props) => {
     const [liste,handelCotisation] = useCotisations();
     const [isbutton,setIsbutton] = useState(false);
     const {nav,setNav,user,metadata,handelDatas} = props;
+    const navigate = useNavigate();
 
-
-    console.log( 'Cotisation', liste );
- 
+    console.log('cotisation',liste);
+    
 
 /** 
  * POUR LA NAVIGATION
@@ -29,7 +29,7 @@ const Cotisation = (props) => {
             ]);
         }
 
-        handelCotisation(user.dateOfBirth);
+        handelCotisation( user?.dateOfBirth );
 
     }, []);
     
@@ -54,17 +54,17 @@ const Cotisation = (props) => {
         //console.log( 'validation', name, value, 'find', toto.tarif, toto.titre );
         handelDatas('cotisation',toto);
         // setCotisation(value);
-        // setIsbutton(true);
+        setIsbutton(true);
     }
 
     function handelClickValidation(event){
         console.log('validation', event.target, liste );
-        //handelDatas('cotisation',)
+        navigate('/licence');
     }
 
-//checked={ cotisation === obj.titre }
     return(
        <div>
+
         {
         Object.entries(liste).map( ([key,obj]) => (
                 // {"key":{id:1,titre:"ddk"}}
@@ -79,7 +79,6 @@ const Cotisation = (props) => {
                 )
             )
         }
-        
         {
             isbutton && <button type="button" id="valider" onClick={ handelClickValidation }>valider</button>
         }

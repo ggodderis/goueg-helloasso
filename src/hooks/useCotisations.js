@@ -6,12 +6,12 @@ const useCotisations = () => {
     const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_cotisations";
     
     const data = new FormData();
-        //data.append('nonce', the_ajax_script.nonce );
+        data.append('nonce', the_ajax_script.nonce );
         //data.append('metadata', JSON.stringify(metas) );
     
-    function handelCotisation ( date ) {
+    function handelCotisation ( dateBirthday ) {
 
-        data.append('date', date );
+        data.append('date', dateBirthday );
 
         fetch( 
             ROOT_URL_HELLOASSO ,
@@ -24,7 +24,8 @@ const useCotisations = () => {
             })
             .then( res => res.json()  )
             .then( json => { 
-                setListe( json );
+                console.log( json );
+                setListe( json.club );
             } )
             .catch( error => { console.log(error) } )
 
