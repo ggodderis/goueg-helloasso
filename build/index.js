@@ -4971,15 +4971,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+/**
+ * Components
+ */
+
+/**
+ * Hooks
+ */
 
 
-
+/**
+ * CSS
+ */
 
 const App = () => {
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_10__.useLocation)();
   const adherent = the_ajax_script.infosUser;
+  const [nouveau, setNouveau] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const [datas, user, liste, metadata, handelDatas] = (0,_hooks_useDatas__WEBPACK_IMPORTED_MODULE_8__["default"])();
   /**
    * @param selection []
-   * Contient la liste des différents
+   * Contient la liste des activités pour les licences
+   * contient également les selections faites par l'adhérent
    */
   const [selection, setSelection] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
     descriptif: 'Randonnée pédestre',
@@ -5026,24 +5039,24 @@ const App = () => {
     labelchecked: false,
     show: false
   }]);
-  // const [cotisation,setCotisation] = useState('');
-  // const [liste,handelFetch] = useFetch();
-  const [datas, user, metadata, handelDatas] = (0,_hooks_useDatas__WEBPACK_IMPORTED_MODULE_8__["default"])();
   const [nav, setNav] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
     to: '/',
     label: 'Home'
   }]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    window.scrollTo({
+      top: 50,
+      behavior: 'smooth'
+    });
+  }, [location]);
 
   /**
    * Si c'est une connection direct d'un déjà adhérent
    */
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (adherent.firstName) {
-      //setUser(adherent);
+      setNouveau('adherent');
       handelDatas('adherent', adherent);
-      // setDatas({...datas,
-      //     totalAmount : 666,
-      //     payer: adherent });
     }
   }, []);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Header__WEBPACK_IMPORTED_MODULE_6__["default"], {
@@ -5052,12 +5065,14 @@ const App = () => {
     exact: true,
     path: "/",
     element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Home__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      nouveau: nouveau,
       user: user
     })
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_10__.Route, {
     exact: true,
     path: "/formulaire",
     element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Form__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      setNouveau: setNouveau,
       nav: nav,
       setNav: setNav,
       user: user,
@@ -5069,6 +5084,7 @@ const App = () => {
     element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Cotisation__WEBPACK_IMPORTED_MODULE_5__["default"], {
       nav: nav,
       setNav: setNav,
+      liste: liste,
       user: user,
       metadata: metadata,
       handelDatas: handelDatas
@@ -5077,7 +5093,10 @@ const App = () => {
     exact: true,
     path: "/licence",
     element: (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_pages_Licence__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      datas: datas,
+      handelDatas: handelDatas,
       nav: nav,
+      liste: liste,
       setNav: setNav,
       selection: selection,
       setSelection: setSelection
@@ -5112,6 +5131,9 @@ const Header = props => {
   const {
     nav
   } = props;
+
+  // window.scrollTo({ top: 50, behavior: 'smooth' });
+
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("nav", null, nav.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
     key: i,
     to: item.to,
@@ -5119,6 +5141,28 @@ const Header = props => {
   }, item.label))));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Header);
+
+/***/ }),
+
+/***/ "./src/components/Total.js":
+/*!*********************************!*\
+  !*** ./src/components/Total.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+
+const Total = props => {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "hello_total"
+  });
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Total);
 
 /***/ }),
 
@@ -5151,8 +5195,8 @@ const useCotisations = () => {
         'X-WP-Nonce': the_ajax_script.rootNonce
       }
     }).then(res => res.json()).then(json => {
-      console.log(json);
-      setListe(json.club);
+      //console.log( json );
+      setListe(json);
     }).catch(error => {
       console.log(error);
     });
@@ -5175,11 +5219,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _useCotisations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./useCotisations */ "./src/hooks/useCotisations.js");
 /**
  * Hook pour stocker les informations au format hello asso
  */
 
+
 const useDatas = () => {
+  const [liste, handelCotisation] = (0,_useCotisations__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  const [payer, setPayer] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
   const [datas, setDatas] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     totalAmount: '',
     initialAmount: '',
@@ -5194,10 +5242,34 @@ const useDatas = () => {
       cotisation: '',
       tarif_cotisation: '',
       licence: '',
+      type_licence: '',
       tarif_licence: '',
+      option_ffme: {},
       famille: {}
     }
   });
+
+  /**
+   * On surveille la mise à jour des information de l'adhérent
+   * et on l'injecte dans datas.payer:{}
+   * à chaque mise à jour de payer on appel handelCotisation
+   * pour avoir les bonnes cotisations et licences selon la date de naissance
+   */
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (payer.dateOfBirth != undefined) {
+      console.log(payer);
+      handelCotisation(payer.dateOfBirth);
+      setDatas({
+        ...datas,
+        payer: payer
+      });
+    }
+  }, [payer]);
+  /** */
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    console.log(datas.metadata);
+  }, [datas]);
 
   /**
    * 
@@ -5209,10 +5281,8 @@ const useDatas = () => {
     //console.log( event[0] , event[1].firstName );
     switch (event[0]) {
       case 'adherent':
-        setDatas({
-          ...datas,
-          payer: event[1]
-        });
+        //setDatas({...datas, payer: event[1] });
+        setPayer(event[1]);
         break;
       case 'cotisation':
         console.log('cotisation', event[1].titre, event[1].tarif);
@@ -5226,11 +5296,23 @@ const useDatas = () => {
         });
         //setDatas({...datas, payer: event[1] });
         break;
+      case 'licence':
+        console.log('licence', event[1].titre, event[1]);
+        setDatas({
+          ...datas,
+          metadata: {
+            ...datas.metadata,
+            type_licence: event[1].titre,
+            tarif_licence: event[1].tarif
+          }
+        });
+        //setDatas({...datas, payer: event[1] });
+        break;
     }
   };
   const user = datas.payer;
   const metadata = datas.metadata;
-  return [datas, user, metadata, handelDatas];
+  return [datas, user, liste, metadata, handelDatas];
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useDatas);
 
@@ -5328,23 +5410,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _hooks_useCotisations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hooks/useCotisations */ "./src/hooks/useCotisations.js");
+/* harmony import */ var _components_Total__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Total */ "./src/components/Total.js");
 
 
 
 
 const Cotisation = props => {
-  const [liste, handelCotisation] = (0,_hooks_useCotisations__WEBPACK_IMPORTED_MODULE_1__["default"])();
-  const [isbutton, setIsbutton] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const {
     nav,
     setNav,
     user,
+    liste,
     metadata,
     handelDatas
   } = props;
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
-  console.log('cotisation', liste);
+  const {
+    club
+  } = liste;
+  //console.log('cotisation',club,user);
 
   /** 
    * POUR LA NAVIGATION
@@ -5361,36 +5445,27 @@ const Cotisation = props => {
         label: 'Cotisation'
       }]);
     }
-    handelCotisation(user?.dateOfBirth);
   }, []);
+  /** */
+
   function handelClickCotisation(event) {
     const {
       name,
       value
     } = event.target;
-    const toto = Object.entries(liste).reduce((newObject, [key, obj]) => {
+    const el = Object.entries(club).reduce((newObject, [key, obj]) => {
       if (obj.titre === value) {
         newObject = obj;
       }
       return newObject;
     }, {});
-    // const toto = Object.entries(liste).filter( ([key,obj]) => { 
-    //     if( obj.titre === value ){
-    //         return obj;
-    //     }
-    // } )
-    console.log(toto);
-
-    //console.log( 'validation', name, value, 'find', toto.tarif, toto.titre );
-    handelDatas('cotisation', toto);
-    // setCotisation(value);
-    setIsbutton(true);
+    handelDatas('cotisation', el);
   }
   function handelClickValidation(event) {
-    console.log('validation', event.target, liste);
+    console.log('validation', event.target, club);
     navigate('/licence');
   }
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, Object.entries(liste).map(([key, obj]) =>
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, club ? Object.entries(club).map(([key, obj]) =>
   // {"key":{id:1,titre:"ddk"}}
   (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     className: "label_radio",
@@ -5401,11 +5476,12 @@ const Cotisation = props => {
     name: "type_cotisation",
     value: obj.titre,
     checked: metadata.cotisation === obj.titre
-  }), obj.descriptif, " - ", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("b", null, obj.tarif / 100, "\u20AC"))), isbutton && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+  }), obj.descriptif, " - ", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("b", null, obj.tarif / 100, "\u20AC"))) : '', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Total__WEBPACK_IMPORTED_MODULE_1__["default"], null), metadata.cotisation && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     type: "button",
     id: "valider",
+    className: "bt_bleu",
     onClick: handelClickValidation
-  }, "valider"));
+  }, "\xC9tape suivante"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Cotisation);
 
@@ -5454,7 +5530,8 @@ const Form = props => {
     nav,
     setNav,
     user,
-    handelDatas
+    handelDatas,
+    setNouveau
   } = props;
   const [isexist, handelUserEmail] = (0,_hooks_useEmail__WEBPACK_IMPORTED_MODULE_1__["default"])();
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
@@ -5473,14 +5550,17 @@ const Form = props => {
         label: 'Formulaire'
       }]);
     }
+    setNouveau('nouveau');
   }, []);
   /** */
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (isexist === false) {
       navigate('/cotisation');
+    } else if (isexist === '') {
+      console.log('début …');
     } else {
-      console.log('Adhérent déjà présent !!!!');
+      alert('Il existe déjà un compte avec cet email...');
     }
   }, [isexist]);
   const handelSubmit = event => {
@@ -5577,7 +5657,8 @@ const Form = props => {
     defaultValue: user.gda_tel_personne,
     required: true
   }))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    type: "submit"
+    type: "submit",
+    className: "bt_bleu"
   }, "Valider"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Form);
@@ -5600,20 +5681,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const Home = ({
-  user
-}) => {
-  // useEffect( () => {
-  //     if( user.firstName ){
-  //         handelFetch();
-  //     }
-  // },[user]);
-
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Adh\xE9sion au club"), user.firstName ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Bonjour, ", user.firstName, " ", user.lastName), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+const Home = props => {
+  const {
+    user,
+    nouveau
+  } = props;
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Adh\xE9sion au club"), user.firstName ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, "Bonjour, ", user.firstName, " ", user.lastName), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), nouveau == 'adherent' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
     key: "1",
     to: "/cotisation",
     className: "bt_bleu"
-  }, "Renouveler mon adh\xE9sion"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+  }, "Commencer mon adh\xE9sion") : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link, {
+    key: "1",
+    to: "/formulaire",
+    className: "bt_bleu"
+  }, "Commencer mon adh\xE9sion"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     href: "/wp-login.php?action=logout&_wpnonce=" + the_ajax_script.logoutNonce + "&redirect_to=page-d-exemple"
   }, "Me connecter avec un autre compte")) : (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "content_start"
@@ -5646,6 +5727,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Total__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Total */ "./src/components/Total.js");
+
 
 
 const Licence = props => {
@@ -5656,14 +5739,24 @@ const Licence = props => {
   const {
     nav,
     setNav,
+    liste,
+    datas,
+    handelDatas,
     selection,
     setSelection
   } = props;
   /**
-   * @param selectlicence [''] contient la selection faite pour les licences
+   * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
+   * contient la selection faite pour les licences
    * afin de savoir si c'est ffme ou ffr
    */
   const [selectlicence, setSelectlicence] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+
+  /**
+   *  @param type = 'famille ou 'seul'
+   */
+  const [type, setType] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+
   /** 
    * POUR LA NAVIGATION
    * On regarde si le label Formulaire existe dans nav
@@ -5699,6 +5792,9 @@ const Licence = props => {
     });
     setSelection(newselection);
   };
+  /**
+   * Mise à jour du sous chois > à PD
+   */
   const handelNiveau = event => {
     let {
       name
@@ -5715,6 +5811,13 @@ const Licence = props => {
    * 
    */
 
+  /**
+   * Choix du type de licence famille ou seul
+   */
+  const handelFamille = event => {
+    console.log(event.target.value);
+    setType(event.target.value);
+  };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     /**
      * On stock les informations de selection pour 
@@ -5737,16 +5840,53 @@ const Licence = props => {
    */
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (selectlicence.includes('ESCA') || selectlicence.includes('ALPI_SUP') || selectlicence.includes('SKIR_SUP')) {
-      console.log('FFME');
+      const {
+        licences
+      } = liste.ffme;
+      if (type == 'famille') {
+        Object.entries(licences).map(([item, obj]) => {
+          if (obj.titre == 'FF2') {
+            handelDatas('licence', obj);
+          }
+        });
+      } else {
+        Object.entries(licences).map(([item, obj]) => {
+          if (obj.titre == 'FJ') {
+            handelDatas('licence', obj);
+          } else {
+            if (obj.titre == 'FA') {
+              handelDatas('licence', obj);
+            }
+          }
+        });
+      }
     } else {
       if (selectlicence.includes('ALPI') || selectlicence.includes('SKIR') || selectlicence.includes('VTT') || selectlicence.includes('VF') || selectlicence.includes('CA') || selectlicence.includes('SKIA')) {
-        console.log('FFR speciale');
+        if (type == 'famille') {
+          console.log('FFR FMPN', liste.ffr.licences);
+        } else {
+          console.log('FFR IMPN ou IMPNJ ', liste.ffr.licences);
+        }
       } else {
-        console.log('FFR normale');
+        if (type == 'famille') {
+          console.log('FFR FRA', liste.ffr.licences);
+        } else {
+          console.log('FFR IRA ou IMPNJ ', liste.ffr.licences);
+        }
       }
     }
-  }, [selectlicence]);
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Licences / Assurances"), selection.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }, [selectlicence, type]);
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Licences / Assurances"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "Prenez-vous une licence pour:"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "radio",
+    name: "licence_type",
+    value: "seul",
+    onChange: handelFamille
+  }), " Moi seulement"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "radio",
+    name: "licence_type",
+    value: "famille",
+    onChange: handelFamille
+  }), " Ma famille"), type !== '' ? selection.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "ligne_licence"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
     key: i
@@ -5765,7 +5905,7 @@ const Licence = props => {
     name: item.labelname,
     checked: item.labelchecked,
     onChange: handelNiveau
-  }), " oui")) : '')));
+  }), " oui")) : '')) : '', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Total__WEBPACK_IMPORTED_MODULE_1__["default"], null));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Licence);
 

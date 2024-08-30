@@ -1,16 +1,25 @@
 import { React, useState, useEffect } from 'react';
+import Total from '../components/Total';
 
 const Licence = (props) => {
+    
 /**
  * Récupération en provenance de App.js
  * de @param selection []
  */
-    const {nav,setNav,selection,setSelection} = props;
+    const {nav,setNav,liste,datas,handelDatas,selection,setSelection} = props;
 /**
- * @param selectlicence [''] contient la selection faite pour les licences
+ * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
+ * contient la selection faite pour les licences
  * afin de savoir si c'est ffme ou ffr
  */
     const [selectlicence,setSelectlicence] = useState([]);
+
+/**
+ *  @param type = 'famille ou 'seul'
+ */
+    const [type,setType] = useState('');
+
 /** 
  * POUR LA NAVIGATION
  * On regarde si le label Formulaire existe dans nav
@@ -48,7 +57,9 @@ useEffect( () => {
 
         setSelection(newselection);
     }
-
+    /**
+     * Mise à jour du sous chois > à PD
+     */
     const handelNiveau = ( event ) => {
 
         let {name} = event.target;
@@ -66,6 +77,14 @@ useEffect( () => {
 /**
  * 
  */
+
+/**
+ * Choix du type de licence famille ou seul
+ */
+    const handelFamille = (event) => {
+        console.log(event.target.value);
+        setType(event.target.value);
+    }
 
     useEffect( () => {
         /**
@@ -94,8 +113,31 @@ useEffect( () => {
         if( selectlicence.includes('ESCA') ||
             selectlicence.includes('ALPI_SUP') ||
             selectlicence.includes('SKIR_SUP') ){
+            
+            const {licences} = liste.ffme;
 
-            console.log('FFME');
+            if( type == 'famille'){ 
+               
+                Object.entries(licences).map( ([item,obj]) => {
+                    
+                        if( obj.titre == 'FF2' ){
+                            handelDatas('licence',obj);
+                        }  
+                });
+
+            }else{
+
+                Object.entries(licences).map( ([item,obj]) => {
+                    
+                    if( obj.titre == 'FJ' ){
+                        handelDatas('licence',obj);
+                    }else{
+                        if( obj.titre == 'FA' ){
+                        handelDatas('licence',obj);
+                        }
+                    }
+                });
+            }
 
         }else{
             if( selectlicence.includes('ALPI') ||
@@ -105,41 +147,60 @@ useEffect( () => {
                 selectlicence.includes('CA') ||
                 selectlicence.includes('SKIA') ){
 
-                    console.log('FFR speciale');
+                    if( type == 'famille'){ 
+                        console.log('FFR FMPN', liste.ffr.licences );
+                    }else{ 
+                        console.log('FFR IMPN ou IMPNJ ', liste.ffr.licences );
+                    }
 
                 }else{
 
-                    console.log('FFR normale');
+                    if( type == 'famille'){ 
+                        console.log('FFR FRA', liste.ffr.licences );
+                    }else{ 
+                        console.log('FFR IRA ou IMPNJ ', liste.ffr.licences );
+                    }
+
                 }
         }
 
-    } ,[selectlicence])
+    } ,[selectlicence,type])
 
     return(
         <>
         <h1>Licences / Assurances</h1>
+        <h2>Prenez-vous une licence pour:</h2>
+        <label>
+            <input type="radio" name="licence_type" value="seul" onChange={handelFamille} /> Moi seulement
+        </label>
+        <label>
+            <input type="radio" name="licence_type" value="famille" onChange={handelFamille} /> Ma famille
+        </label>
         {
-            selection.map( (item,i) => 
-                (
-                <div className="ligne_licence">
-                <label key={i} >
-                    <input type="checkbox" name={item.name} id={item.name} checked={ item.checked } onChange={handelCheckbox} />
-                    {item.descriptif}
-                </label>
-                {
-                        item.show ? (
-                            <div className="sous_ligne_licence">
-                                {item.label}
-                                <span className="label_sous_ligne_licence">
-                                    <input type="checkbox" name={item.labelname} checked={item.labelchecked} onChange={handelNiveau} /> oui
-                                </span>
-                            </div>
-                       ):('')
-                    }
-                </div>
+            type !== '' ? (
+                selection.map( (item,i) => 
+                    (
+                    <div className="ligne_licence">
+                    <label key={i} >
+                        <input type="checkbox" name={item.name} id={item.name} checked={ item.checked } onChange={handelCheckbox} />
+                        {item.descriptif}
+                    </label>
+                    {
+                            item.show ? (
+                                <div className="sous_ligne_licence">
+                                    {item.label}
+                                    <span className="label_sous_ligne_licence">
+                                        <input type="checkbox" name={item.labelname} checked={item.labelchecked} onChange={handelNiveau} /> oui
+                                    </span>
+                                </div>
+                        ):('')
+                        }
+                    </div>
+                    )
                 )
-            )
+            ):('')
         }
+        <Total />
         </>
     )
 }

@@ -1,3 +1,6 @@
+#rootHelloAsso {
+    padding: 0 1rem;
+}
 /**
 * Header
 */
@@ -9,7 +12,7 @@
 * Formulaire
 */
 .form_inscription {
-    max-width: 700px;
+    max-width: 600px;
 }
 .label_ligne {
     display: grid;
@@ -82,4 +85,13 @@
 .label_sous_ligne_licence {
     display: flex;
     align-items: center;
+}
+
+/**
+* Total
+*/
+.hello_total {
+    width: 100%;
+    padding: 1rem 0.5rem;
+    background-color: #efefef;
 }

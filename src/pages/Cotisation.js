@@ -1,15 +1,14 @@
 import { React, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import useCotisations from '../hooks/useCotisations';
+import Total from '../components/Total';
 
 const Cotisation = (props) => {
-
-    const [liste,handelCotisation] = useCotisations();
-    const [isbutton,setIsbutton] = useState(false);
-    const {nav,setNav,user,metadata,handelDatas} = props;
+    
+    const {nav,setNav,user,liste,metadata,handelDatas} = props;
     const navigate = useNavigate();
 
-    console.log('cotisation',liste);
+    const {club} = liste;
+    //console.log('cotisation',club,user);
     
 
 /** 
@@ -29,58 +28,50 @@ const Cotisation = (props) => {
             ]);
         }
 
-        handelCotisation( user?.dateOfBirth );
-
     }, []);
-    
-
+/** */
 
     function handelClickCotisation(event){
 
         const {name,value} = event.target;
-        const toto = Object.entries(liste).reduce( (newObject,[key,obj]) => {
+
+        const el = Object.entries(club).reduce( (newObject,[key,obj]) => {
           if( obj.titre === value ) {
             newObject = obj;
           }
           return newObject;
         },{});
-        // const toto = Object.entries(liste).filter( ([key,obj]) => { 
-        //     if( obj.titre === value ){
-        //         return obj;
-        //     }
-        // } )
-        console.log( toto );
         
-        //console.log( 'validation', name, value, 'find', toto.tarif, toto.titre );
-        handelDatas('cotisation',toto);
-        // setCotisation(value);
-        setIsbutton(true);
+        handelDatas('cotisation',el);
+
     }
 
     function handelClickValidation(event){
-        console.log('validation', event.target, liste );
+        console.log('validation', event.target, club );
         navigate('/licence');
     }
 
     return(
        <div>
-
         {
-        Object.entries(liste).map( ([key,obj]) => (
-                // {"key":{id:1,titre:"ddk"}}
-                <label className="label_radio" key={key}>
-                    <input type="radio"
-                        onChange={ handelClickCotisation }
-                        name="type_cotisation" value={obj.titre}
-                        checked={ metadata.cotisation === obj.titre }
-                        />
-                        {obj.descriptif} - <b>{obj.tarif/100}€</b>
-                </label>  
+            club ? (
+            Object.entries(club).map( ([key,obj]) => (
+                    // {"key":{id:1,titre:"ddk"}}
+                    <label className="label_radio" key={key}>
+                        <input type="radio"
+                            onChange={ handelClickCotisation }
+                            name="type_cotisation" value={obj.titre}
+                            checked={ metadata.cotisation === obj.titre }
+                            />
+                            {obj.descriptif} - <b>{obj.tarif/100}€</b>
+                    </label>
+                    )
                 )
-            )
+            ):('')
         }
+        <Total />
         {
-            isbutton && <button type="button" id="valider" onClick={ handelClickValidation }>valider</button>
+            metadata.cotisation && <button type="button" id="valider" className='bt_bleu' onClick={ handelClickValidation }>Étape suivante</button>
         }
         </div>
     )

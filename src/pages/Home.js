@@ -1,13 +1,9 @@
 import { React, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Home = ({user}) => {
+const Home = (props) => {
 
-    // useEffect( () => {
-    //     if( user.firstName ){
-    //         handelFetch();
-    //     }
-    // },[user]);
+    const {user,nouveau} = props;
 
 
     return(
@@ -18,7 +14,13 @@ const Home = ({user}) => {
                 <>
                 <span>Bonjour, {user.firstName} {user.lastName}</span>
                 <br />
-                <Link key="1" to="/cotisation" className='bt_bleu'>Renouveler mon adhésion</Link>
+                {
+                    nouveau == 'adherent' ? (
+                        <Link key="1" to="/cotisation" className='bt_bleu'>Commencer mon adhésion</Link>
+                    ):(
+                        <Link key="1" to="/formulaire" className='bt_bleu'>Commencer mon adhésion</Link>
+                    )
+                }
                 <br />
                 <a href={"/wp-login.php?action=logout&_wpnonce="+the_ajax_script.logoutNonce+"&redirect_to=page-d-exemple"}>
                     Me connecter avec un autre compte

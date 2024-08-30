@@ -239,7 +239,9 @@ class rest_route_helloasso {
                 }else{
                     $element->tarif = $element->plein_tarif;
                 }
-                return $element->titre !== "IMPN";
+                if( $element->titre !== "IMPN" && $element->titre !== "IRA"){
+                    return $element;
+                }
                 //                   ↑
                 // Array value which you want to delete
             });

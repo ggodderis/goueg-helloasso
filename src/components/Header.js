@@ -5,6 +5,8 @@ const Header = (props) => {
 
     const {nav} = props;
 
+    // window.scrollTo({ top: 50, behavior: 'smooth' });
+
     return(
         <>
         <nav>

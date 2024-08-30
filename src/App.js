@@ -1,5 +1,5 @@
 import {React,useEffect,useState} from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 /**
  * Pages
@@ -9,19 +9,30 @@ import Licence from './pages/Licence';
 import Form from './pages/Form';
 import Errors from './pages/Errors';
 import Cotisation from './pages/Cotisation';
+/**
+ * Components
+ */
 import Header from './components/Header';
-
+/**
+ * Hooks
+ */
 import useFetch from './hooks/useFetch';
 import useDatas from './hooks/useDatas';
-
+/**
+ * CSS
+ */
 import './css/style_helloasso.css';
 
 const App = () => {
 
+    const location = useLocation();
     const adherent = the_ajax_script.infosUser;
+    const [nouveau,setNouveau] = useState('');
+    const [datas,user,liste,metadata,handelDatas] = useDatas();
     /**
      * @param selection []
-     * Contient la liste des différents
+     * Contient la liste des activités pour les licences
+     * contient également les selections faites par l'adhérent
      */
     const [selection,setSelection] = useState([
         {descriptif:'Randonnée pédestre', name: 'RP', checked: false },
@@ -35,24 +46,22 @@ const App = () => {
         {descriptif:'Ski de randonnée', name: 'SKIR', checked: false, label: 'Pratiquez vous le Ski de randonnée à un niveau supérieur à PD ?', labelname: 'SKIR_SUP',labelchecked: false, show: false }
 
     ]);
-    // const [cotisation,setCotisation] = useState('');
-    // const [liste,handelFetch] = useFetch();
-    const [datas,user,metadata,handelDatas] = useDatas();
 
     const [nav,setNav] = useState([
         { to: '/', label: 'Home'}
     ]);
+
+    useEffect( () => {
+        window.scrollTo({ top: 50, behavior: 'smooth' });
+    },[location]);
 
 /**
  * Si c'est une connection direct d'un déjà adhérent
  */
     useEffect( () => {
         if( adherent.firstName ){
-            //setUser(adherent);
+            setNouveau('adherent');
             handelDatas('adherent',adherent);
-            // setDatas({...datas,
-            //     totalAmount : 666,
-            //     payer: adherent });
         }
     },[]);
 
@@ -60,10 +69,10 @@ const App = () => {
         <>
         <Header nav={nav} />
             <Routes>
-                <Route exact path="/" element={ <Home user={user} /> } />
-                <Route exact path="/formulaire" element={ <Form nav={nav} setNav={setNav} user={user} handelDatas={handelDatas}/> } />
-                <Route exact path="/cotisation" element={ <Cotisation nav={nav} setNav={setNav} user={user} metadata={metadata} handelDatas={handelDatas} /> } />
-                <Route exact path="/licence" element={ <Licence nav={nav} setNav={setNav} selection={selection} setSelection={setSelection} /> } />
+                <Route exact path="/" element={ <Home nouveau={nouveau} user={user} /> } />
+                <Route exact path="/formulaire" element={ <Form setNouveau={setNouveau} nav={nav} setNav={setNav} user={user} handelDatas={handelDatas}/> } />
+                <Route exact path="/cotisation" element={ <Cotisation nav={nav} setNav={setNav} liste={liste} user={user} metadata={metadata} handelDatas={handelDatas} /> } />
+                <Route exact path="/licence" element={ <Licence datas={datas} handelDatas={handelDatas} nav={nav} liste={liste} setNav={setNav} selection={selection} setSelection={setSelection} /> } />
                 <Route exact path="*" element={ <Errors /> } />
             </Routes>
         </>

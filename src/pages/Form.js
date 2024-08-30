@@ -5,7 +5,7 @@ import useEmail from '../hooks/useEmail';
 
 const Form = (props) => {
 
-    const {nav,setNav,user,handelDatas} = props;
+    const {nav,setNav,user,handelDatas,setNouveau} = props;
     const [isexist,handelUserEmail] = useEmail();
     const navigate = useNavigate();
 
@@ -24,17 +24,22 @@ const Form = (props) => {
                 { to: '/formulaire', label: 'Formulaire'}
             ]);
         }
+        
+        setNouveau('nouveau');
 
     }, []);
 /** */
 
     useEffect( () => {
-
+         
         if( isexist === false ){
             navigate('/cotisation');
+        }else if (isexist === '') {
+            console.log('début …');
         }else{
-            console.log('Adhérent déjà présent !!!!');
+            alert('Il existe déjà un compte avec cet email...')
         }
+        
     },[isexist]);
 
     const handelSubmit = (event) => {
@@ -109,7 +114,7 @@ const Form = (props) => {
                 </label>
             </div>
 
-            <button type="submit">Valider</button>
+            <button type="submit" className='bt_bleu'>Valider</button>
 
         </form>
     )

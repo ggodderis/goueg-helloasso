@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const useCotisations = () => {
 
@@ -24,8 +24,8 @@ const useCotisations = () => {
             })
             .then( res => res.json()  )
             .then( json => { 
-                console.log( json );
-                setListe( json.club );
+                //console.log( json );
+                setListe( json );
             } )
             .catch( error => { console.log(error) } )
 
