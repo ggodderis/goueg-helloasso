@@ -1,24 +1,25 @@
 import { React, useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom"
 import Total from '../components/Total';
 
 const Licence = (props) => {
     
+    const navigate = useNavigate();
 /**
  * Récupération en provenance de App.js
  * de @param selection []
  */
     const {nav,setNav,liste,datas,handelDatas,selection,setSelection} = props;
+    const {checkbox,famille} = props.selection;
+    const {options} = liste.ffme;
 /**
  * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
  * contient la selection faite pour les licences
  * afin de savoir si c'est ffme ou ffr
  */
     const [selectlicence,setSelectlicence] = useState([]);
-
-/**
- *  @param type = 'famille ou 'seul'
- */
-    const [type,setType] = useState('');
+    
+    const [new_options,setNew_options] = useState(options);
 
 /** 
  * POUR LA NAVIGATION
@@ -44,34 +45,38 @@ useEffect( () => {
     const handelCheckbox = (event) => {
 
         let {name} = event.target;
-
-        let newselection = selection.map( (item,index) => {
+        //console.log( 'handelCheckbox',name );
+        
+        let newselection = checkbox.map( (item,index) => {
             if( item.name === name ){
                 item.checked = !item.checked;
-                if( item.name === 'SKIR' || item.name === 'ALPI'){
+                if( item.name == 'SKIR' || item.name == 'ALPI'){
                     item.show = !item.show;
+                    if( ! item.checked ){
+                        item.labelchecked = false;
+                    }
                 }
             }
             return item;
         })
 
-        setSelection(newselection);
+        setSelection({...selection, checkbox: newselection });
     }
     /**
-     * Mise à jour du sous chois > à PD
+     * Mise à jour du sous choix > à PD
      */
     const handelNiveau = ( event ) => {
 
         let {name} = event.target;
 
-        let newselection = selection.map( (item,index) => {
+        let newselection = checkbox.map( (item,index) => {
             if( item.labelname === name ){
                 item.labelchecked = !item.labelchecked;
             }
             return item;
         })
 
-        setSelection(newselection);
+        setSelection({...selection, checkbox: newselection });
         
     }
 /**
@@ -82,8 +87,8 @@ useEffect( () => {
  * Choix du type de licence famille ou seul
  */
     const handelFamille = (event) => {
-        console.log(event.target.value);
-        setType(event.target.value);
+        const {value} = event.target;
+        setSelection({...selection,famille:value});
     }
 
     useEffect( () => {
@@ -93,7 +98,7 @@ useEffect( () => {
          */
         let el = [];
 
-        selection.forEach(element => {
+        checkbox.forEach(element => {
             if( element.checked && !element.labelchecked ){
                 el.push(element.name);
             }
@@ -103,12 +108,43 @@ useEffect( () => {
         });
         setSelectlicence(el);
  
-    },[selection]);
+    },[checkbox]);
+/**
+ * Choix Options
+ */
+const handelOptions = (event) => {
+
+   let new_options = options.map( (item,i) => {
+
+            if (item.name === event.target.name){
+               item.checked =! item.checked; }
+             return item;
+            } );
+
+                    
+    setNew_options(new_options);
+}
+
+useEffect( () => {
+    let options_for_datas = new_options.filter( item => item.checked );
+    handelDatas('options',options_for_datas);
+},[new_options]);
 
 /**
  * Choix de la licence selon les activitées et le niveau choisi
  */
     useEffect( () => {
+     
+        /**
+         * si il n'y a pas de licence on vide le champs type_licence dans useDatas
+         * ça évite le bug d'affichage des options
+         */
+        if(selectlicence.length === 0 ){
+            handelDatas('licence','');
+        }
+        
+
+        if( selectlicence.length !==0 && famille !=="" )
 
         if( selectlicence.includes('ESCA') ||
             selectlicence.includes('ALPI_SUP') ||
@@ -116,11 +152,11 @@ useEffect( () => {
             
             const {licences} = liste.ffme;
 
-            if( type == 'famille'){ 
+            if( famille == 'famille'){ 
                
                 Object.entries(licences).map( ([item,obj]) => {
                     
-                        if( obj.titre == 'FF2' ){
+                        if( obj.titre == 'FFME_FF2' ){
                             handelDatas('licence',obj);
                         }  
                 });
@@ -129,10 +165,10 @@ useEffect( () => {
 
                 Object.entries(licences).map( ([item,obj]) => {
                     
-                    if( obj.titre == 'FJ' ){
+                    if( obj.titre == 'FFME_FJ' ){
                         handelDatas('licence',obj);
                     }else{
-                        if( obj.titre == 'FA' ){
+                        if( obj.titre == 'FFME_FA' ){
                         handelDatas('licence',obj);
                         }
                     }
@@ -140,6 +176,7 @@ useEffect( () => {
             }
 
         }else{
+    
             if( selectlicence.includes('ALPI') ||
                 selectlicence.includes('SKIR') ||
                 selectlicence.includes('VTT') ||
@@ -147,45 +184,86 @@ useEffect( () => {
                 selectlicence.includes('CA') ||
                 selectlicence.includes('SKIA') ){
 
-                    if( type == 'famille'){ 
-                        console.log('FFR FMPN', liste.ffr.licences );
-                    }else{ 
-                        console.log('FFR IMPN ou IMPNJ ', liste.ffr.licences );
-                    }
+                    const {licences} = liste.ffr;
+
+                    Object.entries(licences).map( ([item,obj]) => {
+                    
+                        if( famille == 'famille'){
+
+                            if( obj.titre == 'FFR_FMPN' ){
+                                handelDatas('licence',obj);
+                            } 
+                        }else{
+                            if( obj.titre == 'FFR_IMPN' || obj.titre == 'FFR_IMPNJ'){
+                                handelDatas('licence',obj);
+                            }
+                        }
+
+                    });
 
                 }else{
 
-                    if( type == 'famille'){ 
-                        console.log('FFR FRA', liste.ffr.licences );
-                    }else{ 
-                        console.log('FFR IRA ou IMPNJ ', liste.ffr.licences );
-                    }
+                    const {licences} = liste.ffr;
+
+                    Object.entries(licences).map( ([item,obj]) => {
+
+                        if( famille == 'famille'){
+
+                            if( obj.titre == 'FFR_FRA'){
+                                handelDatas('licence',obj);
+                            }
+                            
+                        }else{
+                            if( obj.titre == 'FFR_IRA' || obj.titre == 'FFR_IMPNJ'){
+                                handelDatas('licence',obj);
+                            }
+                        }
+
+                    })
 
                 }
         }
 
-    } ,[selectlicence,type])
+    } ,[selectlicence,famille])
+
+function handelClickPrecedente(event){
+        //console.log('validation', event.target, club );
+        nav.map( (item,i) => {
+            
+            if( item.label == 'Licence') {
+                let index = i-1;
+               navigate( nav[index].to );
+            }
+            
+        })
+    }
 
     return(
         <>
-        <h1>Licences / Assurances</h1>
-        <h2>Prenez-vous une licence pour:</h2>
-        <label>
-            <input type="radio" name="licence_type" value="seul" onChange={handelFamille} /> Moi seulement
-        </label>
-        <label>
-            <input type="radio" name="licence_type" value="famille" onChange={handelFamille} /> Ma famille
-        </label>
+        <h2>Licences / Assurances</h2>
+        <fieldset>
+            <legend>Prenez-vous une licence pour:</legend>
+            <div className="ligne_licence"><label>
+                <input type="radio" name="licence_type" value="seul" onChange={handelFamille} checked={famille === 'seul'} /> Vous seulement
+            </label></div>
+            <div className="ligne_licence"><label>
+                <input type="radio" name="licence_type" value="famille" onChange={handelFamille} checked={famille === 'famille'}/> Vous et votre famille
+            </label></div>
+        </fieldset>
         {
-            type !== '' ? (
-                selection.map( (item,i) => 
+            famille !== '' ? (
+            
+           <fieldset>
+                <legend>Cochez les activités que vous voulez pratiquer:</legend>
+                
+                {checkbox.map( (item,i) => 
                     (
                     <div className="ligne_licence">
                     <label key={i} >
                         <input type="checkbox" name={item.name} id={item.name} checked={ item.checked } onChange={handelCheckbox} />
                         {item.descriptif}
                     </label>
-                    {
+                        {
                             item.show ? (
                                 <div className="sous_ligne_licence">
                                     {item.label}
@@ -197,10 +275,41 @@ useEffect( () => {
                         }
                     </div>
                     )
-                )
+                    )}
+             </fieldset>   
             ):('')
+            
         }
-        <Total />
+       
+        {
+            
+            datas.metadata.type_licence === 'FFME_FA' || 
+            datas.metadata.type_licence === 'FFME_FJ' || 
+            datas.metadata.type_licence === 'FFME_FF2' ? (
+            
+            <fieldset>
+                <legend>Options supplémentaires (nom obligatoire)</legend>
+                {
+                new_options.map( (item,i) => (
+                    <div className="ligne_licence">
+                        <label key={item.id}>
+                            <input type="radio" name={item.name} id={item.name} checked={item.checked} value={item.titre} onClick={handelOptions} />
+                            {item.titre}&nbsp;<b>{item.plein_tarif/100}€</b>
+                        </label>
+                    </div>
+                ))
+                }
+            </fieldset>
+               
+             ):('')
+        
+        }
+        
+        <Total datas={datas}/>
+        <div className="navig_bottom">
+            <button type="button" className='bt_bleu_outline' onClick={handelClickPrecedente}>Étape précédente</button>
+            <button type="button" id="valider" className='bt_bleu' >Valider</button>
+        </div>
         </>
     )
 }

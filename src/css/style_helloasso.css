@@ -4,9 +4,19 @@
 /**
 * Header
 */
-.link_chemin {
-    display: inline-flex;
-    padding: 1rem;
+#rootHelloAsso > nav {
+    display: flex;
+    flex-direction: row;
+    margin: 0 0 2rem 0;
+}
+.link_chemin, .active {
+    display: flex;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+}
+.active {
+    color: var(--bleu-foncer) !important;
+    background-color: var(--orange-clair);
 }
 /**
 * Formulaire
@@ -86,12 +96,49 @@
     display: flex;
     align-items: center;
 }
+fieldset {
+    margin: 1rem 0;
+    padding: 1rem 0.5rem;
+    border: 1px solid #efefef;
+    background: none;
+}
+legend {
+    font-weight: bold;
+}
 
 /**
 * Total
 */
 .hello_total {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     width: 100%;
-    padding: 1rem 0.5rem;
+    margin: 2rem 0;
     background-color: #efefef;
+}
+.hello_total > span {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    text-align: right;
+    padding: 0.35rem 0.5rem;
+    font-size: 1rem;
+}
+.hello_total > span > b {
+    display: flex;
+    min-width: 90px;
+    justify-content: flex-end;
+}
+
+/**
+* Navigation bottom
+*/
+.navig_bottom {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+.navig_bottom > * {
+    margin: 0;
 }

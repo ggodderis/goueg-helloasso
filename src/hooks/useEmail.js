@@ -11,7 +11,7 @@ const useEmail = () => {
     
     function handelUserEmail ( userEmail = 'test@test.com' ) {
         data.append('email', userEmail );
-
+        setIsexist('');
         fetch( 
             ROOT_URL_HELLOASSO ,
             { 

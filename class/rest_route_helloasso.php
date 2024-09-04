@@ -201,7 +201,7 @@ class rest_route_helloasso {
                 }else{
                     $element->tarif = $element->plein_tarif;
                 }
-                return $element->titre !== "FA";
+                return $element->titre !== "FFME_FA";
                 //                   ↑
                 // Array value which you want to delete
             });
@@ -215,7 +215,7 @@ class rest_route_helloasso {
                 }else{
                     $element->tarif = $element->plein_tarif;
                 }
-                return $element->titre !== "FJ";
+                return $element->titre !== "FFME_FJ";
                 //                   ↑
                 // Array value which you want to delete
             });
@@ -239,7 +239,7 @@ class rest_route_helloasso {
                 }else{
                     $element->tarif = $element->plein_tarif;
                 }
-                if( $element->titre !== "IMPN" && $element->titre !== "IRA"){
+                if( $element->titre !== "FFR_IMPN" && $element->titre !== "FFR_IRA"){
                     return $element;
                 }
                 //                   ↑
@@ -255,7 +255,7 @@ class rest_route_helloasso {
                 }else{
                     $element->tarif = $element->plein_tarif;
                 }
-                return $element->titre !== "IMPNJ";
+                return $element->titre !== "FFR_IMPNJ";
                 //                   ↑
                 // Array value which you want to delete
             });

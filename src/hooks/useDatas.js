@@ -18,14 +18,13 @@ const useDatas = () => {
         containsDonation: true, 
         payer: {},
         metadata: {
-            id: '007',
             cotisation: '',
-            tarif_cotisation: '',
+            tarif_cotisation: 0,
             licence: '',
             type_licence: '',
-            tarif_licence: '',
-            option_ffme: {},
-            famille: {}
+            tarif_licence: 0,
+            options_ffme: [],
+            famille: []
         }
     } );
 
@@ -38,7 +37,7 @@ const useDatas = () => {
     useEffect( () => {
  
         if( payer.dateOfBirth != undefined ){
-            console.log( payer );
+            console.log( 'Payer :: ',payer );
             
             handelCotisation( payer.dateOfBirth );
             setDatas({...datas, payer: payer });
@@ -48,7 +47,7 @@ const useDatas = () => {
 /** */
 
     useEffect ( () => {
-        console.log(datas.metadata);
+        console.log(datas);
         
     },[datas]);
 
@@ -66,7 +65,7 @@ const useDatas = () => {
                 setPayer( event[1] );
                 break;
             case 'cotisation':
-                console.log('cotisation', event[1].titre, event[1].tarif);
+                //console.log('cotisation', event[1].titre, event[1].tarif);
                 setDatas({...datas, metadata: {
                             ...datas.metadata,
                             cotisation: event[1].titre,
@@ -75,13 +74,18 @@ const useDatas = () => {
                     //setDatas({...datas, payer: event[1] });
             break;
             case 'licence':
-                console.log('licence', event[1].titre, event[1] );
+                //console.log('licence', event[1].titre, event[1] );
                 setDatas({...datas, metadata: {
                             ...datas.metadata,
                             type_licence: event[1].titre,
                             tarif_licence: event[1].tarif
                         } });
-                    //setDatas({...datas, payer: event[1] });
+            break;
+            case 'options':
+                setDatas( {...datas, metadata:{
+                    ...datas.metadata,
+                    options_ffme: event[1]
+                }})
             break;
         }
         

@@ -31,13 +31,13 @@ const Form = (props) => {
 /** */
 
     useEffect( () => {
-         
+        
         if( isexist === false ){
             navigate('/cotisation');
         }else if (isexist === '') {
             console.log('début …');
         }else{
-            alert('Il existe déjà un compte avec cet email...')
+            alert(`l\'email ${user.email} existe déjà dans nos comptes d\'adhérents !!`);
         }
         
     },[isexist]);
@@ -114,7 +114,7 @@ const Form = (props) => {
                 </label>
             </div>
 
-            <button type="submit" className='bt_bleu'>Valider</button>
+            <button type="submit" className='bt_bleu'>Étape suivante</button>
 
         </form>
     )

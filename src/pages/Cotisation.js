@@ -4,7 +4,7 @@ import Total from '../components/Total';
 
 const Cotisation = (props) => {
     
-    const {nav,setNav,user,liste,metadata,handelDatas} = props;
+    const {nav,setNav,user,liste,datas,metadata,handelDatas} = props;
     const navigate = useNavigate();
 
     const {club} = liste;
@@ -29,6 +29,11 @@ const Cotisation = (props) => {
         }
 
     }, []);
+
+    function handelClickValidation(event){
+        //console.log('validation', event.target, club );
+        navigate('/licence');
+    }
 /** */
 
     function handelClickCotisation(event){
@@ -46,9 +51,16 @@ const Cotisation = (props) => {
 
     }
 
-    function handelClickValidation(event){
-        console.log('validation', event.target, club );
-        navigate('/licence');
+    function handelClickPrecedente(event){
+        //console.log('validation', event.target, club );
+        nav.map( (item,i) => {
+            
+            if( item.label == 'Cotisation') {
+                let index = i-1;
+               navigate( nav[index].to );
+            }
+            
+        })
     }
 
     return(
@@ -69,9 +81,13 @@ const Cotisation = (props) => {
                 )
             ):('')
         }
-        <Total />
+        <Total datas={datas}/>
         {
-            metadata.cotisation && <button type="button" id="valider" className='bt_bleu' onClick={ handelClickValidation }>Étape suivante</button>
+            metadata.cotisation && 
+            <div className="navig_bottom">
+                <button type="button" className='bt_bleu_outline' onClick={handelClickPrecedente}>Étape précédente</button>
+                <button type="button" className='bt_bleu' onClick={ handelClickValidation }>Étape suivante</button>
+            </div>
         }
         </div>
     )

@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Header = (props) => {
 
@@ -11,10 +11,15 @@ const Header = (props) => {
         <>
         <nav>
             {
+                 nav.map( (item,i) => (
+                    <NavLink to={item.to} className={({ isActive }) => (isActive ? 'active' : 'link_chemin')} >{item.label}</NavLink>
+                 ) )
+            }
+            {/* {
                 nav.map( (item,i) => (
                     <Link key={i} to={item.to} className='link_chemin'>{item.label}</Link>
                 ) )
-            }
+            } */}
             {/* <Link key="1" to="/">Home</Link>
             <Link key="2" to="/formulaire">Formulaire</Link>
             <Link key="4" to="/cotisation">Cotisation</Link>
