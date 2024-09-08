@@ -85,7 +85,7 @@ class rest_route_helloasso {
 
         $this->general['club'] = getAllTarifs::g('wp_cotisations_club');
         $this->general['ffme']['licences'] = getAllTarifs::g('wp_licences_ffme');
-        $this->general['ffme']['options'] = getAllTarifs::g('wp_options_ffme');
+        //$this->general['ffme']['options'] = getAllTarifs::g('wp_options_ffme');
         $this->general['ffr']['licences'] = getAllTarifs::g('wp_licences_ffr');
 
         //return self::get_cotisation_club();
@@ -223,7 +223,7 @@ class rest_route_helloasso {
 
         }
 
-        $this->temporaire['ffme']['options'] = $this->general['ffme']['options'];
+        //$this->temporaire['ffme']['options'] = $this->general['ffme']['options'];
 
         self::get_licence_ffr();
     }   

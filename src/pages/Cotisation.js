@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import FormFamille from '../components/FormFamille';
 import Total from '../components/Total';
 
 const Cotisation = (props) => {
@@ -65,6 +66,7 @@ const Cotisation = (props) => {
 
     return(
        <div>
+       <fieldset><legend>Choix de cotisation au club</legend>
         {
             club ? (
             Object.entries(club).map( ([key,obj]) => (
@@ -81,6 +83,12 @@ const Cotisation = (props) => {
                 )
             ):('')
         }
+        </fieldset>
+        {
+            metadata.cotisation === 'F/F2' ? ( <FormFamille /> ):('')
+        }
+        <fieldset><legend>Voulez-vous utiliser le mur d'escalade au gymnase Berthe de Boissieux ?</legend></fieldset>
+        <fieldset><legend>Voulez-vous ajouter une cotisation de soutien au club ?</legend></fieldset>
         <Total datas={datas}/>
         {
             metadata.cotisation && 
