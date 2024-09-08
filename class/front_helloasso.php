@@ -43,7 +43,8 @@ class front_helloasso {
             'rootUrl' => esc_url_raw( rest_url() ),
             'rootNonce' => wp_create_nonce( 'wp_rest' ),
             'logoutNonce' => wp_create_nonce('log-out'),
-            'infosUser' => getUserInfos::g()
+            'infosUser' => getUserInfos::g(),
+            'options_ffme' => getAllTarifs::g('wp_options_ffme')
         ) );
         
     }

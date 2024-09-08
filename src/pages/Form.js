@@ -2,6 +2,7 @@ import { React, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import useEmail from '../hooks/useEmail';
+import { paysListe } from '../datas/paysListe';
 
 const Form = (props) => {
 
@@ -46,8 +47,8 @@ const Form = (props) => {
         event.preventDefault();
 
         let champs = new FormData( event.target );
-        let adherent = Object.fromEntries(champs);
-
+        let adherent = Object.fromEntries(champs); 
+        
         handelUserEmail( adherent.email );
         handelDatas('adherent', adherent );
 
@@ -56,7 +57,8 @@ const Form = (props) => {
     return(
         <form onSubmit={handelSubmit} className="form_inscription">
 
-            <h2>Formulaire d'adhésion au club</h2>
+        <fieldset>
+        <legend>Formulaire d'adhésion au club</legend>
 
             <div className="label_ligne">
                 <label>Votre nom:
@@ -88,6 +90,21 @@ const Form = (props) => {
                 </label>
             </div>
 
+            <div className="label_ligne">
+                <label>Votre lieu de naissance:
+                    <input type="text" name="gda_lieu" id="gda_lieu" defaultValue={user.gda_lieu} required />
+                </label>
+                <label>Votre nationalité:
+                    <select name="country" defaultValue='FRA'>
+                        {
+                            paysListe.map( (item,i) => (
+                                <option value={item.value}>{item.land}</option>
+                            ))
+                        }
+                    </select>
+                </label>
+            </div>
+
             <div className="label_adresse">
                 <label>Votre adresse:
                     <input type="text" name="address" id="address" defaultValue={user.address} required />
@@ -102,8 +119,10 @@ const Form = (props) => {
                     <input type="text" name="zipCode" id="zipCode" defaultValue={user.zipCode} required />
                 </label>
             </div>
+            </fieldset>
 
-            <h3>Personne à prévenir en cas de problème:</h3>
+            <fieldset>
+            <legend>Personne à prévenir en cas de problème:</legend>
 
             <div className="label_ligne">
                 <label>Nom de la personne:
@@ -113,6 +132,7 @@ const Form = (props) => {
                     <input type="tel" name="gda_tel_personne" id="gda_tel_personne" defaultValue={user.gda_tel_personne} required />
                 </label>
             </div>
+            </fieldset>
 
             <button type="submit" className='bt_bleu'>Étape suivante</button>
 

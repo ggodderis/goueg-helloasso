@@ -20,8 +20,10 @@ const useDatas = () => {
         metadata: {
             cotisation: '',
             tarif_cotisation: 0,
+            cotisation_famille: '',
             licence: '',
             type_licence: '',
+            licence_famille: '',
             tarif_licence: 0,
             options_ffme: [],
             famille: []
@@ -40,7 +42,13 @@ const useDatas = () => {
             console.log( 'Payer :: ',payer );
             
             handelCotisation( payer.dateOfBirth );
-            setDatas({...datas, payer: payer });
+            setDatas({...datas,
+                payer: payer,
+                metadata: {
+                    ...datas.metadata,
+                    options_ffme: []
+                }
+            });
         }
 
     }, [payer]);
@@ -77,6 +85,7 @@ const useDatas = () => {
                 //console.log('licence', event[1].titre, event[1] );
                 setDatas({...datas, metadata: {
                             ...datas.metadata,
+                            licence_famille: event[1].type,
                             type_licence: event[1].titre,
                             tarif_licence: event[1].tarif
                         } });

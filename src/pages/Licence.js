@@ -10,16 +10,14 @@ const Licence = (props) => {
  * de @param selection []
  */
     const {nav,setNav,liste,datas,handelDatas,selection,setSelection} = props;
-    const {checkbox,famille} = props.selection;
-    const {options} = liste.ffme;
+    const {activites,famille,options} = props.selection;
+
 /**
  * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
  * contient la selection faite pour les licences
  * afin de savoir si c'est ffme ou ffr
  */
     const [selectlicence,setSelectlicence] = useState([]);
-    
-    const [new_options,setNew_options] = useState(options);
 
 /** 
  * POUR LA NAVIGATION
@@ -47,7 +45,7 @@ useEffect( () => {
         let {name} = event.target;
         //console.log( 'handelCheckbox',name );
         
-        let newselection = checkbox.map( (item,index) => {
+        let newselection = activites.map( (item,index) => {
             if( item.name === name ){
                 item.checked = !item.checked;
                 if( item.name == 'SKIR' || item.name == 'ALPI'){
@@ -60,7 +58,7 @@ useEffect( () => {
             return item;
         })
 
-        setSelection({...selection, checkbox: newselection });
+        setSelection({...selection, activites: newselection });
     }
     /**
      * Mise à jour du sous choix > à PD
@@ -69,14 +67,14 @@ useEffect( () => {
 
         let {name} = event.target;
 
-        let newselection = checkbox.map( (item,index) => {
+        let newselection = activites.map( (item,index) => {
             if( item.labelname === name ){
                 item.labelchecked = !item.labelchecked;
             }
             return item;
         })
 
-        setSelection({...selection, checkbox: newselection });
+        setSelection({...selection, activites: newselection });
         
     }
 /**
@@ -98,7 +96,7 @@ useEffect( () => {
          */
         let el = [];
 
-        checkbox.forEach(element => {
+        activites.forEach(element => {
             if( element.checked && !element.labelchecked ){
                 el.push(element.name);
             }
@@ -108,27 +106,42 @@ useEffect( () => {
         });
         setSelectlicence(el);
  
-    },[checkbox]);
+    },[activites]);
 /**
  * Choix Options
  */
 const handelOptions = (event) => {
 
-   let new_options = options.map( (item,i) => {
+    const {name} = event.target;
 
-            if (item.name === event.target.name){
+    console.log('handelOptions',name);
+
+   let new_options = options.map( (item,i) => {
+            if (item.name === name){
                item.checked =! item.checked; }
              return item;
             } );
-
-                    
-    setNew_options(new_options);
+       
+    setSelection({...selection,
+            options:new_options
+        }
+    );
 }
-
+const handelResetOptions = () => {
+    let new_options = options.map( (item,i) => {
+           item.checked = false;
+         return item;
+        } );
+   
+    setSelection({...selection,
+            options:new_options
+        }
+    );
+}
 useEffect( () => {
-    let options_for_datas = new_options.filter( item => item.checked );
+    let options_for_datas = options.filter( item => item.checked );
     handelDatas('options',options_for_datas);
-},[new_options]);
+},[options]);
 
 /**
  * Choix de la licence selon les activitées et le niveau choisi
@@ -174,7 +187,7 @@ useEffect( () => {
                     }
                 });
             }
-
+            
         }else{
     
             if( selectlicence.includes('ALPI') ||
@@ -222,6 +235,12 @@ useEffect( () => {
                     })
 
                 }
+
+            /**
+             * Remise à zéro des options partout !
+             */
+            handelResetOptions();
+
         }
 
     } ,[selectlicence,famille])
@@ -256,7 +275,7 @@ function handelClickPrecedente(event){
            <fieldset>
                 <legend>Cochez les activités que vous voulez pratiquer:</legend>
                 
-                {checkbox.map( (item,i) => 
+                {activites.map( (item,i) => 
                     (
                     <div className="ligne_licence">
                     <label key={i} >
@@ -290,7 +309,7 @@ function handelClickPrecedente(event){
             <fieldset>
                 <legend>Options supplémentaires (nom obligatoire)</legend>
                 {
-                new_options.map( (item,i) => (
+                options.map( (item,i) => (
                     <div className="ligne_licence">
                         <label key={item.id}>
                             <input type="radio" name={item.name} id={item.name} checked={item.checked} value={item.titre} onClick={handelOptions} />

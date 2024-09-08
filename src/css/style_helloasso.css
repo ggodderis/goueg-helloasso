@@ -22,7 +22,7 @@
 * Formulaire
 */
 .form_inscription {
-    max-width: 600px;
+    max-width: 800px;
 }
 .label_ligne {
     display: grid;
