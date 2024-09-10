@@ -79,7 +79,7 @@ const App = () => {
             <Routes>
                 <Route exact path="/" element={ <Home nouveau={nouveau} user={user} /> } />
                 <Route exact path="/formulaire" element={ <Form setNouveau={setNouveau} nav={nav} setNav={setNav} user={user} handelDatas={handelDatas}/> } />
-                <Route exact path="/cotisation" element={ <Cotisation datas={datas} nav={nav} setNav={setNav} liste={liste} user={user} metadata={metadata} handelDatas={handelDatas} /> } />
+                <Route exact path="/cotisation" element={ <Cotisation datas={datas} nav={nav} setNav={setNav} liste={liste} metadata={metadata} handelDatas={handelDatas} /> } />
                 <Route exact path="/licence" element={ <Licence datas={datas} handelDatas={handelDatas} nav={nav} liste={liste} setNav={setNav} selection={selection} setSelection={setSelection} /> } />
                 <Route exact path="*" element={ <Errors /> } />
             </Routes>

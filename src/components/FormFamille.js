@@ -1,40 +1,68 @@
-import { React,useState,useEffect } from 'react';
+import { React,useState,useEffect} from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import FormMembre from './FormMembre';
 
-const isEmailValid = (email) => {
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return emailPattern.test(email);
-  };
+// const isEmailValid = (email) => {
+//     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+//     return emailPattern.test(email);
+//   };
 
-const FormFamille = () => {
+const FormFamille = (props) => {
 
-    const handleEmailChange = (e) => {
-        const value = e.target.value;
-        //setEmail(value);
+  const {handelDatas} = props;
+  const {famille_adulte,famille_enfant,famille_supp} = props.metadata;
+
+  const [arrayMembre,setArrayMembre] = useState(famille_supp);
+
+  const handelSuppMembre = (id) => {
+    let new_array = arrayMembre.filter( item => item.id !== id );
+    setArrayMembre(new_array);
+   }
+
+  const handelAddMembre = (event) => {
+    let myref = uuidv4();
+    setArrayMembre([...arrayMembre,{id:myref}]);
+  }
+
+  useEffect( () => {
+    handelDatas('add_membre',arrayMembre);
+  }, [arrayMembre]);
+
+    // const handleEmailChange = (e) => {
+    //     const value = e.target.value;
+    //     //setEmail(value);
     
-        if (!isEmailValid(value)) {
-            console.log('Invalid email format.');
+    //     if (!isEmailValid(value)) {
+    //         console.log('Invalid email format.');
             
-          //setError('Invalid email format.');
-        } else {
-            console.log('Email is ok...');
+    //       //setError('Invalid email format.');
+    //     } else {
+    //         console.log('Email is ok...');
             
-          //setError('');
-        }
-      };
+    //       //setError('');
+    //     }
+    //   };
 
-    const handelInputChange = (e) => {
-        const {value,name} = e.target;
-    }
+    // const handelInputChange = (e) => {
+    //     const {value,name} = e.target;
+    // }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-      };
+    useEffect( () => {
+      console.log("useEffect",famille_supp);
+    },[famille_supp]);
 
     return(
-        <form onSubmit={handleSubmit} className="form_adherent_helloasso">
-            <fieldset><legend>Formulaire Famille</legend></fieldset>
-        </form>
+      <div>
+        <FormMembre legend="Deuxiéme Adulte"/>
+        <FormMembre legend="Enfant"/>
+        {
+          famille_supp.map( (item,i) => (
+            <FormMembre monid={item.id} key={i} handelSuppMembre={handelSuppMembre} />
+          )
+          )
+        }
+        <button onClick={handelAddMembre} className="bt_bleu">Ajouter un membre de famille</button>
+      </div>
     )
 }
 export default FormFamille;

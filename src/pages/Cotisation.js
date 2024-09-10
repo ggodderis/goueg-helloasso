@@ -5,7 +5,7 @@ import Total from '../components/Total';
 
 const Cotisation = (props) => {
     
-    const {nav,setNav,user,liste,datas,metadata,handelDatas} = props;
+    const {nav,setNav,liste,datas,metadata,handelDatas} = props;
     const navigate = useNavigate();
 
     const {club} = liste;
@@ -84,11 +84,11 @@ const Cotisation = (props) => {
             ):('')
         }
         </fieldset>
-        {
-            metadata.cotisation === 'F/F2' ? ( <FormFamille /> ):('')
-        }
         <fieldset><legend>Voulez-vous utiliser le mur d'escalade au gymnase Berthe de Boissieux ?</legend></fieldset>
         <fieldset><legend>Voulez-vous ajouter une cotisation de soutien au club ?</legend></fieldset>
+        {
+            metadata.cotisation === 'F/F2' ? ( <FormFamille metadata={metadata} handelDatas={handelDatas} /> ):('')
+        }
         <Total datas={datas}/>
         {
             metadata.cotisation && 

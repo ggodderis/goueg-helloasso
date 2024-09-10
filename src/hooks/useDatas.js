@@ -26,7 +26,9 @@ const useDatas = () => {
             licence_famille: '',
             tarif_licence: 0,
             options_ffme: [],
-            famille: []
+            famille_adulte: [],
+            famille_enfant: [],
+            famille_supp: []
         }
     } );
 
@@ -42,6 +44,7 @@ const useDatas = () => {
             console.log( 'Payer :: ',payer );
             
             handelCotisation( payer.dateOfBirth );
+
             setDatas({...datas,
                 payer: payer,
                 metadata: {
@@ -94,6 +97,12 @@ const useDatas = () => {
                 setDatas( {...datas, metadata:{
                     ...datas.metadata,
                     options_ffme: event[1]
+                }})
+            break;
+            case 'add_membre':
+                setDatas( {...datas, metadata:{ 
+                    ...datas.metadata,
+                    famille_supp: event[1]
                 }})
             break;
         }
