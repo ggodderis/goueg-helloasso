@@ -1,10 +1,13 @@
 import { React, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
 import Total from '../components/Total';
+import useHello from '../hooks/useHello';
 
 const Licence = (props) => {
     
     const navigate = useNavigate();
+
+    const [token,startPaye] = useHello();
 /**
  * Récupération en provenance de App.js
  * de @param selection []
@@ -144,6 +147,15 @@ useEffect( () => {
 },[options]);
 
 /**
+ * On paye !
+ */
+const handelPaye = (event) => {
+    startPaye(datas);
+}
+    useEffect( () => {
+        console.log(token);
+    },[token])
+/**
  * Choix de la licence selon les activitées et le niveau choisi
  */
     useEffect( () => {
@@ -262,72 +274,89 @@ function handelClickPrecedente(event){
         <h2>Licences / Assurances</h2>
         <fieldset>
             <legend>Prenez-vous une licence pour:</legend>
-            <div className="ligne_licence"><label>
+            <div className="ligne_licence">
+                <label className="label_radio">
                 <input type="radio" name="licence_type" value="seul" onChange={handelFamille} checked={famille === 'seul'} /> Vous seulement
-            </label></div>
-            <div className="ligne_licence"><label>
+                </label>
+            </div>
+            <div className="ligne_licence">
+                <label className="label_radio">
                 <input type="radio" name="licence_type" value="famille" onChange={handelFamille} checked={famille === 'famille'}/> Vous et votre famille
-            </label></div>
+                </label>
+            </div>
         </fieldset>
         {
             famille !== '' ? (
-            
-           <fieldset>
-                <legend>Cochez les activités que vous voulez pratiquer:</legend>
-                
-                {activites.map( (item,i) => 
-                    (
-                    <div className="ligne_licence">
-                    <label key={i} >
-                        <input type="checkbox" name={item.name} id={item.name} checked={ item.checked } onChange={handelCheckbox} />
-                        {item.descriptif}
-                    </label>
+            <div className="content_membre">
+                <fieldset>
+                        <legend>Cochez les activités que vous voulez pratiquer:</legend>
+                        
                         {
-                            item.show ? (
-                                <div className="sous_ligne_licence">
-                                    {item.label}
-                                    <span className="label_sous_ligne_licence">
-                                        <input type="checkbox" name={item.labelname} checked={item.labelchecked} onChange={handelNiveau} /> oui
-                                    </span>
-                                </div>
-                        ):('')
+                        activites.map( (item,i) => 
+                            (
+                            <div className="ligne_licence">
+                            <label key={i} className="label_radio">
+                                <input type="checkbox" name={item.name} id={item.name} checked={ item.checked } onChange={handelCheckbox} />
+                                {item.descriptif}
+                            </label>
+                                {
+                                    item.show ? (
+                                        <div className="sous_ligne_licence">
+                                            {item.label}
+                                            <span className="label_sous_ligne_licence">
+                                                <input type="checkbox" name={item.labelname} checked={item.labelchecked} onChange={handelNiveau} /> oui
+                                            </span>
+                                        </div>
+                                ):('')
+                                }
+                            </div>
+                            )
+                            )
                         }
-                    </div>
-                    )
-                    )}
-             </fieldset>   
+                        
+                    </fieldset>
+
+                {
+                            
+                    datas.metadata.type_licence === 'FFME_FA' || 
+                    datas.metadata.type_licence === 'FFME_FJ' || 
+                    datas.metadata.type_licence === 'FFME_FF2' ? (
+                    
+                    <fieldset>
+                        <legend>Options supplémentaires (nom obligatoire)</legend>
+                        {
+                        options.map( (item,i) => (
+                            <div className="ligne_licence">
+                                <label key={item.id} className="label_radio">
+                                    <input type="radio" name={item.name} id={item.name} checked={item.checked} value={item.titre} onClick={handelOptions} />
+                                    {item.titre}&nbsp;<b>{item.plein_tarif/100}€</b>
+                                </label>
+                            </div>
+                        ))
+                        }
+                    </fieldset>
+                    
+                    ):('')
+
+                }
+
+            </div>
+
             ):('')
             
-        }
-       
-        {
-            
-            datas.metadata.type_licence === 'FFME_FA' || 
-            datas.metadata.type_licence === 'FFME_FJ' || 
-            datas.metadata.type_licence === 'FFME_FF2' ? (
-            
-            <fieldset>
-                <legend>Options supplémentaires (nom obligatoire)</legend>
-                {
-                options.map( (item,i) => (
-                    <div className="ligne_licence">
-                        <label key={item.id}>
-                            <input type="radio" name={item.name} id={item.name} checked={item.checked} value={item.titre} onClick={handelOptions} />
-                            {item.titre}&nbsp;<b>{item.plein_tarif/100}€</b>
-                        </label>
-                    </div>
-                ))
-                }
-            </fieldset>
-               
-             ):('')
-        
         }
         
         <Total datas={datas}/>
         <div className="navig_bottom">
-            <button type="button" className='bt_bleu_outline' onClick={handelClickPrecedente}>Étape précédente</button>
-            <button type="button" id="valider" className='bt_bleu' >Valider</button>
+                <button type="button" className='bt_bleu_outline' onClick={handelClickPrecedente}>
+                    <i className="icon-chevron-gauche"></i>&nbsp;Étape précédente
+                </button>
+            {
+                datas.metadata.type_licence &&
+                <button type="button" id="valider" className='bt_vert' onClick={handelPaye}>
+                    <i className="icon-valider"></i>&nbsp;Payer mon adhésion
+                </button>
+            }
         </div>
         </>
     )

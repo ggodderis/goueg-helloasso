@@ -8,23 +8,24 @@ const Home = (props) => {
 
     return(
         <>
-        <h1>Adhésion au club</h1>
         {
             user.firstName ? (
                 <>
-                <span>Bonjour, {user.firstName} {user.lastName}</span>
-                <br />
-                {
+                <div className="bandeau_haut">
+                    <span className="bandeau_haut_titre">Bonjour, <b>{user.firstName} {user.lastName}</b></span>
+                    <a className="hello_deconnexion" href={"/wp-login.php?action=logout&_wpnonce="+the_ajax_script.logoutNonce+"&redirect_to=page-d-exemple"}>
+                    <i className="icon-close"></i>&nbsp;Déconnexion
+                    </a>
+                </div>
+                <div className="content_bouton_start">
+                    {
                     nouveau == 'adherent' ? (
-                        <Link key="1" to="/cotisation" className='bt_bleu'>Commencer mon adhésion</Link>
+                        <Link key="1" to="/cotisation" className='bt_bleu_outline'>Commencer mon adhésion&nbsp;<i className="icon-chevron-droite"></i></Link>
                     ):(
-                        <Link key="1" to="/formulaire" className='bt_bleu'>Commencer mon adhésion</Link>
+                        <Link key="1" to="/formulaire" className='bt_bleu_outline'>Commencer mon adhésion&nbsp;<i className="icon-chevron-droite"></i></Link>
                     )
-                }
-                <br />
-                <a href={"/wp-login.php?action=logout&_wpnonce="+the_ajax_script.logoutNonce+"&redirect_to=page-d-exemple"}>
-                    Me connecter avec un autre compte
-                </a>
+                    }
+                </div>
                 </>
             ):(
                 <div className='content_start'>

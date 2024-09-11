@@ -1,31 +1,44 @@
-import React, { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 
 const useHello = () => {
 
-  const [data,setData] = useState( {
-          totalAmount: 6000,
-          initialAmount: 6000,
-          itemName: 'Adhésion au club Grimpeurs des Alpes',
-          backUrl: 'https://www.club-montagne.net/helloasso/back.php', 
-          errorUrl: 'https://www.club-montagne.net/helloasso/error.php', 
-          returnUrl: 'https://www.club-montagne.net/helloasso/return.php', 
-          containsDonation: true, 
-          payer: {
-            firstName:'Frédéric',
-            lastName: 'Brand',
-            email: 'fbrand@orange.fr',
-            dateOfBirth: '1975-09-03',
-            address: '268, chemin des Traversières',
-            city: 'Les Adrets',
-            zipCode: '38190',
-            country: 'FRA',
-            companyName: ''
-          },
-          metadata: {}
-  } );
+  // const [data,setData] = useState( {
+  //         totalAmount: 6000,
+  //         initialAmount: 6000,
+  //         itemName: 'Adhésion au club Grimpeurs des Alpes',
+  //         backUrl: 'https://www.club-montagne.net/helloasso/back.php', 
+  //         errorUrl: 'https://www.club-montagne.net/helloasso/error.php', 
+  //         returnUrl: 'https://www.club-montagne.net/helloasso/return.php', 
+  //         containsDonation: true, 
+  //         payer: {
+  //           firstName:'Frédéric',
+  //           lastName: 'Brand',
+  //           email: 'fbrand@orange.fr',
+  //           dateOfBirth: '1975-09-03',
+  //           address: '268, chemin des Traversières',
+  //           city: 'Les Adrets',
+  //           zipCode: '38190',
+  //           country: 'FRA',
+  //           companyName: ''
+  //         },
+  //         metadata: {}
+  // } );
 
   const [token,setToken] = useState('');
+  const [datas,setData] = useState( null );
+  const [url,setUrl] = useState('');
 
+  // useEffect( () => {
+  //   if( url != '' ){
+  //     window.location.href = url;
+  //   }
+    
+  // },[url]);
+
+  /**
+   * Si on a un token on appel Hello pour obtenir l'url
+   * de paiement..
+   */
   useEffect( () => {
     
     if( token !== ''){
@@ -37,13 +50,13 @@ const useHello = () => {
           "Content-Type": "application/json",
           "authorization": "Bearer "+token
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(datas)
         //.toString()
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log( data );
-          
+          console.log( data, );
+          setUrl(data.redirectUrl);
         })
         .catch((error) => console.log(error));
         
@@ -54,23 +67,30 @@ const useHello = () => {
     }
   } ,[token]);
 
-    const datas = new FormData();
-    datas.append("client_id","");
-    datas.append("client_secret","");
-    datas.append("grant_type","client_credentials");
-
-    console.log( new URLSearchParams(datas) );
 
 
+  const keys = new FormData();
+  keys.append("client_id","a0fead5a1ba4404eacf4b9de755fb3b9");
+  keys.append("client_secret","NOfvEhtPEa4CBhrom8Q6nkBIwcZOapxr");
+  keys.append("grant_type","client_credentials");
 
-    useEffect(() => {
+  const startPaye = (datas) => {
+    setData(datas);
+  }
+/**
+ * Si datas est plein...
+ * on appel l'api helloasso pour obtenir le token
+ */
+    useEffect( () => {
+
+      if( datas ){
 
         fetch("https://api.helloasso-sandbox.com/oauth2/token", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
-          body: new URLSearchParams(datas).toString()
+          body: new URLSearchParams(keys).toString()
           //.toString()
         })
           .then((response) => response.json())
@@ -78,12 +98,12 @@ const useHello = () => {
             setToken(data.access_token);
           })
           .catch((error) => console.log(error));
-      }, []);
+        
+      }
+      
+    },[datas]);
 
 
-
-    return(
-        <h1>Hello...</h1>
-    );
+    return [token,startPaye];
 }
 export default useHello;

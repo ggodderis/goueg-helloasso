@@ -4,7 +4,8 @@ import { paysListe } from '../datas/paysListe';
 
 const FormMembre = (props) => {
 
-const {legend,handelSuppMembre,monid} = props;
+const {legend,handelSuppMembre,monid,isMobile} = props;
+const [etat,setEtat]= useState(isMobile);
 const [titre,setTitre] = useState('');
 
 const handelSubmit = (event) => {
@@ -17,7 +18,7 @@ const suppMembre = (event) => {
     return(
         <form onSubmit={handelSubmit} className="form_inscription">
 
-        <fieldset>
+        <fieldset className="fieldset_grey">
         <legend>
            {legend}
         </legend>
@@ -82,7 +83,7 @@ const suppMembre = (event) => {
                 </label>
             </div> */}
            
-            <h4>Personne à prévenir en cas de problème:</h4>
+            <h4 className="hello_h4">Personne à prévenir en cas de problème:</h4>
 
             <div className="label_ligne">
                 <label>Nom de la personne:
@@ -93,8 +94,13 @@ const suppMembre = (event) => {
                 </label>
             </div>
 
-            <button type="button" onClick={suppMembre} className='bt_supprimer'>x Supprimer</button>
-            <button type="submit" className='bt_bleu'>Valider</button>
+                <div className="navig_bottom">
+                {
+                    etat === 'mobile' ? ( <button type="button" onClick={suppMembre} className='bt_supprimer'>x Supprimer</button>):('')
+                }
+                <button type="submit" className='bt_vert'><i className="icon-valider"></i>&nbsp;Valider</button>
+                </div>
+
             </fieldset>
 
 

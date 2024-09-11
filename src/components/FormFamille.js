@@ -53,15 +53,19 @@ const FormFamille = (props) => {
 
     return(
       <div>
-        <FormMembre legend="Deuxiéme Adulte"/>
-        <FormMembre legend="Enfant"/>
-        {
-          famille_supp.map( (item,i) => (
-            <FormMembre monid={item.id} key={i} handelSuppMembre={handelSuppMembre} />
-          )
-          )
-        }
-        <button onClick={handelAddMembre} className="bt_bleu">Ajouter un membre de famille</button>
+         <div className="content_membre">
+          <FormMembre legend="Deuxiéme Adulte" />
+          <FormMembre legend="Enfant" />
+          {
+            famille_supp.map( (item,i) => (
+              <FormMembre monid={item.id} key={i} handelSuppMembre={handelSuppMembre} isMobile="mobile" />
+            )
+            )
+          }
+        </div>
+          <div className="content_ajouter">
+            <button onClick={handelAddMembre} className="bt_bleu center">+ Ajouter un membre de famille</button>
+            </div>
       </div>
     )
 }

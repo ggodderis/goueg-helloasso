@@ -18,6 +18,10 @@
     color: var(--bleu-foncer) !important;
     background-color: var(--orange-clair);
 }
+.content_bouton_start {
+    display: flex;
+    justify-content: center;
+}
 /**
 * Formulaire
 */
@@ -35,13 +39,48 @@
     margin-bottom: 2rem;
 }
 .label_radio {
-    display: block;
-    margin-bottom: 0.5rem;
+    display: flex;
+    margin: 0.5rem 0;
+    cursor: pointer;
+}
+.label_radio > input {
+    margin-right: 1rem;
+}
+.content_membre {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    column-gap: 2rem;
 }
 
 /**
 * Home
 */
+.bandeau_haut {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    color: #ffffff;
+    background-color: var(--bleu-foncer);
+}
+.bandeau_haut_titre {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: normal;
+    font-size: 1.1rem;
+}
+.hello_deconnexion {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    color: #ffffff !important;
+    border: 1px solid #ffffff;
+    border-radius: 1rem;
+    background: none;
+}
 .content_start {
     display: grid;
     grid-template-columns: repeat(2,1fr);
@@ -56,25 +95,30 @@
     margin-bottom: 1rem;
     color: var(--bleu-foncer);
 }
-.bt_bleu, .bt_bleu_outline {
-    display: flex;
+.bt_bleu, .bt_bleu_outline, .bt_vert, .bt_supprimer {
+    display: inline-flex;
     font-family: var(--font-condensed);
     font-weight: 600;
     font-size: 1.1rem;
-    max-width: 250px;
+    align-items: center;
     text-transform: uppercase;
     justify-content: center;
     padding: 0.6rem 1rem;
-    margin: auto;
     text-decoration: none;
     color: #ffffff !important;
     background-color: var(--bleu-foncer);
-    border: 3px solid var(--bleu-foncer);
     border-radius: 999px;
+}
+.bt_vert {
+    background-color: green;
+}
+.bt_supprimer {
+    background-color: var(--grey-color);
 }
 .bt_bleu_outline {
     color: var(--bleu-foncer)!important;
     background-color: #ffffff;
+    border: 2px solid var(--bleu-foncer);
 }
 
 /**
@@ -82,11 +126,6 @@
 */
 .ligne_licence {
     display: block;
-    padding: 0 0 0.5rem 0;
-}
-.ligne_licence label {
-    display: flex;
-    align-items: center;
 }
 .sous_ligne_licence {
     display: block;
@@ -98,12 +137,15 @@
 }
 fieldset {
     margin: 1rem 0;
-    padding: 1rem 0.5rem;
+    padding: 1rem;
     border: 1px solid #efefef;
     background: none;
 }
 legend {
     font-weight: bold;
+}
+.fieldset_grey {
+    background-color: #f8f8f8;
 }
 
 /**
@@ -141,4 +183,18 @@ legend {
 }
 .navig_bottom > * {
     margin: 0;
+}
+
+/**
+* Famille
+*/
+.content_ajouter {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+}
+.hello_h4 {
+    display: block;
+    padding: 0.5rem 0;
+    font-weight: bold;
 }

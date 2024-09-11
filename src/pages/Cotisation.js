@@ -2,11 +2,13 @@ import { React, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import FormFamille from '../components/FormFamille';
 import Total from '../components/Total';
+import useHello from '../hooks/useHello';
 
 const Cotisation = (props) => {
     
     const {nav,setNav,liste,datas,metadata,handelDatas} = props;
     const navigate = useNavigate();
+    const [token,startPaye] = useHello();
 
     const {club} = liste;
     //console.log('cotisation',club,user);
@@ -63,9 +65,19 @@ const Cotisation = (props) => {
             
         })
     }
+/**
+ * On paye !
+ */
+    const handelPaye = (event) => {
+        startPaye(datas);
+    }
+
+    // useEffect( () => {
+    //     console.log(token);
+    // },[token])
 
     return(
-       <div>
+    <div>
        <fieldset><legend>Choix de cotisation au club</legend>
         {
             club ? (
@@ -77,27 +89,36 @@ const Cotisation = (props) => {
                             name="type_cotisation" value={obj.titre}
                             checked={ metadata.cotisation === obj.titre }
                             />
-                            {obj.descriptif} - <b>{obj.tarif/100}€</b>
+                            {obj.descriptif} :&nbsp;<b>{obj.tarif/100}€</b>
                     </label>
                     )
                 )
             ):('')
         }
+            <h4 className="hello_h4">Voulez-vous utiliser le mur d'escalade au gymnase Berthe de Boissieux ?</h4>
+                <label className="label_radio"><input type="checkbox" name="mur" />oui :&nbsp;<b>30€</b></label>
+            <h4 className="hello_h4">Voulez-vous ajouter une cotisation de soutien au club ?</h4>
+                <label className="label_radio"><input type="checkbox" name="soutien" />cotisation de soutien au club :&nbsp;<b>10€</b></label>
         </fieldset>
-        <fieldset><legend>Voulez-vous utiliser le mur d'escalade au gymnase Berthe de Boissieux ?</legend></fieldset>
-        <fieldset><legend>Voulez-vous ajouter une cotisation de soutien au club ?</legend></fieldset>
-        {
-            metadata.cotisation === 'F/F2' ? ( <FormFamille metadata={metadata} handelDatas={handelDatas} /> ):('')
-        }
-        <Total datas={datas}/>
-        {
-            metadata.cotisation && 
+
+
+            {
+                metadata.cotisation === 'F/F2' ? ( <FormFamille metadata={metadata} handelDatas={handelDatas} /> ):('')
+            }
+            <Total datas={datas}/>
             <div className="navig_bottom">
-                <button type="button" className='bt_bleu_outline' onClick={handelClickPrecedente}>Étape précédente</button>
-                <button type="button" className='bt_bleu' onClick={ handelClickValidation }>Étape suivante</button>
+                <button type="button" className='bt_bleu_outline' onClick={handelClickPrecedente}><i className="icon-chevron-gauche"></i>&nbsp;Étape précédente</button>
+            {
+                metadata.cotisation === 'ANP' ? 
+                (<button type="button" className='bt_vert' onClick={handelPaye}><i className="icon-valider"></i>&nbsp;Payer mon adhésion</button>):('') 
+
+            }
+            {
+                metadata.cotisation != 'ANP' && metadata.cotisation != '' ? 
+                (<button type="button" className='bt_bleu' onClick={ handelClickValidation }>Étape suivante&nbsp;<i className="icon-chevron-droite"></i></button>):('')
+            }
             </div>
-        }
-        </div>
+    </div>
     )
 }
 export default Cotisation;

@@ -9,15 +9,17 @@ const useDatas = () => {
     const [liste,handelCotisation] = useCotisations();
     const [payer,setPayer] = useState({});
     const [datas,setDatas] = useState( {
-        totalAmount: '',
-        initialAmount: '',
-        itemName: '',
+        totalAmount: 0,
+        initialAmount: 0,
+        itemName: 'Adhésion au Club GDA',
         backUrl: 'https://www.club-montagne.net/helloasso/back.php', 
         errorUrl: 'https://www.club-montagne.net/helloasso/error.php', 
         returnUrl: 'https://www.club-montagne.net/helloasso/return.php', 
         containsDonation: true, 
         payer: {},
         metadata: {
+            soutien: 0,
+            mur: 0,
             cotisation: '',
             tarif_cotisation: 0,
             cotisation_famille: '',
@@ -28,7 +30,8 @@ const useDatas = () => {
             options_ffme: [],
             famille_adulte: [],
             famille_enfant: [],
-            famille_supp: []
+            famille_supp: [],
+            payer: {}
         }
     } );
 
@@ -49,7 +52,8 @@ const useDatas = () => {
                 payer: payer,
                 metadata: {
                     ...datas.metadata,
-                    options_ffme: []
+                    options_ffme: [],
+                    payer: payer
                 }
             });
         }
@@ -77,12 +81,37 @@ const useDatas = () => {
                 break;
             case 'cotisation':
                 //console.log('cotisation', event[1].titre, event[1].tarif);
-                setDatas({...datas, metadata: {
-                            ...datas.metadata,
-                            cotisation: event[1].titre,
-                            tarif_cotisation: event[1].tarif
-                        } });
-                    //setDatas({...datas, payer: event[1] });
+                if( event[1].titre != 'ANP') {
+                    setDatas({...datas,
+                                metadata: {
+                                ...datas.metadata,
+                                cotisation: event[1].titre,
+                                tarif_cotisation: event[1].tarif
+                            } });
+                }else{
+                    /**
+                     * Si c'est une adhésion ANP adhérent non pratiquant
+                     * on reset toutes les infos..
+                     */
+                    setDatas({...datas,
+                        totalAmount: event[1].tarif,
+                        initialAmount: event[1].tarif,
+                        metadata: {
+                        ...datas.metadata,
+                        cotisation: event[1].titre,
+                        tarif_cotisation: event[1].tarif,
+                        cotisation_famille: '',
+                        licence: '',
+                        type_licence: '',
+                        licence_famille: '',
+                        tarif_licence: 0,
+                        options_ffme: [],
+                        famille_adulte: [],
+                        famille_enfant: [],
+                        famille_supp: []
+                    } });
+                }
+
             break;
             case 'licence':
                 //console.log('licence', event[1].titre, event[1] );

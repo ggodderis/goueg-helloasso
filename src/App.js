@@ -60,7 +60,7 @@ const App = () => {
     ]);
 
     useEffect( () => {
-        window.scrollTo({ top: 50, behavior: 'smooth' });
+        window.scrollTo({ top: 400, behavior: 'smooth' });
     },[location]);
 
 /**
@@ -75,7 +75,7 @@ const App = () => {
 
     return (
         <>
-        <Header nav={nav} />
+        {/* <Header nav={nav} /> */}
             <Routes>
                 <Route exact path="/" element={ <Home nouveau={nouveau} user={user} /> } />
                 <Route exact path="/formulaire" element={ <Form setNouveau={setNouveau} nav={nav} setNav={setNav} user={user} handelDatas={handelDatas}/> } />
