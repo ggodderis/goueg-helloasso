@@ -54,7 +54,6 @@ const App = () => {
     }
     );
 
-    
     const [nav,setNav] = useState([
         { to: '/', label: 'Home'}
     ]);

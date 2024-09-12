@@ -35,6 +35,8 @@ const useDatas = () => {
         }
     } );
 
+    const infos_for_total = [];
+
 /**
  * On surveille la mise à jour des information de l'adhérent
  * et on l'injecte dans datas.payer:{}
@@ -62,10 +64,48 @@ const useDatas = () => {
 /** */
 
     useEffect ( () => {
-        console.log(datas);
         
-    },[datas]);
+        doTotal();
+        
+    },[datas.metadata]);
 
+/**
+ * Calcul du total
+ */
+    const doTotal = () => {
+
+        // console.log("soutien",datas.metadata.soutien,
+        //             "mur",datas.metadata.mur,
+        //             "tarif_cotisation", datas.metadata.tarif_cotisation,
+        //             "tarif_licence",datas.metadata.tarif_licence
+        // );
+
+        let options = 0;
+
+        metadata.options_ffme.map( (item,i) => {
+            //console.log("Options",item.titre,item.plein_tarif);
+            options += Number(item.plein_tarif);
+        })
+
+        
+        let total = 0;
+
+        total += Number( datas.metadata.soutien) ;
+        total += Number( datas.metadata.mur );
+        total += Number( datas.metadata.tarif_cotisation );
+        total += Number( datas.metadata.tarif_licence ) || 0;
+        total += Number( options );
+
+        // Manque Mur d'escalade famille dans formulaire famille
+
+        setDatas({...datas,
+            totalAmount: total,
+            initialAmount: total});
+    }
+
+    useEffect( () => {
+        console.log(datas);
+    },[datas]);
 /**
  * 
  * @param  {...any} event 
@@ -80,13 +120,14 @@ const useDatas = () => {
                 setPayer( event[1] );
                 break;
             case 'cotisation':
-                //console.log('cotisation', event[1].titre, event[1].tarif);
+                // console.log('cotisation', event[1].titre, event[1].tarif);
+
                 if( event[1].titre != 'ANP') {
                     setDatas({...datas,
                                 metadata: {
                                 ...datas.metadata,
                                 cotisation: event[1].titre,
-                                tarif_cotisation: event[1].tarif
+                                tarif_cotisation: Number(event[1].tarif)
                             } });
                 }else{
                     /**
@@ -94,12 +135,11 @@ const useDatas = () => {
                      * on reset toutes les infos..
                      */
                     setDatas({...datas,
-                        totalAmount: event[1].tarif,
-                        initialAmount: event[1].tarif,
                         metadata: {
                         ...datas.metadata,
+                        mur: 0,
                         cotisation: event[1].titre,
-                        tarif_cotisation: event[1].tarif,
+                        tarif_cotisation: Number(event[1].tarif),
                         cotisation_famille: '',
                         licence: '',
                         type_licence: '',
@@ -114,13 +154,15 @@ const useDatas = () => {
 
             break;
             case 'licence':
-                //console.log('licence', event[1].titre, event[1] );
+                //console.log('licence', event[1].licence, event[1].titre, event[1] );
                 setDatas({...datas, metadata: {
                             ...datas.metadata,
-                            licence_famille: event[1].type,
-                            type_licence: event[1].titre,
-                            tarif_licence: event[1].tarif
+                            licence: event[1].licence || '',
+                            licence_famille: event[1].type || '',
+                            type_licence: event[1].titre || '',
+                            tarif_licence: Number(event[1].tarif) || 0
                         } });
+                        
             break;
             case 'options':
                 setDatas( {...datas, metadata:{
@@ -132,6 +174,18 @@ const useDatas = () => {
                 setDatas( {...datas, metadata:{ 
                     ...datas.metadata,
                     famille_supp: event[1]
+                }})
+            break;
+            case 'mur':
+                setDatas( {...datas, metadata:{
+                    ...datas.metadata,
+                    mur: Number(event[1])
+                }})
+            break;
+            case 'soutien':
+                setDatas( {...datas, metadata:{
+                    ...datas.metadata,
+                    soutien: Number(event[1])
                 }})
             break;
         }

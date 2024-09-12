@@ -2,38 +2,16 @@ import { React, useState, useEffect } from "react";
 
 const useHello = () => {
 
-  // const [data,setData] = useState( {
-  //         totalAmount: 6000,
-  //         initialAmount: 6000,
-  //         itemName: 'Adhésion au club Grimpeurs des Alpes',
-  //         backUrl: 'https://www.club-montagne.net/helloasso/back.php', 
-  //         errorUrl: 'https://www.club-montagne.net/helloasso/error.php', 
-  //         returnUrl: 'https://www.club-montagne.net/helloasso/return.php', 
-  //         containsDonation: true, 
-  //         payer: {
-  //           firstName:'Frédéric',
-  //           lastName: 'Brand',
-  //           email: 'fbrand@orange.fr',
-  //           dateOfBirth: '1975-09-03',
-  //           address: '268, chemin des Traversières',
-  //           city: 'Les Adrets',
-  //           zipCode: '38190',
-  //           country: 'FRA',
-  //           companyName: ''
-  //         },
-  //         metadata: {}
-  // } );
-
   const [token,setToken] = useState('');
   const [datas,setData] = useState( null );
   const [url,setUrl] = useState('');
 
-  // useEffect( () => {
-  //   if( url != '' ){
-  //     window.location.href = url;
-  //   }
+  useEffect( () => {
+    if( url != '' ){
+      window.location.href = url;
+    }
     
-  // },[url]);
+  },[url]);
 
   /**
    * Si on a un token on appel Hello pour obtenir l'url

@@ -20,7 +20,19 @@ const Licence = (props) => {
  * contient la selection faite pour les licences
  * afin de savoir si c'est ffme ou ffr
  */
-    const [selectlicence,setSelectlicence] = useState([]);
+// let toto = [];
+
+//     activites.map( (item,i) => {
+//         if( item.checked ){
+//             toto.push( item.name )
+//         }
+//         if( item.labelchecked ){
+//             toto.push( item.labelname );
+//         }
+//     });
+    
+const [selectlicence,setSelectlicence] = useState([]);
+
 
 /** 
  * POUR LA NAVIGATION
@@ -115,13 +127,13 @@ useEffect( () => {
  */
 const handelOptions = (event) => {
 
-    const {name} = event.target;
+    const {name,checked} = event.target;
 
-    console.log('handelOptions',name);
+    console.log('handelOptions',name,checked);
 
    let new_options = options.map( (item,i) => {
             if (item.name === name){
-               item.checked =! item.checked; }
+               item.checked = checked; }
              return item;
             } );
        
@@ -139,7 +151,7 @@ const handelResetOptions = () => {
     setSelection({...selection,
             options:new_options
         }
-    );
+    );  
 }
 useEffect( () => {
     let options_for_datas = options.filter( item => item.checked );
@@ -159,14 +171,17 @@ const handelPaye = (event) => {
  * Choix de la licence selon les activitées et le niveau choisi
  */
     useEffect( () => {
-     
         /**
          * si il n'y a pas de licence on vide le champs type_licence dans useDatas
          * ça évite le bug d'affichage des options
          */
-        if(selectlicence.length === 0 ){
-            handelDatas('licence','');
-        }
+        // if(selectlicence.length === 0 ){
+        //     handelDatas('licence',[]);
+        // }
+
+        // if( datas.metadata.type_licence === ''){
+        //     handelResetOptions();
+        // }
         
 
         if( selectlicence.length !==0 && famille !=="" )
@@ -255,7 +270,8 @@ const handelPaye = (event) => {
 
         }
 
-    } ,[selectlicence,famille])
+    } ,[selectlicence,famille]);
+
 
 function handelClickPrecedente(event){
         //console.log('validation', event.target, club );
@@ -318,9 +334,9 @@ function handelClickPrecedente(event){
 
                 {
                             
-                    datas.metadata.type_licence === 'FFME_FA' || 
-                    datas.metadata.type_licence === 'FFME_FJ' || 
-                    datas.metadata.type_licence === 'FFME_FF2' ? (
+                    datas.metadata.type_licence == 'FFME_FA' || 
+                    datas.metadata.type_licence == 'FFME_FJ' || 
+                    datas.metadata.type_licence == 'FFME_FF2' ? (
                     
                     <fieldset>
                         <legend>Options supplémentaires (nom obligatoire)</legend>
@@ -328,7 +344,7 @@ function handelClickPrecedente(event){
                         options.map( (item,i) => (
                             <div className="ligne_licence">
                                 <label key={item.id} className="label_radio">
-                                    <input type="radio" name={item.name} id={item.name} checked={item.checked} value={item.titre} onClick={handelOptions} />
+                                    <input type="checkbox" name={item.name} id={item.name} checked={item.checked} value={item.titre} onClick={handelOptions} />
                                     {item.titre}&nbsp;<b>{item.plein_tarif/100}€</b>
                                 </label>
                             </div>

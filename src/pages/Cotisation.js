@@ -33,13 +33,13 @@ const Cotisation = (props) => {
 
     }, []);
 
-    function handelClickValidation(event){
+    const handelClickValidation = (event) => {
         //console.log('validation', event.target, club );
         navigate('/licence');
     }
 /** */
 
-    function handelClickCotisation(event){
+    const handelClickCotisation = (event) => {
 
         const {name,value} = event.target;
 
@@ -52,6 +52,29 @@ const Cotisation = (props) => {
         
         handelDatas('cotisation',el);
 
+    }
+
+    const handelClickMurSoutien = (event) => {
+
+        const {name,value,checked} = event.target;
+
+        switch (name) {
+            case 'mur':
+                if( checked ){
+                    handelDatas('mur',value);
+                }else{
+                    handelDatas('mur',0);
+                }   
+                break;
+            case 'soutien':
+                if( checked ){
+                    handelDatas('soutien',value);
+                }else{
+                    handelDatas('soutien',0);
+                }  
+                break;
+        }
+        
     }
 
     function handelClickPrecedente(event){
@@ -96,15 +119,20 @@ const Cotisation = (props) => {
             ):('')
         }
             <h4 className="hello_h4">Voulez-vous utiliser le mur d'escalade au gymnase Berthe de Boissieux ?</h4>
-                <label className="label_radio"><input type="checkbox" name="mur" />oui :&nbsp;<b>30€</b></label>
+                <label className="label_radio">
+                    <input type="checkbox" name="mur" checked={ metadata.mur } value="3000" onChange={handelClickMurSoutien} />oui :&nbsp;<b>30€</b>
+                    </label>
             <h4 className="hello_h4">Voulez-vous ajouter une cotisation de soutien au club ?</h4>
-                <label className="label_radio"><input type="checkbox" name="soutien" />cotisation de soutien au club :&nbsp;<b>10€</b></label>
+                <label className="label_radio">
+                    <input type="checkbox" name="soutien" checked={ metadata.soutien } value="1000" onChange={handelClickMurSoutien} />cotisation de soutien au club :&nbsp;<b>10€</b>
+                    </label>
         </fieldset>
 
 
             {
                 metadata.cotisation === 'F/F2' ? ( <FormFamille metadata={metadata} handelDatas={handelDatas} /> ):('')
             }
+
             <Total datas={datas}/>
             <div className="navig_bottom">
                 <button type="button" className='bt_bleu_outline' onClick={handelClickPrecedente}><i className="icon-chevron-gauche"></i>&nbsp;Étape précédente</button>
