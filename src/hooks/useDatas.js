@@ -34,9 +34,140 @@ const useDatas = () => {
             payer: {}
         }
     } );
+        /**
+     * @param selection []
+     * Contient la liste des activités pour les licences
+     * contient également les selections faites par l'adhérent
+     */
+    const [selection,setSelection] = useState({
+        famille: '',
+        activites: [
+        {descriptif:'Randonnée pédestre', name: 'RP', checked: false },
+        {descriptif:'Raquette à neige', name: 'RN', checked: false },
+        {descriptif:'Via ferrata', name: 'VF', checked: false },
+        {descriptif:'Canyoning', name: 'CA', checked: false },
+        {descriptif:'Ski alpin sur domaine station', name: 'SKIA', checked: false },
+        {descriptif:'Vtt', name: 'VTT', checked: false },
+        {descriptif:'Escalade', name: 'ESCA', checked: false },
+        {descriptif:'Alpinisme', name: 'ALPI', checked: false, label: 'Pratiquez vous l\'alpinisme à un niveau supérieur à PD ?', labelname: 'ALPI_SUP', labelchecked: false, show: false },
+        {descriptif:'Ski de randonnée', name: 'SKIR', checked: false, label: 'Pratiquez vous le Ski de randonnée à un niveau supérieur à PD ?', labelname: 'SKIR_SUP',labelchecked: false, show: false }
+        ],
+        options: the_ajax_script.options_ffme
+    }
+    );
 
-    const infos_for_total = [];
+    useEffect( () => {
+        console.log("Mise à jour selection");
 
+        let options_for_datas = selection.options.filter( item => item.checked );
+        let activite_for_datas = selection.activites.filter( item => item.checked );
+
+        handelDatas('licence', getLicences(activite_for_datas,options_for_datas) );
+        
+        
+    },[selection]);
+
+    const getLicences = (dt,ops) => {
+
+        let licence_name = [];
+
+        dt.map( (item,i) => {
+            if( item.checked ){
+                licence_name.push(item.name);
+            }
+            if( item.labelchecked ){
+                licence_name.push(item.labelname);
+            }
+        });
+
+        let new_licence = null;
+
+        if( licence_name.length !==0 && selection.famille !=="" ){
+
+            if( licence_name.includes('ESCA') ||
+                licence_name.includes('ALPI_SUP') ||
+                licence_name.includes('SKIR_SUP') ){
+                
+                const {licences} = liste.ffme;
+
+                if( selection.famille === 'famille'){ 
+                    
+                    Object.entries(licences).map( ([item,obj]) => {
+                        
+                            if( obj.titre == 'FFME_FF2' ){
+                                new_licence = obj;
+                            }  
+                    });
+
+                }else{
+                    Object.entries(licences).map( ([item,obj]) => {
+                        if( obj.titre == 'FFME_FJ' ){
+                            new_licence = obj;
+                        }else{
+                            if( obj.titre == 'FFME_FA' ){
+                            new_licence = obj;
+                            }
+                        }
+                    });
+                }
+
+            }else{
+
+                ops = [];
+
+                if( licence_name.includes('ALPI') ||
+                    licence_name.includes('SKIR') ||
+                    licence_name.includes('VTT') ||
+                    licence_name.includes('VF') ||
+                    licence_name.includes('CA') ||
+                    licence_name.includes('SKIA') ){
+                    
+                    const {licences} = liste.ffr;
+
+                    Object.entries(licences).map( ([item,obj]) => {
+
+                        if( selection.famille === 'famille'){
+
+                            if( obj.titre == 'FFR_FMPN' ){
+                                new_licence = obj;
+                            } 
+                        }else{
+                            if( obj.titre == 'FFR_IMPN' || obj.titre == 'FFR_IMPNJ'){
+                                new_licence = obj;
+                            }
+                        }
+
+                    });
+
+                }else{
+
+                    const {licences} = liste.ffr;
+
+                    Object.entries(licences).map( ([item,obj]) => {
+
+                        if( selection.famille === 'famille'){
+
+                            if( obj.titre == 'FFR_FRA'){
+                                new_licence = obj;
+                            }
+                            
+                        }else{
+                            if( obj.titre == 'FFR_IRA' || obj.titre == 'FFR_IMPNJ'){
+                                new_licence = obj;
+                            }
+                        }
+
+                    })
+                }
+
+            }
+
+
+        }
+
+        return [new_licence,ops];
+
+    }
 /**
  * On surveille la mise à jour des information de l'adhérent
  * et on l'injecte dans datas.payer:{}
@@ -46,7 +177,7 @@ const useDatas = () => {
     useEffect( () => {
  
         if( payer.dateOfBirth != undefined ){
-            console.log( 'Payer :: ',payer );
+            console.log( 'useEffect payer',payer );
             
             handelCotisation( payer.dateOfBirth );
 
@@ -66,6 +197,9 @@ const useDatas = () => {
     useEffect ( () => {
         
         doTotal();
+
+        console.log('useEffect datas.metadata',datas.metadata);
+        
         
     },[datas.metadata]);
 
@@ -103,9 +237,9 @@ const useDatas = () => {
             initialAmount: total});
     }
 
-    useEffect( () => {
-        console.log(datas);
-    },[datas]);
+    // useEffect( () => {
+    //     console.log('datas change',datas);
+    // },[datas]);
 /**
  * 
  * @param  {...any} event 
@@ -154,21 +288,28 @@ const useDatas = () => {
 
             break;
             case 'licence':
-                //console.log('licence', event[1].licence, event[1].titre, event[1] );
+                //console.log('licence',event[1][0],'options',event[1][1]);
+                if( event[1][0] ){
+
                 setDatas({...datas, metadata: {
                             ...datas.metadata,
-                            licence: event[1].licence || '',
-                            licence_famille: event[1].type || '',
-                            type_licence: event[1].titre || '',
-                            tarif_licence: Number(event[1].tarif) || 0
+                            licence: event[1][0].licence || '',
+                            licence_famille: event[1][0].type || '',
+                            type_licence: event[1][0].titre || '',
+                            tarif_licence: Number(event[1][0].tarif) || 0,
+                            options_ffme: event[1][1] || []
                         } });
+
+                }
                         
             break;
             case 'options':
+                console.log('useDatas options', event[1]);
                 setDatas( {...datas, metadata:{
                     ...datas.metadata,
                     options_ffme: event[1]
-                }})
+                }});
+
             break;
             case 'add_membre':
                 setDatas( {...datas, metadata:{ 
@@ -195,7 +336,7 @@ const useDatas = () => {
     const user = datas.payer;
     const metadata = datas.metadata;
 
-    return [datas,user,liste,metadata,handelDatas];
+    return [datas,user,liste,metadata,selection,setSelection,handelDatas];
 
 }
 export default useDatas;

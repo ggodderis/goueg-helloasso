@@ -20,20 +20,27 @@ const Licence = (props) => {
  * contient la selection faite pour les licences
  * afin de savoir si c'est ffme ou ffr
  */
-// let toto = [];
-
-//     activites.map( (item,i) => {
-//         if( item.checked ){
-//             toto.push( item.name )
-//         }
-//         if( item.labelchecked ){
-//             toto.push( item.labelname );
-//         }
-//     });
     
 const [selectlicence,setSelectlicence] = useState([]);
 
+useEffect( () => {
 
+    let toto = [];
+
+    activites.map( (item,i) => {
+        if( item.checked ){
+            toto.push( item.name )
+        }
+        if( item.labelchecked ){
+            toto.push( item.labelname );
+        }
+    });
+    setSelectlicence(toto);
+
+    console.log('toto',toto);
+    
+
+},[]);
 /** 
  * POUR LA NAVIGATION
  * On regarde si le label Formulaire existe dans nav
@@ -53,7 +60,7 @@ useEffect( () => {
 }, []);
 
 /**
- * Mise à jour de selection [] dans App.js
+ * Mise à jour de selection [] dans useDatas.js
  */
     const handelCheckbox = (event) => {
 
@@ -129,8 +136,6 @@ const handelOptions = (event) => {
 
     const {name,checked} = event.target;
 
-    console.log('handelOptions',name,checked);
-
    let new_options = options.map( (item,i) => {
             if (item.name === name){
                item.checked = checked; }
@@ -141,22 +146,8 @@ const handelOptions = (event) => {
             options:new_options
         }
     );
+
 }
-const handelResetOptions = () => {
-    let new_options = options.map( (item,i) => {
-           item.checked = false;
-         return item;
-        } );
-   
-    setSelection({...selection,
-            options:new_options
-        }
-    );  
-}
-useEffect( () => {
-    let options_for_datas = options.filter( item => item.checked );
-    handelDatas('options',options_for_datas);
-},[options]);
 
 /**
  * On paye !
@@ -167,110 +158,6 @@ const handelPaye = (event) => {
     useEffect( () => {
         console.log(token);
     },[token])
-/**
- * Choix de la licence selon les activitées et le niveau choisi
- */
-    useEffect( () => {
-        /**
-         * si il n'y a pas de licence on vide le champs type_licence dans useDatas
-         * ça évite le bug d'affichage des options
-         */
-        // if(selectlicence.length === 0 ){
-        //     handelDatas('licence',[]);
-        // }
-
-        // if( datas.metadata.type_licence === ''){
-        //     handelResetOptions();
-        // }
-        
-
-        if( selectlicence.length !==0 && famille !=="" )
-
-        if( selectlicence.includes('ESCA') ||
-            selectlicence.includes('ALPI_SUP') ||
-            selectlicence.includes('SKIR_SUP') ){
-            
-            const {licences} = liste.ffme;
-
-            if( famille == 'famille'){ 
-               
-                Object.entries(licences).map( ([item,obj]) => {
-                    
-                        if( obj.titre == 'FFME_FF2' ){
-                            handelDatas('licence',obj);
-                        }  
-                });
-
-            }else{
-
-                Object.entries(licences).map( ([item,obj]) => {
-                    
-                    if( obj.titre == 'FFME_FJ' ){
-                        handelDatas('licence',obj);
-                    }else{
-                        if( obj.titre == 'FFME_FA' ){
-                        handelDatas('licence',obj);
-                        }
-                    }
-                });
-            }
-            
-        }else{
-    
-            if( selectlicence.includes('ALPI') ||
-                selectlicence.includes('SKIR') ||
-                selectlicence.includes('VTT') ||
-                selectlicence.includes('VF') ||
-                selectlicence.includes('CA') ||
-                selectlicence.includes('SKIA') ){
-
-                    const {licences} = liste.ffr;
-
-                    Object.entries(licences).map( ([item,obj]) => {
-                    
-                        if( famille == 'famille'){
-
-                            if( obj.titre == 'FFR_FMPN' ){
-                                handelDatas('licence',obj);
-                            } 
-                        }else{
-                            if( obj.titre == 'FFR_IMPN' || obj.titre == 'FFR_IMPNJ'){
-                                handelDatas('licence',obj);
-                            }
-                        }
-
-                    });
-
-                }else{
-
-                    const {licences} = liste.ffr;
-
-                    Object.entries(licences).map( ([item,obj]) => {
-
-                        if( famille == 'famille'){
-
-                            if( obj.titre == 'FFR_FRA'){
-                                handelDatas('licence',obj);
-                            }
-                            
-                        }else{
-                            if( obj.titre == 'FFR_IRA' || obj.titre == 'FFR_IMPNJ'){
-                                handelDatas('licence',obj);
-                            }
-                        }
-
-                    })
-
-                }
-
-            /**
-             * Remise à zéro des options partout !
-             */
-            handelResetOptions();
-
-        }
-
-    } ,[selectlicence,famille]);
 
 
 function handelClickPrecedente(event){
@@ -334,9 +221,9 @@ function handelClickPrecedente(event){
 
                 {
                             
-                    datas.metadata.type_licence == 'FFME_FA' || 
-                    datas.metadata.type_licence == 'FFME_FJ' || 
-                    datas.metadata.type_licence == 'FFME_FF2' ? (
+                    selectlicence.includes('ESCA') ||
+                    selectlicence.includes('ALPI_SUP') ||
+                    selectlicence.includes('SKIR_SUP') ? (
                     
                     <fieldset>
                         <legend>Options supplémentaires (nom obligatoire)</legend>
