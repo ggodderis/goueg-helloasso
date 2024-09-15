@@ -6,6 +6,7 @@ import useCotisations from './useCotisations';
 
 const useDatas = () => {
 
+    //const options = the_ajax_script.options_ffme.map( (item,i) => { item.checked = false; return item} );
     const [liste,handelCotisation] = useCotisations();
     const [payer,setPayer] = useState({});
     const [datas,setDatas] = useState( {
@@ -27,13 +28,14 @@ const useDatas = () => {
             type_licence: '',
             licence_famille: '',
             tarif_licence: 0,
-            options_ffme: [],
-            famille_adulte: [],
-            famille_enfant: [],
+            options_ffme: the_ajax_script.options_ffme,
+            famille_adulte: {},
+            famille_enfant: {},
             famille_supp: [],
             payer: {}
         }
     } );
+    
         /**
      * @param selection []
      * Contient la liste des activités pour les licences
@@ -47,7 +49,7 @@ const useDatas = () => {
         {descriptif:'Via ferrata', name: 'VF', checked: false },
         {descriptif:'Canyoning', name: 'CA', checked: false },
         {descriptif:'Ski alpin sur domaine station', name: 'SKIA', checked: false },
-        {descriptif:'Vtt', name: 'VTT', checked: false },
+        {descriptif:'VTT', name: 'VTT', checked: false },
         {descriptif:'Escalade', name: 'ESCA', checked: false },
         {descriptif:'Alpinisme', name: 'ALPI', checked: false, label: 'Pratiquez vous l\'alpinisme à un niveau supérieur à PD ?', labelname: 'ALPI_SUP', labelchecked: false, show: false },
         {descriptif:'Ski de randonnée', name: 'SKIR', checked: false, label: 'Pratiquez vous le Ski de randonnée à un niveau supérieur à PD ?', labelname: 'SKIR_SUP',labelchecked: false, show: false }
@@ -59,17 +61,19 @@ const useDatas = () => {
     useEffect( () => {
         console.log("Mise à jour selection");
 
-        let options_for_datas = selection.options.filter( item => item.checked );
+        //let options_for_datas = selection.options.filter( item => item.checked );
         let activite_for_datas = selection.activites.filter( item => item.checked );
 
-        handelDatas('licence', getLicences(activite_for_datas,options_for_datas) );
+        handelDatas('licence', getLicences(activite_for_datas) );
         
         
     },[selection]);
 
-    const getLicences = (dt,ops) => {
+
+    const getLicences = (dt) => {
 
         let licence_name = [];
+        let ops = datas.metadata.options_ffme;
 
         dt.map( (item,i) => {
             if( item.checked ){
@@ -82,7 +86,10 @@ const useDatas = () => {
 
         let new_licence = null;
 
-        if( licence_name.length !==0 && selection.famille !=="" ){
+        console.log('licence_name::',licence_name);
+        
+
+        if( licence_name.length !==0 ){
 
             if( licence_name.includes('ESCA') ||
                 licence_name.includes('ALPI_SUP') ||
@@ -113,8 +120,6 @@ const useDatas = () => {
 
             }else{
 
-                ops = [];
-
                 if( licence_name.includes('ALPI') ||
                     licence_name.includes('SKIR') ||
                     licence_name.includes('VTT') ||
@@ -123,6 +128,8 @@ const useDatas = () => {
                     licence_name.includes('SKIA') ){
                     
                     const {licences} = liste.ffr;
+
+                    ops = ops.map( (item,i) => { item.checked = false; return item });
 
                     Object.entries(licences).map( ([item,obj]) => {
 
@@ -163,6 +170,9 @@ const useDatas = () => {
             }
 
 
+        }else{
+            new_licence = [];
+            ops = ops.map( (item,i) => { item.checked = false; return item });
         }
 
         return [new_licence,ops];
@@ -185,7 +195,6 @@ const useDatas = () => {
                 payer: payer,
                 metadata: {
                     ...datas.metadata,
-                    options_ffme: [],
                     payer: payer
                 }
             });
@@ -218,7 +227,7 @@ const useDatas = () => {
 
         metadata.options_ffme.map( (item,i) => {
             //console.log("Options",item.titre,item.plein_tarif);
-            options += Number(item.plein_tarif);
+            if( item.checked ){ options += Number(item.plein_tarif); }
         })
 
         
@@ -327,6 +336,12 @@ const useDatas = () => {
                 setDatas( {...datas, metadata:{
                     ...datas.metadata,
                     soutien: Number(event[1])
+                }})
+            break;
+            case 'Adulte':
+                setDatas( {...datas, metadata:{
+                    ...datas.metadata,
+                    famille_adulte: event[1]
                 }})
             break;
         }

@@ -4,12 +4,21 @@ import { paysListe } from '../datas/paysListe';
 
 const FormMembre = (props) => {
 
-const {legend,handelSuppMembre,monid,isMobile} = props;
+const {legend,handelSuppMembre,handelDatas,monid,isMobile} = props;
 const [etat,setEtat]= useState(isMobile);
 const [titre,setTitre] = useState('');
 
 const handelSubmit = (event) => {
     event.preventDefault();
+
+    let champs = new FormData( event.target );
+    let adherent = Object.fromEntries(champs);
+    
+    console.log( 'Toutes les infos sont bonnes', legend, adherent );
+        
+    // handelUserEmail( adherent.email );
+    handelDatas( legend, adherent );
+    
 }
 const suppMembre = (event) => {
     handelSuppMembre(monid);

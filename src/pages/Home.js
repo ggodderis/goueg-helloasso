@@ -32,7 +32,7 @@ const Home = (props) => {
 
                     <div>
                         <h2 className='titre_adhesion'>Je suis déjà adhérent</h2>
-                        <a href="/member-login?redirect_to=page-d-exemple" className='bt_bleu'>Je m'indentifie</a>
+                        <a href="/member-login?redirect_to=page-d-exemple" className='bt_bleu'>Je m'identifie</a>
                     </div>
 
                     <div>

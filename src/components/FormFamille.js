@@ -54,8 +54,8 @@ const FormFamille = (props) => {
     return(
       <div>
          <div className="content_membre">
-          <FormMembre legend="Deuxiéme Adulte" />
-          <FormMembre legend="Enfant" />
+          <FormMembre legend="Adulte" handelDatas={handelDatas} />
+          <FormMembre legend="Enfant" handelDatas={handelDatas} />
           {
             famille_supp.map( (item,i) => (
               <FormMembre monid={item.id} key={i} handelSuppMembre={handelSuppMembre} isMobile="mobile" />

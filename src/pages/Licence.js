@@ -13,7 +13,9 @@ const Licence = (props) => {
  * de @param selection []
  */
     const {nav,setNav,liste,datas,handelDatas,selection,setSelection} = props;
-    const {activites,famille,options} = props.selection;
+    const {metadata} = datas;
+    const {options_ffme} = datas.metadata;
+    const {activites,famille,} = props.selection;
 
 /**
  * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
@@ -22,6 +24,7 @@ const Licence = (props) => {
  */
     
 const [selectlicence,setSelectlicence] = useState([]);
+
 
 useEffect( () => {
 
@@ -106,10 +109,10 @@ useEffect( () => {
 /**
  * Choix du type de licence famille ou seul
  */
-    const handelFamille = (event) => {
-        const {value} = event.target;
-        setSelection({...selection,famille:value});
-    }
+    // const handelFamille = (event) => {
+    //     const {value} = event.target;
+    //     setSelection({...selection,famille:value});
+    // }
 
     useEffect( () => {
         /**
@@ -136,17 +139,47 @@ const handelOptions = (event) => {
 
     const {name,checked} = event.target;
 
-   let new_options = options.map( (item,i) => {
+   let new_options = options_ffme.map( (item,i) => {
+    
             if (item.name === name){
-               item.checked = checked; }
-             return item;
-            } );
-       
-    setSelection({...selection,
-            options:new_options
-        }
-    );
 
+               item.checked = checked;
+
+            }
+             return item;
+
+            } 
+        );
+    
+    // setSelection({...selection,
+    //         options:new_options
+    //     }
+    // );
+    handelDatas('options',new_options);
+
+}
+
+const handelClickMurSoutien = (event) => {
+
+    const {name,value,checked} = event.target;
+
+    switch (name) {
+        case 'mur':
+            if( checked ){
+                handelDatas('mur',value);
+            }else{
+                handelDatas('mur',0);
+            }   
+            break;
+        case 'soutien':
+            if( checked ){
+                handelDatas('soutien',value);
+            }else{
+                handelDatas('soutien',0);
+            }  
+            break;
+    }
+    
 }
 
 /**
@@ -175,7 +208,7 @@ function handelClickPrecedente(event){
     return(
         <>
         <h2>Licences / Assurances</h2>
-        <fieldset>
+        {/* <fieldset>
             <legend>Prenez-vous une licence pour:</legend>
             <div className="ligne_licence">
                 <label className="label_radio">
@@ -187,9 +220,8 @@ function handelClickPrecedente(event){
                 <input type="radio" name="licence_type" value="famille" onChange={handelFamille} checked={famille === 'famille'}/> Vous et votre famille
                 </label>
             </div>
-        </fieldset>
-        {
-            famille !== '' ? (
+        </fieldset> */}
+
             <div className="content_membre">
                 <fieldset>
                         <legend>Cochez les activités que vous voulez pratiquer:</legend>
@@ -228,7 +260,7 @@ function handelClickPrecedente(event){
                     <fieldset>
                         <legend>Options supplémentaires (nom obligatoire)</legend>
                         {
-                        options.map( (item,i) => (
+                        options_ffme.map( (item,i) => (
                             <div className="ligne_licence">
                                 <label key={item.id} className="label_radio">
                                     <input type="checkbox" name={item.name} id={item.name} checked={item.checked} value={item.titre} onClick={handelOptions} />
@@ -244,10 +276,12 @@ function handelClickPrecedente(event){
                 }
 
             </div>
-
-            ):('')
-            
-        }
+            <fieldset>
+                <legend>Voulez-vous utiliser le mur d'escalade au gymnase Berthe de Boissieux ?</legend>
+                <label className="label_radio">
+                    <input type="checkbox" name="mur" checked={ metadata.mur } value="3000" onChange={handelClickMurSoutien} />oui :&nbsp;<b>30€</b>
+                </label>
+            </fieldset>
         
         <Total datas={datas}/>
         <div className="navig_bottom">

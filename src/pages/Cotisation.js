@@ -118,10 +118,6 @@ const Cotisation = (props) => {
                 )
             ):('')
         }
-            <h4 className="hello_h4">Voulez-vous utiliser le mur d'escalade au gymnase Berthe de Boissieux ?</h4>
-                <label className="label_radio">
-                    <input type="checkbox" name="mur" checked={ metadata.mur } value="3000" onChange={handelClickMurSoutien} />oui :&nbsp;<b>30€</b>
-                    </label>
             <h4 className="hello_h4">Voulez-vous ajouter une cotisation de soutien au club ?</h4>
                 <label className="label_radio">
                     <input type="checkbox" name="soutien" checked={ metadata.soutien } value="1000" onChange={handelClickMurSoutien} />cotisation de soutien au club :&nbsp;<b>10€</b>
@@ -142,7 +138,7 @@ const Cotisation = (props) => {
 
             }
             {
-                metadata.cotisation != 'ANP' && metadata.cotisation != '' ? 
+                metadata.cotisation != 'ANP' && metadata.cotisation != '' && metadata.cotisation != 'F/F2' ? 
                 (<button type="button" className='bt_bleu' onClick={ handelClickValidation }>Étape suivante&nbsp;<i className="icon-chevron-droite"></i></button>):('')
             }
             </div>

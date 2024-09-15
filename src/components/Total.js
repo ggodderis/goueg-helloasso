@@ -27,10 +27,9 @@ return(
             type_licence ? ( <span>Licence et assurance {type_licence} <b>{tarif_licence/100} €</b></span>):('')
         }
         {
-            options_ffme.map( (item,i) => (
-                   <span key={i}>Options FFME {item.titre} <b>{item.plein_tarif/100} €</b></span>
-                    
-                ))
+            options_ffme.map( (item,i) => 
+                item.checked ? (<span key={i}>Options FFME {item.titre} <b>{item.plein_tarif/100} €</b></span>):('')
+                )
         }
         <span>Total <b>{totalAmount/100} €</b></span>
     </div>

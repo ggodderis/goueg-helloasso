@@ -35,7 +35,11 @@ const App = () => {
     ]);
 
     useEffect( () => {
-        window.scrollTo({ top: 400, behavior: 'smooth' });
+
+        if( location.pathname != "/"){
+            window.scrollTo({ top: 300, behavior: 'smooth' });
+        }
+
     },[location]);
 
 /**
