@@ -52,25 +52,33 @@ const useDatas = () => {
         {descriptif:'VTT', name: 'VTT', checked: false },
         {descriptif:'Escalade', name: 'ESCA', checked: false },
         {descriptif:'Alpinisme', name: 'ALPI', checked: false, label: 'Pratiquez vous l\'alpinisme à un niveau supérieur à PD ?', labelname: 'ALPI_SUP', labelchecked: false, show: false },
-        {descriptif:'Ski de randonnée', name: 'SKIR', checked: false, label: 'Pratiquez vous le Ski de randonnée à un niveau supérieur à PD ?', labelname: 'SKIR_SUP',labelchecked: false, show: false }
+        {descriptif:'Ski de randonnée', name: 'SKIR', checked: false, label: 'Pratiquez vous le Ski de randonnée à un niveau supérieur à PD ?', labelname: 'SKIR_SUP',labelchecked: false, show: false },
         ],
-        options: the_ajax_script.options_ffme
+        mur: {descriptif:'Voulez-vous utiliser le mur d\'escalade au gymnase Berthe de Boissieux ?',name:'mur', checked: false, plein_tarif:3000}
     }
     );
 
     useEffect( () => {
         console.log("Mise à jour selection");
 
-        //let options_for_datas = selection.options.filter( item => item.checked );
-        let activite_for_datas = selection.activites.filter( item => item.checked );
+        let new_mur = 0;
+        let activite_for_datas = null;
 
-        handelDatas('licence', getLicences(activite_for_datas) );
+        if( selection.mur.checked ){
+            new_mur = selection.mur.plein_tarif;
+            selection.activites = selection.activites.map( (item,i) => { if( item.name === 'ESCA' ) { item.checked = true } return item; });
+        }
+
+        //let options_for_datas = selection.options.filter( item => item.checked );
+        activite_for_datas = selection.activites.filter( item => item.checked );
+
+        handelDatas('licence', getLicences(activite_for_datas,new_mur) );
         
         
     },[selection]);
 
 
-    const getLicences = (dt) => {
+const getLicences = (dt,new_mur) => {
 
         let licence_name = [];
         let ops = datas.metadata.options_ffme;
@@ -86,14 +94,14 @@ const useDatas = () => {
 
         let new_licence = null;
 
-        console.log('licence_name::',licence_name);
-        
+        //console.log('licence_name::',licence_name,selection.mur.checked );
 
-        if( licence_name.length !==0 ){
+    if( licence_name.length !==0 || selection.mur.checked ){
 
             if( licence_name.includes('ESCA') ||
                 licence_name.includes('ALPI_SUP') ||
-                licence_name.includes('SKIR_SUP') ){
+                licence_name.includes('SKIR_SUP') ||
+                selection.mur.checked ){
                 
                 const {licences} = liste.ffme;
 
@@ -128,7 +136,9 @@ const useDatas = () => {
                     licence_name.includes('SKIA') ){
                     
                     const {licences} = liste.ffr;
-
+                    /**
+                     * Remise à zéro des options
+                     */
                     ops = ops.map( (item,i) => { item.checked = false; return item });
 
                     Object.entries(licences).map( ([item,obj]) => {
@@ -149,6 +159,10 @@ const useDatas = () => {
                 }else{
 
                     const {licences} = liste.ffr;
+                    /**
+                     * Remise à zéro des options
+                     */
+                    ops = ops.map( (item,i) => { item.checked = false; return item });
 
                     Object.entries(licences).map( ([item,obj]) => {
 
@@ -170,14 +184,17 @@ const useDatas = () => {
             }
 
 
-        }else{
-            new_licence = [];
-            ops = ops.map( (item,i) => { item.checked = false; return item });
-        }
-
-        return [new_licence,ops];
-
+    }else{
+        /**
+         * Si la licence_name est vide on remet à zero la licence est les options
+         */
+        new_licence = [];
+        ops = ops.map( (item,i) => { item.checked = false; return item });
     }
+
+        return [new_licence,ops,new_mur];
+
+}
 /**
  * On surveille la mise à jour des information de l'adhérent
  * et on l'injecte dans datas.payer:{}
@@ -277,6 +294,11 @@ const useDatas = () => {
                      * Si c'est une adhésion ANP adhérent non pratiquant
                      * on reset toutes les infos..
                      */
+                    let options = datas.metadata.options_ffme.map( (item,i) => { item.checked = false; return item });
+                    let licences = selection.activites.map( (item,i) => { item.checked = false, item.labelchecked = false; return item } );
+                    selection.activites = licences;
+                    selection.mur =  {...selection.mur, checked: false }
+
                     setDatas({...datas,
                         metadata: {
                         ...datas.metadata,
@@ -285,10 +307,10 @@ const useDatas = () => {
                         tarif_cotisation: Number(event[1].tarif),
                         cotisation_famille: '',
                         licence: '',
+                        options_ffme: options,
                         type_licence: '',
                         licence_famille: '',
                         tarif_licence: 0,
-                        options_ffme: [],
                         famille_adulte: [],
                         famille_enfant: [],
                         famille_supp: []
@@ -306,7 +328,8 @@ const useDatas = () => {
                             licence_famille: event[1][0].type || '',
                             type_licence: event[1][0].titre || '',
                             tarif_licence: Number(event[1][0].tarif) || 0,
-                            options_ffme: event[1][1] || []
+                            options_ffme: event[1][1] || [],
+                            mur: event[1][2] || 0
                         } });
 
                 }
@@ -342,6 +365,26 @@ const useDatas = () => {
                 setDatas( {...datas, metadata:{
                     ...datas.metadata,
                     famille_adulte: event[1]
+                }})
+            break;
+            case 'Enfant':
+                setDatas( {...datas, metadata:{
+                    ...datas.metadata,
+                    famille_enfant: event[1]
+                }})
+            break;
+            case 'Membres':
+                //console.log("Membres",event[1]);
+                let membres = datas.metadata.famille_supp.map( (item,i) => { 
+                    if( item.id === event[1].id ){
+                        return event[1];
+                    }else{
+                        return item;
+                    }
+                })
+                setDatas( {...datas, metadata:{
+                    ...datas.metadata,
+                    famille_supp: membres
                 }})
             break;
         }

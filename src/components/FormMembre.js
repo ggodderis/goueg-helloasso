@@ -4,11 +4,12 @@ import { paysListe } from '../datas/paysListe';
 
 const FormMembre = (props) => {
 
-const {legend,handelSuppMembre,handelDatas,monid,isMobile} = props;
-const [etat,setEtat]= useState(isMobile);
+const {legend,famille_supp,handelSuppMembre,handelDatas,monid,isReset} = props;
+const [etat,setEtat]= useState(isReset);
 const [titre,setTitre] = useState('');
 
 const handelSubmit = (event) => {
+
     event.preventDefault();
 
     let champs = new FormData( event.target );
@@ -24,6 +25,15 @@ const suppMembre = (event) => {
     handelSuppMembre(monid);
 }
 
+useEffect( () => {
+
+    if( etat === 'reset' ){
+        let ce_formulaire = famille_supp.filter( item => item.id === monid );
+        console.log(etat,ce_formulaire.id);
+    }
+    
+},[famille_supp]);
+
     return(
         <form onSubmit={handelSubmit} className="form_inscription">
 
@@ -31,7 +41,9 @@ const suppMembre = (event) => {
         <legend>
            {legend}
         </legend>
-
+            {
+                monid ? (<input type="hidden" name="id" value={monid} />):('')
+            }
             <div className="label_ligne">
                 <label>Nom:
                     <input type="text" name="lastName" id="lastName" defaultValue="" required />
@@ -94,24 +106,23 @@ const suppMembre = (event) => {
            
             <h4 className="hello_h4">Personne à prévenir en cas de problème:</h4>
 
-            <div className="label_ligne">
-                <label>Nom de la personne:
-                    <input type="text" name="gda_personne" id="gda_personne" defaultValue="" required />
-                </label>
-                <label>Téléphone de la personne:
-                    <input type="tel" name="gda_tel_personne" id="gda_tel_personne" defaultValue="" required />
-                </label>
-            </div>
-
-                <div className="navig_bottom">
+                <div className="label_ligne">
+                    <label>Nom de la personne:
+                        <input type="text" name="gda_personne" id="gda_personne" defaultValue="" required />
+                    </label>
+                    <label>Téléphone de la personne:
+                        <input type="tel" name="gda_tel_personne" id="gda_tel_personne" defaultValue="" required />
+                    </label>
+                </div>
+            
+            <div className="navig_bottom">
                 {
-                    etat === 'mobile' ? ( <button type="button" onClick={suppMembre} className='bt_supprimer'>x Supprimer</button>):('')
+                    etat === 'reset' ? ( <button type="button" onClick={suppMembre} className='bt_supprimer'>x Supprimer</button>):('')
                 }
                 <button type="submit" className='bt_vert'><i className="icon-valider"></i>&nbsp;Valider</button>
-                </div>
-
-            </fieldset>
-
+            </div>
+        
+        </fieldset>
 
         </form>
     )

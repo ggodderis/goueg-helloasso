@@ -12,7 +12,7 @@ const FormFamille = (props) => {
   const {handelDatas} = props;
   const {famille_adulte,famille_enfant,famille_supp} = props.metadata;
 
-  const [arrayMembre,setArrayMembre] = useState(famille_supp);
+  const [arrayMembre,setArrayMembre] = useState([]);
 
   const handelSuppMembre = (id) => {
     let new_array = arrayMembre.filter( item => item.id !== id );
@@ -21,7 +21,10 @@ const FormFamille = (props) => {
 
   const handelAddMembre = (event) => {
     let myref = uuidv4();
-    setArrayMembre([...arrayMembre,{id:myref}]);
+    let new_membre = {id:myref};
+
+    setArrayMembre([...famille_supp,new_membre]);
+
   }
 
   useEffect( () => {
@@ -47,9 +50,6 @@ const FormFamille = (props) => {
     //     const {value,name} = e.target;
     // }
 
-    useEffect( () => {
-      console.log("useEffect",famille_supp);
-    },[famille_supp]);
 
     return(
       <div>
@@ -58,7 +58,7 @@ const FormFamille = (props) => {
           <FormMembre legend="Enfant" handelDatas={handelDatas} />
           {
             famille_supp.map( (item,i) => (
-              <FormMembre monid={item.id} key={i} handelSuppMembre={handelSuppMembre} isMobile="mobile" />
+              <FormMembre legend="Membres" famille_supp={famille_supp} monid={item.id} key={i} handelDatas={handelDatas} handelSuppMembre={handelSuppMembre} isReset="reset" />
             )
             )
           }

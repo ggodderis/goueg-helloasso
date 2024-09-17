@@ -43,6 +43,18 @@ const Form = (props) => {
         
     },[isexist]);
 
+    function handelClickPrecedente(event){
+        //console.log('validation', event.target, club );
+        nav.map( (item,i) => {
+            
+            if( item.label == 'Formulaire') {
+                let index = i-1;
+               navigate( nav[index].to );
+            }
+            
+        })
+    }
+
     const handelSubmit = (event) => {
         event.preventDefault();
 
@@ -134,7 +146,10 @@ const Form = (props) => {
             </div>
             </fieldset>
 
-            <button type="submit" className='bt_bleu'>Étape suivante</button>
+            <div className="navig_bottom">
+                <button type="button" className='bt_bleu_outline' onClick={handelClickPrecedente}><i className="icon-chevron-gauche"></i>&nbsp;Étape précédente</button>
+                <button type="submit" className='bt_bleu'>Étape suivante&nbsp;<i className="icon-chevron-droite"></i></button>
+            </div>
 
         </form>
     )

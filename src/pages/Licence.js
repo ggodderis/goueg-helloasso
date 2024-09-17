@@ -2,20 +2,21 @@ import { React, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
 import Total from '../components/Total';
 import useHello from '../hooks/useHello';
+import Loader from '../components/Loader';
 
 const Licence = (props) => {
     
     const navigate = useNavigate();
 
     const [token,startPaye] = useHello();
+    const [loader,setLoader] = useState(false);
 /**
  * Récupération en provenance de App.js
  * de @param selection []
  */
     const {nav,setNav,liste,datas,handelDatas,selection,setSelection} = props;
-    const {metadata} = datas;
     const {options_ffme} = datas.metadata;
-    const {activites,famille,} = props.selection;
+    const {activites,mur} = props.selection;
 
 /**
  * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
@@ -68,7 +69,11 @@ useEffect( () => {
     const handelCheckbox = (event) => {
 
         let {name} = event.target;
-        //console.log( 'handelCheckbox',name );
+        /**
+         * Si le mur d'escalade est selectionné on empêche
+         * le click sur escalade
+         */
+        if( selection.mur.checked && name === 'ESCA') return false;
         
         let newselection = activites.map( (item,index) => {
             if( item.name === name ){
@@ -151,34 +156,15 @@ const handelOptions = (event) => {
             } 
         );
     
-    // setSelection({...selection,
-    //         options:new_options
-    //     }
-    // );
     handelDatas('options',new_options);
 
 }
 
-const handelClickMurSoutien = (event) => {
+const handelClickMur = (event) => {
 
-    const {name,value,checked} = event.target;
+    const {checked} = event.target;
 
-    switch (name) {
-        case 'mur':
-            if( checked ){
-                handelDatas('mur',value);
-            }else{
-                handelDatas('mur',0);
-            }   
-            break;
-        case 'soutien':
-            if( checked ){
-                handelDatas('soutien',value);
-            }else{
-                handelDatas('soutien',0);
-            }  
-            break;
-    }
+    setSelection({...selection, mur: {...selection.mur, checked: checked }  });
     
 }
 
@@ -186,11 +172,14 @@ const handelClickMurSoutien = (event) => {
  * On paye !
  */
 const handelPaye = (event) => {
+    
+    setLoader(true);
     startPaye(datas);
+
 }
-    useEffect( () => {
-        console.log(token);
-    },[token])
+useEffect( () => {
+    console.log(token);
+},[token]);
 
 
 function handelClickPrecedente(event){
@@ -207,33 +196,24 @@ function handelClickPrecedente(event){
 
     return(
         <>
+        {
+            loader ? (<Loader />):('')
+        }
         <h2>Licences / Assurances</h2>
-        {/* <fieldset>
-            <legend>Prenez-vous une licence pour:</legend>
-            <div className="ligne_licence">
-                <label className="label_radio">
-                <input type="radio" name="licence_type" value="seul" onChange={handelFamille} checked={famille === 'seul'} /> Vous seulement
-                </label>
-            </div>
-            <div className="ligne_licence">
-                <label className="label_radio">
-                <input type="radio" name="licence_type" value="famille" onChange={handelFamille} checked={famille === 'famille'}/> Vous et votre famille
-                </label>
-            </div>
-        </fieldset> */}
-
             <div className="content_membre">
                 <fieldset>
                         <legend>Cochez les activités que vous voulez pratiquer:</legend>
                         
                         {
-                        activites.map( (item,i) => 
-                            (
+                        activites.map( (item,i) => (
+                             
                             <div className="ligne_licence">
+
                             <label key={i} className="label_radio">
                                 <input type="checkbox" name={item.name} id={item.name} checked={ item.checked } onChange={handelCheckbox} />
                                 {item.descriptif}
                             </label>
+
                                 {
                                     item.show ? (
                                         <div className="sous_ligne_licence">
@@ -244,8 +224,9 @@ function handelClickPrecedente(event){
                                         </div>
                                 ):('')
                                 }
+
                             </div>
-                            )
+                                )
                             )
                         }
                         
@@ -259,6 +240,7 @@ function handelClickPrecedente(event){
                     
                     <fieldset>
                         <legend>Options supplémentaires (nom obligatoire)</legend>
+                        
                         {
                         options_ffme.map( (item,i) => (
                             <div className="ligne_licence">
@@ -267,8 +249,9 @@ function handelClickPrecedente(event){
                                     {item.titre}&nbsp;<b>{item.plein_tarif/100}€</b>
                                 </label>
                             </div>
-                        ))
+                            ) )
                         }
+
                     </fieldset>
                     
                     ):('')
@@ -277,9 +260,9 @@ function handelClickPrecedente(event){
 
             </div>
             <fieldset>
-                <legend>Voulez-vous utiliser le mur d'escalade au gymnase Berthe de Boissieux ?</legend>
+                <legend>{mur.descriptif}</legend>
                 <label className="label_radio">
-                    <input type="checkbox" name="mur" checked={ metadata.mur } value="3000" onChange={handelClickMurSoutien} />oui :&nbsp;<b>30€</b>
+                    <input type="checkbox" name={mur.name} checked={mur.checked} value={mur.plein_tarif} onChange={handelClickMur} />oui :&nbsp;<b>30€</b>
                 </label>
             </fieldset>
         

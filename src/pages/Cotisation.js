@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import FormFamille from '../components/FormFamille';
 import Total from '../components/Total';
+import Loader from '../components/Loader';
 import useHello from '../hooks/useHello';
 
 const Cotisation = (props) => {
@@ -9,6 +10,7 @@ const Cotisation = (props) => {
     const {nav,setNav,liste,datas,metadata,handelDatas} = props;
     const navigate = useNavigate();
     const [token,startPaye] = useHello();
+    const [loader,setLoader] = useState(false);
 
     const {club} = liste;
     //console.log('cotisation',club,user);
@@ -92,6 +94,7 @@ const Cotisation = (props) => {
  * On paye !
  */
     const handelPaye = (event) => {
+        setLoader(true);
         startPaye(datas);
     }
 
@@ -101,6 +104,9 @@ const Cotisation = (props) => {
 
     return(
     <div>
+        {
+            loader ? (<Loader />):('')
+        }
        <fieldset><legend>Choix de cotisation au club</legend>
         {
             club ? (

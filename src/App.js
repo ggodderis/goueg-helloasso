@@ -38,6 +38,8 @@ const App = () => {
 
         if( location.pathname != "/"){
             window.scrollTo({ top: 300, behavior: 'smooth' });
+        }else{
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
     },[location]);
