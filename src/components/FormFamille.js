@@ -9,56 +9,35 @@ import FormMembre from './FormMembre';
 
 const FormFamille = (props) => {
 
-  const {handelDatas} = props;
-  const {famille_adulte,famille_enfant,famille_supp} = props.metadata;
-
-  const [arrayMembre,setArrayMembre] = useState([]);
+  const {handelDatas,datas} = props;
+  const {famille_adulte,famille_enfant,famille_supp} = datas.metadata;
 
   const handelSuppMembre = (id) => {
-    let new_array = arrayMembre.filter( item => item.id !== id );
-    setArrayMembre(new_array);
+    let new_array = famille_supp.filter( item => item.id !== id );
+    handelDatas('supp_membre',new_array);
    }
 
   const handelAddMembre = (event) => {
     let myref = uuidv4();
     let new_membre = {id:myref};
-
-    setArrayMembre([...famille_supp,new_membre]);
-
+    handelDatas('add_membre',new_membre);
+    //setArrayMembre([...arrayMembre,new_membre]);
   }
 
-  useEffect( () => {
-    handelDatas('add_membre',arrayMembre);
-  }, [arrayMembre]);
-
-    // const handleEmailChange = (e) => {
-    //     const value = e.target.value;
-    //     //setEmail(value);
-    
-    //     if (!isEmailValid(value)) {
-    //         console.log('Invalid email format.');
-            
-    //       //setError('Invalid email format.');
-    //     } else {
-    //         console.log('Email is ok...');
-            
-    //       //setError('');
-    //     }
-    //   };
-
-    // const handelInputChange = (e) => {
-    //     const {value,name} = e.target;
-    // }
+  // useEffect( () => {
+  //   console.log(famille_supp);
+  //   setTest(famille_supp);
+  // },[datas]);
 
 
     return(
       <div>
          <div className="content_membre">
-          <FormMembre legend="Adulte" handelDatas={handelDatas} />
-          <FormMembre legend="Enfant" handelDatas={handelDatas} />
+          <FormMembre legend="Adulte" key={uuidv4()} handelDatas={handelDatas} famille_adulte={famille_adulte} monid={uuidv4()} />
+          <FormMembre legend="Enfant" key={uuidv4()} handelDatas={handelDatas} famille_enfant={famille_enfant} monid={uuidv4()} />
           {
             famille_supp.map( (item,i) => (
-              <FormMembre legend="Membres" famille_supp={famille_supp} monid={item.id} key={i} handelDatas={handelDatas} handelSuppMembre={handelSuppMembre} isReset="reset" />
+              <FormMembre legend="Membres" famille_supp={famille_supp} monid={item.id} key={uuidv4()} handelDatas={handelDatas} handelSuppMembre={handelSuppMembre} isReset="reset" />
             )
             )
           }

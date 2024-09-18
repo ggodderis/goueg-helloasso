@@ -1,7 +1,7 @@
 /**
  * Hook pour stocker les informations au format hello asso
  */
-import { React, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import useCotisations from './useCotisations';
 
 const useDatas = () => {
@@ -224,7 +224,7 @@ const getLicences = (dt,new_mur) => {
         
         doTotal();
 
-        console.log('useEffect datas.metadata',datas.metadata);
+        console.log('useEffect datas.metadata',datas);
         
         
     },[datas.metadata]);
@@ -344,6 +344,14 @@ const getLicences = (dt,new_mur) => {
 
             break;
             case 'add_membre':
+                let new_famille = datas.metadata.famille_supp;
+                let test = [...new_famille,event[1]];
+                setDatas( {...datas, metadata:{ 
+                    ...datas.metadata,
+                    famille_supp: test
+                }})
+            break;
+            case 'supp_membre':
                 setDatas( {...datas, metadata:{ 
                     ...datas.metadata,
                     famille_supp: event[1]

@@ -93,8 +93,8 @@ const Form = (props) => {
             <div className="label_ligne">
                 <div>Votre genre:
                     <div>
-                        <label><input type="radio" value="f" name="gda_genre" defaultChecked={user.gda_genre === 'f'} required />Femme</label>
-                        <label><input type="radio" value="h" name="gda_genre" defaultChecked={user.gda_genre === 'h'} />Homme</label>
+                        <label key="1"><input type="radio" value="f" name="gda_genre" defaultChecked={user.gda_genre === 'f'} required />Femme</label>
+                        <label key="2"><input type="radio" value="h" name="gda_genre" defaultChecked={user.gda_genre === 'h'} />Homme</label>
                     </div>
                 </div>
                 <label>Votre date de naissance:
@@ -106,11 +106,11 @@ const Form = (props) => {
                 <label>Votre lieu de naissance:
                     <input type="text" name="gda_lieu" id="gda_lieu" defaultValue={user.gda_lieu} required />
                 </label>
-                <label>Votre nationalité:
-                    <select name="country" defaultValue='FRA'>
+                <label key="pays">Votre nationalité:
+                    <select name="country" defaultValue={user.country || "FRA"}>
                         {
                             paysListe.map( (item,i) => (
-                                <option value={item.value}>{item.land}</option>
+                                <option key={i} value={item.value}>{item.land}</option>
                             ))
                         }
                     </select>

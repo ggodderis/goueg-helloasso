@@ -132,7 +132,7 @@ const Cotisation = (props) => {
 
 
             {
-                metadata.cotisation === 'F/F2' ? ( <FormFamille metadata={metadata} handelDatas={handelDatas} /> ):('')
+                metadata.cotisation === 'F/F2' ? ( <FormFamille datas={datas} metadata={metadata} handelDatas={handelDatas} /> ):('')
             }
 
             <Total datas={datas}/>
