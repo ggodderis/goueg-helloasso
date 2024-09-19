@@ -11,6 +11,7 @@ const Cotisation = (props) => {
     const navigate = useNavigate();
     const [token,startPaye] = useHello();
     const [loader,setLoader] = useState(false);
+    const [etat,setEtat] = useState(false);
 
     const {club} = liste;
     //console.log('cotisation',club,user);
@@ -51,6 +52,10 @@ const Cotisation = (props) => {
           }
           return newObject;
         },{});
+
+        if( el.titre != "F/F2" ){
+            setEtat(false);
+        }
         
         handelDatas('cotisation',el);
 
@@ -132,14 +137,14 @@ const Cotisation = (props) => {
 
 
             {
-                metadata.cotisation === 'F/F2' ? ( <FormFamille datas={datas} metadata={metadata} handelDatas={handelDatas} /> ):('')
+                metadata.cotisation === 'F/F2' ? ( <FormFamille datas={datas} setEtat={setEtat} handelDatas={handelDatas} /> ):('')
             }
 
             <Total datas={datas}/>
             <div className="navig_bottom">
                 <button type="button" className='bt_bleu_outline' onClick={handelClickPrecedente}><i className="icon-chevron-gauche"></i>&nbsp;Étape précédente</button>
             {
-                metadata.cotisation === 'ANP' ? 
+                metadata.cotisation === 'ANP' || etat === true ? 
                 (<button type="button" className='bt_vert' onClick={handelPaye}><i className="icon-valider"></i>&nbsp;Payer mon adhésion</button>):('') 
 
             }

@@ -1,6 +1,14 @@
 #rootHelloAsso {
     padding: 0;
     position: relative;
+    overflow: hidden;
+    border: 1px solid var(--grey-light);
+    border-radius: 0.5rem;
+    padding-bottom: 1rem;
+    margin-bottom: 3rem;
+}
+#rootHelloAsso h2 {
+    padding: 1rem;
 }
 /**
 * Header
@@ -22,17 +30,43 @@
 .content_bouton_start {
     display: flex;
     justify-content: center;
+    margin: 3rem 0 3rem 0;
 }
 /**
 * Formulaire
 */
 .close {
-    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+    padding: 1.5rem;
+    max-height: 200px;
+    height: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+.close h3 {
+    text-transform: capitalize;
+    margin: 0;
+    padding: 0;
+}
+.rond_valider {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 3rem;
+    width: 50;
+    height: 50;
+    border-radius: 50%;
+    color: #ffffff;
+    background-color: green;
 }
 .form_inscription {
     position: relative;
     overflow: hidden;
     max-width: 800px;
+    margin: auto;
     transition: height 0.3s linear;
 }
 .label_ligne {
@@ -47,8 +81,12 @@
 }
 .label_radio {
     display: flex;
-    margin: 0.5rem 0;
+    padding: 0.5rem 0;
     cursor: pointer;
+    transition: background-color 0.3s linear;
+}
+.label_radio:hover {
+    background-color: #efefef;
 }
 .label_radio > input {
     margin-right: 1rem;
@@ -56,7 +94,6 @@
 .content_membre {
     display: grid;
     grid-template-columns: repeat(2,1fr);
-    column-gap: 2rem;
 }
 
 /**
@@ -91,6 +128,7 @@
 .content_start {
     display: grid;
     grid-template-columns: repeat(2,1fr);
+    margin: 3rem auto;
 }
 .content_start > div {
     text-align: center;
@@ -102,7 +140,7 @@
     margin-bottom: 1rem;
     color: var(--bleu-foncer);
 }
-.bt_bleu, .bt_bleu_outline, .bt_vert, .bt_supprimer, .bt_modifier {
+.bt_bleu, .bt_bleu_outline, .bt_vert, .bt_supprimer, .bt_modifier, .bt_ajouter{
     display: inline-flex;
     font-family: var(--font-condensed);
     font-weight: 600;
@@ -118,14 +156,20 @@
     border-radius: 999px;
     transition: background-color 0.3s linear;
 }
-.bt_modifier {
+
+.bt_modifier, .bt_ajouter {
     display: flex;
-    margin: auto;
+    color: var(--black-color) !important;
     font-size: 0.9rem;
     background-color: var(--grey-color);
 }
 .bt_modifier:hover {
-    background-color: rgb(0, 99, 0);
+    color: #ffffff !important;
+    background-color: green;
+}
+.bt_ajouter:hover {
+    color: #ffffff !important;
+    background-color: var(--black-color);
 }
 .bt_vert {
     background-color: green;
@@ -135,6 +179,9 @@
 }
 .bt_supprimer {
     background-color: var(--grey-color);
+}
+.bt_supprimer:hover {
+    background-color: var(--black-color);
 }
 .bt_bleu_outline {
     color: var(--bleu-foncer)!important;
@@ -160,13 +207,14 @@
     align-items: center;
 }
 fieldset {
-    margin: 1rem 0;
+    margin: 1rem;
     padding: 1rem;
-    border: 1px solid #efefef;
+    border: none;
     background: none;
 }
 legend {
     font-weight: bold;
+    color: var(--bleu-foncer);
 }
 .fieldset_grey {
     background-color: #f8f8f8;
@@ -203,7 +251,7 @@ legend {
 .navig_bottom {
     display: flex;
     justify-content: space-between;
-    padding: 1rem 0;
+    padding: 1rem 2rem;
 }
 .navig_bottom > * {
     margin: 0;
@@ -216,11 +264,13 @@ legend {
     display: flex;
     justify-content: center;
     padding: 1rem 0;
+    margin: 1rem 0;
 }
 .hello_h4 {
     display: block;
     padding: 0.5rem 0;
     font-weight: bold;
+    color: var(--bleu-foncer);
 }
 
 /**

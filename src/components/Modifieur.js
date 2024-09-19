@@ -8,10 +8,9 @@ const handelClick = (event) => {
 
     return (
         <div className="close">
-            <fieldset>
-                <legend>{infos.firstName} {infos.lastName}</legend>
+                <h3>{infos.firstName} {infos.lastName}</h3>
+                <div className="rond_valider"><i className="icon-valider"></i></div>
                 <button type="button" className="bt_modifier" onClick={ handelClick }>modifier les informations</button>
-            </fieldset>
         </div>
     )
 }

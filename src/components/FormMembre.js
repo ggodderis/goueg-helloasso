@@ -9,21 +9,20 @@ const FormMembre = (props) => {
  * @param infos [ toutes les informations du formulaire ]
  */
 
-const {legend,famille_supp,famille_adulte,famille_enfant,handelSuppMembre,handelDatas,monid,isReset} = props;
+const {legend,titre,famille_supp,famille_adulte,famille_enfant,handelSuppMembre,handelDatas,monid,isReset} = props;
 const [etat,setEtat] = useState(isReset);
-const [titre,setTitre] = useState('');
 const [infos,setInfos] = useState({});
 const [modifier,setModifier] = useState(false);
 
 
 useEffect( () => {
-    if( legend === "Adulte"){
+    if( legend === "adulte"){
         setInfos( famille_adulte );
     }
-    if( legend === 'Enfant'){
+    if( legend === 'enfant'){
         setInfos( famille_enfant );
     }
-    if( legend === "Membres" ){
+    if( legend === "membres" ){
         let new_infos = famille_supp.filter( item => item.id === monid );
         setInfos( new_infos[0] );
     }
@@ -59,7 +58,7 @@ const suppMembre = (event) => {
 
             <fieldset className="fieldset_grey">
             <legend>
-            {legend}
+            {titre}
             </legend>
                 {
                     monid ? (<input type="hidden" name="id" value={monid} />):('')

@@ -13,7 +13,7 @@ const useDatas = () => {
         totalAmount: 0,
         initialAmount: 0,
         itemName: 'Adhésion au Club GDA',
-        backUrl: 'https://www.club-montagne.net/helloasso/back.php', 
+        backUrl: 'https://www.club-montagne.retipolons.eu/page-d-exemple/', 
         errorUrl: 'https://www.club-montagne.net/helloasso/error.php', 
         returnUrl: 'https://www.club-montagne.net/helloasso/return.php', 
         containsDonation: true, 
@@ -369,19 +369,19 @@ const getLicences = (dt,new_mur) => {
                     soutien: Number(event[1])
                 }})
             break;
-            case 'Adulte':
+            case 'adulte':
                 setDatas( {...datas, metadata:{
                     ...datas.metadata,
                     famille_adulte: event[1]
                 }})
             break;
-            case 'Enfant':
+            case 'enfant':
                 setDatas( {...datas, metadata:{
                     ...datas.metadata,
                     famille_enfant: event[1]
                 }})
             break;
-            case 'Membres':
+            case 'membres':
                 //console.log("Membres",event[1]);
                 let membres = datas.metadata.famille_supp.map( (item,i) => { 
                     if( item.id === event[1].id ){
