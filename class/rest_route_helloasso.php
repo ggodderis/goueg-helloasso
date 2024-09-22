@@ -22,9 +22,9 @@ class rest_route_helloasso {
      */
     public function create_rest_route(){
 
-        register_rest_route('goueg-helloasso/v1', '/set_datas', [
+        register_rest_route('goueg-helloasso/v1', '/set_session', [
             'methods' => ['POST'] ,
-            'callback' => [$this,'goueg_set_datas'],
+            'callback' => [$this,'goueg_set_session'],
             'permission_callback' => '__return_true'
         ]);
 
@@ -49,19 +49,31 @@ class rest_route_helloasso {
         return rest_ensure_response(['email' => $retour]);
     }
 
-    public function goueg_set_datas( WP_REST_REQUEST $request ){
-        $datas = $request->get_params();
-        //$params = getUserInfos::g();
-        //$tarifs = getAllTarifs::g();
-        $tarifs = self::test();
-        //$tarifs = new adhesionInfos('1970-09-03');
-        
-        //$metas = json_decode($datas['metadata'],true);
+    public function goueg_set_session( WP_REST_REQUEST $request ){
+        global $wpdb;
 
-        //file_put_contents(HELLOASSO_ROOT.'filename.txt', print_r($metas, true));
+        $datas = $request->get_params();
+
+        $data = $datas['datas'];
+        $table_name = 'wp_clients';
+        $data = json_decode($data);
+
+        //$retour = $wpdb->get_results( "SELECT datas FROM $table_name WHERE id=0000000009" );
+        //$test = json_decode($retour[0]->datas);
+        // $wpdb->insert(
+        //     $table_name,
+        //     array(
+        //         'id_session' => $data['session_id'],
+        //         'datas' => $data
+        //     )
+        // );
+        
+        // $data = json_decode($data,true);
+
+        //file_put_contents(HELLOASSO_ROOT.'filename.txt', print_r($data, true));
         //file_put_contents(HELLOASSO_ROOT.'filename.txt', 'toto');
 
-        return rest_ensure_response($tarifs);
+        return rest_ensure_response($data);
     }
 
     public function goueg_set_cotisations( WP_REST_REQUEST $request ){

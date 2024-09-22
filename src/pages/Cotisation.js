@@ -4,16 +4,22 @@ import FormFamille from '../components/FormFamille';
 import Total from '../components/Total';
 import Loader from '../components/Loader';
 import useHello from '../hooks/useHello';
+import useSession from '../hooks/useSession';
 
 const Cotisation = (props) => {
+
+    const [token,startPaye] = useHello();
+    const [session,saveDatasSession] = useSession();
+
+    const navigate = useNavigate();
+
     
     const {nav,setNav,liste,datas,metadata,handelDatas} = props;
-    const navigate = useNavigate();
-    const [token,startPaye] = useHello();
     const [loader,setLoader] = useState(false);
     const [etat,setEtat] = useState(false);
 
     const {club} = liste;
+
     //console.log('cotisation',club,user);
     
 
@@ -100,18 +106,22 @@ const Cotisation = (props) => {
  */
     const handelPaye = (event) => {
         setLoader(true);
-        startPaye(datas);
+        saveDatasSession(datas);
+        //startPaye(datas);
     }
 
-    // useEffect( () => {
-    //     console.log(token);
-    // },[token])
+    useEffect( () => {
+        console.log("Retour de session",session,the_ajax_script.session_id);
+    },[token,session])
 
     return(
     <div>
         {
             loader ? (<Loader />):('')
         }
+        <div className="bandeau_haut">
+            <span className="bandeau_haut_titre">Cotisation au club</span>
+        </div>
        <fieldset><legend>Choix de cotisation au club</legend>
         {
             club ? (

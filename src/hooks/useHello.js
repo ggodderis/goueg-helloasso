@@ -1,3 +1,7 @@
+/**
+ * Hook qui appel Checkout Hellasso
+ * et lui envoie les datas
+ */
 import { React, useState, useEffect } from "react";
 
 const useHello = () => {

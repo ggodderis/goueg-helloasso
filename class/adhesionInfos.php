@@ -13,7 +13,7 @@ class adhesionInfos {
     private $general;
     private $temporaire;
 
-    function __construct($date_de_naissance = '2000-09-03') {
+    function __construct($date_de_naissance = '1970-09-03') {
         
         $this->today = new DateTime('now', new DateTimeZone('Europe/Paris') );
         $this->birthday = (clone $this->today)->modify("{$date_de_naissance}");

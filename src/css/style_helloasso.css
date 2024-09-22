@@ -2,9 +2,8 @@
     padding: 0;
     position: relative;
     overflow: hidden;
-    border: 1px solid var(--grey-light);
+    border: 1px solid var(--bleu-foncer);
     border-radius: 0.5rem;
-    padding-bottom: 1rem;
     margin-bottom: 3rem;
 }
 #rootHelloAsso h2 {
@@ -69,6 +68,11 @@
     margin: auto;
     transition: height 0.3s linear;
 }
+.adherent_grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    column-gap: 2rem;
+}
 .label_ligne {
     display: grid;
     grid-template-columns: repeat(2,1fr);
@@ -125,6 +129,14 @@
     border-radius: 1rem;
     background: none;
 }
+.bandeau_bas {
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    color: var(--bleu-foncer);
+    background-color: #f8f8f8;
+}
+.hello_infos { text-align: center;}
 .content_start {
     display: grid;
     grid-template-columns: repeat(2,1fr);
@@ -152,7 +164,7 @@
     min-width: 120px;
     text-decoration: none;
     color: #ffffff !important;
-    background-color: var(--bleu-foncer);
+    background-color: var(--bleu-clair-hover);
     border-radius: 999px;
     transition: background-color 0.3s linear;
 }
@@ -190,6 +202,9 @@
 }
 .bt_bleu_outline:hover {
     background-color: var(--grey-light);
+}
+.bt_bleu:hover {
+    background-color: var(--bleu-foncer);
 }
 
 /**
@@ -229,7 +244,7 @@ legend {
     justify-content: flex-end;
     width: 100%;
     margin: 2rem 0;
-    background-color: #efefef;
+    background-color: var(--orange-clair);
 }
 .hello_total > span {
     display: flex;
@@ -279,21 +294,23 @@ legend {
 .hello_loader {
     position: absolute;
     display: flex;
-    justify-self: center;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
-    background: rgba( 255,255,255, 0.6);
+    background: rgba( 255,255,255, 0.85);
 }
-.hello_loader::after {
+.hello_loader::before {
     display: block;
     content: "";
     width: 60px;
     height: 60px;
-    margin: auto;
     border: 6px solid var(--bleu-foncer);
     border-bottom-color: transparent;
     border-radius: 50%;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
 }
+.hello_loader > p { color: var(--bleu-foncer); text-align: center; }
+.hello_loader > p > img { margin: 1rem auto; }

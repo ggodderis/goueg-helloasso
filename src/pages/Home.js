@@ -32,12 +32,12 @@ const Home = (props) => {
 
                     <div>
                         <h2 className='titre_adhesion'>Je suis déjà adhérent</h2>
-                        <a href="/member-login?redirect_to=page-d-exemple" className='bt_bleu'>Je m'identifie</a>
+                        <a href="/member-login?redirect_to=page-d-exemple" className='bt_bleu'><i className="icon-valider"></i>&nbsp;Je m'identifie</a>
                     </div>
 
                     <div>
                         <h2 className='titre_adhesion'>Je suis nouveau...</h2>
-                        <Link key="2" to="/formulaire" className='bt_bleu_outline'>Je crée un compte</Link>
+                        <Link key="2" to="/formulaire" className='bt_bleu_outline'>Je crée un compte&nbsp;&#9998;</Link>
                     </div>
 
                 </div>

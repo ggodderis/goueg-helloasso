@@ -1,4 +1,4 @@
-import {React,useEffect,useState} from 'react';
+import { React, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 /**
@@ -16,7 +16,6 @@ import Cotisation from './pages/Cotisation';
 /**
  * Hooks
  */
-// import useFetch from './hooks/useFetch';
 import useDatas from './hooks/useDatas';
 /**
  * CSS
@@ -24,6 +23,9 @@ import useDatas from './hooks/useDatas';
 import './css/style_helloasso.css';
 
 const App = () => {
+
+    console.log( the_ajax_script.session_id );
+    
 
     const location = useLocation();
     const adherent = the_ajax_script.infosUser;
@@ -34,15 +36,21 @@ const App = () => {
         { to: '/', label: 'Home'}
     ]);
 
-    useEffect( () => {
+/**
+ * Scroll to
+ */
 
-        if( location.pathname != "/"){
-            window.scrollTo({ top: 300, behavior: 'smooth' });
-        }else{
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+useEffect( () => {
 
-    },[location]);
+    let top = document.getElementById( 'rootHelloAsso' );
+
+    if( location.pathname != "/"){
+        window.scrollTo({ top: top.offsetTop-20, behavior: 'smooth' });
+    }else{
+        window.scrollTo({ top: 200 , behavior: 'smooth' });
+    }
+
+},[location]);
 
 /**
  * Si c'est une connection direct d'un déjà adhérent
@@ -65,6 +73,12 @@ const App = () => {
                 <Route exact path="/licence" element={ <Licence datas={datas} handelDatas={handelDatas} nav={nav} liste={liste} setNav={setNav} selection={selection} setSelection={setSelection} /> } />
                 <Route exact path="*" element={ <Errors /> } />
             </Routes>
+            <div className="bandeau_bas">
+                <p className="hello_infos">
+                    <i className="icon-infos"></i>
+                    &nbsp;Lors de la validation de votre adhésion, vous serez rediriger sur la page de paiement sécurisée HelloAsso.
+                </p>
+            </div>
         </>
      );
 }

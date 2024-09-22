@@ -67,11 +67,15 @@ const Form = (props) => {
     }
     
     return(
+        <>
+        <div className="bandeau_haut">
+            <span className="bandeau_haut_titre">Formulaire d'adhésion au club</span>
+        </div>
         <form onSubmit={handelSubmit} >
         
-        <div className="form_inscription">
-        <fieldset>
-        <legend>Formulaire d'adhésion au club</legend>
+        <div>
+        <fieldset className="adherent_grid">
+        {/* <legend>Formulaire d'adhésion au club</legend> */}
 
             <div className="label_ligne">
                 <label>Votre nom:
@@ -155,6 +159,7 @@ const Form = (props) => {
             </div>
 
         </form>
+        </>
     )
 }
 export default Form;

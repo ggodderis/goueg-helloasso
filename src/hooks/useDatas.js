@@ -19,6 +19,7 @@ const useDatas = () => {
         containsDonation: true, 
         payer: {},
         metadata: {
+            session_id: '',
             soutien: 0,
             mur: 0,
             cotisation: '',
@@ -192,7 +193,7 @@ const getLicences = (dt,new_mur) => {
         ops = ops.map( (item,i) => { item.checked = false; return item });
     }
 
-        return [new_licence,ops,new_mur];
+    return [new_licence,ops,new_mur];
 
 }
 /**
@@ -212,6 +213,7 @@ const getLicences = (dt,new_mur) => {
                 payer: payer,
                 metadata: {
                     ...datas.metadata,
+                    session_id: the_ajax_script.session_id,
                     payer: payer
                 }
             });
@@ -283,11 +285,23 @@ const getLicences = (dt,new_mur) => {
                 // console.log('cotisation', event[1].titre, event[1].tarif);
 
                 if( event[1].titre != 'ANP') {
+
+                    let options = datas.metadata.options_ffme.map( (item,i) => { item.checked = false; return item });
+                    let licences = selection.activites.map( (item,i) => { item.checked = false, item.labelchecked = false; return item } );
+                    selection.activites = licences;
+                    selection.mur =  {...selection.mur, checked: false }
+
                     setDatas({...datas,
                                 metadata: {
                                 ...datas.metadata,
+                                mur: 0,
                                 cotisation: event[1].titre,
-                                tarif_cotisation: Number(event[1].tarif)
+                                cotisation_famille: event[1].type_licence,
+                                tarif_cotisation: Number(event[1].tarif),
+                                options_ffme: options,
+                                type_licence: '',
+                                licence_famille: '',
+                                tarif_licence: 0,
                             } });
                 }else{
                     /**
@@ -305,7 +319,7 @@ const getLicences = (dt,new_mur) => {
                         mur: 0,
                         cotisation: event[1].titre,
                         tarif_cotisation: Number(event[1].tarif),
-                        cotisation_famille: '',
+                        cotisation_famille: event[1].type_licence,
                         licence: '',
                         options_ffme: options,
                         type_licence: '',
