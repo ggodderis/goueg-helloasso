@@ -45,7 +45,7 @@ class front_helloasso {
             'logoutNonce' => wp_create_nonce('log-out'),
             'infosUser' => getUserInfos::g(),
             'options_ffme' => getAllTarifs::g('wp_options_ffme'),
-            'session_id' => $_SESSION["session_id"]
+            'session_id' => getSession::g()
         ) );
         
     }

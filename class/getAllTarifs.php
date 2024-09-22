@@ -14,6 +14,7 @@ class getAllTarifs {
 
         $sql = "SELECT * FROM {$table}";
         $result = $conn->query($sql);
+        $conn->close();
 
         if (!$result) {
             $message  = 'Invalid query: ' . mysqli_error() . "\n";
@@ -26,6 +27,7 @@ class getAllTarifs {
         }
 
         return $array;
+
 
     }
 

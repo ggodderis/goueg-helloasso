@@ -18,9 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 session_start();
 
-if( !isset($_SESSION["session_id"]) ){
-    $_SESSION["session_id"] = uniqid();
-}
 
 define('HELLOASSO_ROOT', plugin_dir_path( __FILE__ ) );
 define('HELLOASSO_URL', plugin_dir_url( __FILE__ ) );
