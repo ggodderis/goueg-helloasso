@@ -26,7 +26,10 @@ const App = () => {
 
     console.log( the_ajax_script.session_id );
     
-
+    /**
+     * @param adherent contient les infos de l'adhérent du club
+     * @param nouveau pur savoir si c'est un nouvel adhérent 
+     */
     const location = useLocation();
     const adherent = the_ajax_script.infosUser;
     const [nouveau,setNouveau] = useState('');

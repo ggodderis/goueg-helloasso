@@ -17,6 +17,7 @@ class getUserInfos {
         if( $ID > 0 ){
 
             $array_user = [
+                'id' => $ID,
                 'firstName' => get_user_meta($ID,'first_name', true ),
                 'lastName' => get_user_meta($ID,'last_name', true ),
                 'email' => $datas->data->user_email,

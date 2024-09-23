@@ -5,7 +5,9 @@ import useEmail from '../hooks/useEmail';
 import { paysListe } from '../datas/paysListe';
 
 const Form = (props) => {
-
+    /**
+     * @param isexist Boolean pour savoir si l'email existe déjà dans les comptes adhérent
+     */
     const {nav,setNav,user,handelDatas,setNouveau} = props;
     const [isexist,handelUserEmail] = useEmail();
     const navigate = useNavigate();

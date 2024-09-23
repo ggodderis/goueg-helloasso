@@ -106,8 +106,8 @@ const Cotisation = (props) => {
  */
     const handelPaye = (event) => {
         setLoader(true);
-        saveDatasSession(datas);
-        //startPaye(datas);
+        //saveDatasSession(datas);
+        startPaye(datas);
     }
 
     useEffect( () => {
