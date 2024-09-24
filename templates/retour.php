@@ -1,15 +1,6 @@
 <?php
-/** The name of the database for WordPress */
-define( 'DB_NAME', '' );
 
-/** Database username */
-define( 'DB_USER', '' );
-
-/** Database password */
-define( 'DB_PASSWORD', '' );
-
-/** Database hostname */
-define( 'DB_HOST', '' );
+require_once('config.php');
 
 // checkoutIntentId 29104 ok
 
