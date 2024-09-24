@@ -1,15 +1,15 @@
 <?php
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'grimpeurs' );
+define( 'DB_NAME', '' );
 
 /** Database username */
-define( 'DB_USER', 'root' );
+define( 'DB_USER', '' );
 
 /** Database password */
-define( 'DB_PASSWORD', 'gregory1970' );
+define( 'DB_PASSWORD', '' );
 
 /** Database hostname */
-define( 'DB_HOST', 'localhost' );
+define( 'DB_HOST', '' );
 
 // checkoutIntentId 29104 ok
 
