@@ -62,7 +62,9 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
                 '<button type="button">retour au site</button>';
 
         $conn = new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
-        // Check connection
+        /**
+         * Connection à la base ou error
+         */
         if ($conn->connect_error) {
             echo die("Connection failed: " . $conn->connect_error);
         }
@@ -79,7 +81,7 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
             $date = new DateTime('now',new DateTimeZone('Europe/Paris'));
             $date = (clone $date)->format('Y-m-d H:i:s');
 
-            $query_insert = "UPDATE {$table_name} SET `array`='".$retour_hello."' , `date_update`='".$date."' WHERE `hello_id`={$checkoutIntentId} ";
+            $query_insert = "UPDATE {$table_name} SET `array`='{$retour_hello}' , `date_update`='{$date}' WHERE `hello_id`={$checkoutIntentId} ";
             $conn->query($query_insert);
 
         }
