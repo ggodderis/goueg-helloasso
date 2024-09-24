@@ -20,7 +20,7 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
 
     /**
      * Demande de token
-     * à modier pour la prod !!
+     * à modifier pour la prod !!
      */
     $url = 'https://api.helloasso-sandbox.com/oauth2/token';
 
@@ -43,7 +43,7 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
 
     /**
      * Demande d'infos grace au token
-     * à modier pour la prod !!
+     * à modifier pour la prod !!
      */  
     $url2 = "https://api.helloasso-sandbox.com/v5/organizations/goueg/checkout-intents/$checkoutIntentId";
     $curl2 = curl_init($url2);
@@ -66,7 +66,7 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
          */
         $retour_hello = serialize($retour_hello);
 
-        echo '<h3>Paiement accepter</h3>'.
+        echo '<h3>Paiement accepté</h3>'.
                 '<p>Insert des informations dans la table</p>'.
                 '<button type="button">retour au site</button>';
 
@@ -95,7 +95,7 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
         $conn->close();
 
     }else{
-        echo '<h3>Paiement Refuser</h3>';
+        echo '<h3>Paiement Refusé</h3>';
     }
 
 
