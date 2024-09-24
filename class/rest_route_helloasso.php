@@ -50,15 +50,17 @@ class rest_route_helloasso {
     }
 
     public function goueg_set_session( WP_REST_REQUEST $request ){
-        global $wpdb;
 
         $datas = $request->get_params();
 
         $data = $datas['datas'];
         $table_name = 'wp_clients';
-        $data = json_decode($data);
 
-        //$retour = $wpdb->get_results( "SELECT datas FROM $table_name WHERE id=0000000009" );
+        $data = json_decode($data);
+        $id = $datas['id_hello'];
+
+        $isexist = insertClient::g($id);
+
         //$test = json_decode($retour[0]->datas);
         // $wpdb->insert(
         //     $table_name,
@@ -73,7 +75,7 @@ class rest_route_helloasso {
         //file_put_contents(HELLOASSO_ROOT.'filename.txt', print_r($data, true));
         //file_put_contents(HELLOASSO_ROOT.'filename.txt', 'toto');
 
-        return rest_ensure_response($data);
+        return rest_ensure_response($isexist);
     }
 
     public function goueg_set_cotisations( WP_REST_REQUEST $request ){

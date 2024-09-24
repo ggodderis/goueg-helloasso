@@ -6174,10 +6174,10 @@ const useDatas = () => {
   });
 
   /**
-  * @param selection []
-  * Contient la liste des activités pour les licences
-  * contient également les selections faites par l'adhérent
-  */
+       * @param selection []
+       * Contient la liste des activités pour les licences
+       * contient également les selections faites par l'adhérent
+       */
   const [selection, setSelection] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     famille: '',
     activites: [{
@@ -6661,18 +6661,40 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 const useHello = () => {
-  const [token, setToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const ROOT_INSERT = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_session";
+  const [token, setToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const [datas, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const [url, setUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+
+  /**
+   * Si on l'url de checkout existe alors on lance l'insert dans la table wp_clients
+   * et on redirige vers l'API hello Asso
+   */
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (url != '') {
-      window.location.href = url;
+    if (url.id) {
+      const data = new FormData();
+      data.append('datas', JSON.stringify(datas));
+      data.append('id_hello', JSON.stringify(url.id));
+      fetch(ROOT_INSERT, {
+        method: 'POST',
+        body: data,
+        headers: {
+          'X-WP-Nonce': the_ajax_script.rootNonce
+        }
+      }).then(res => res.json()).then(json => {
+        /**
+         * Redirection vers le paiement Hello Asso checkout
+         */
+        window.location.href = url.redirectUrl;
+      }).catch(error => {
+        console.log(error);
+      });
     }
   }, [url]);
 
   /**
    * Si on a un token on appel Hello pour obtenir l'url
-   * de paiement..
+   * de paiement et l'id..
    */
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (token !== '') {
@@ -6686,17 +6708,12 @@ const useHello = () => {
         body: JSON.stringify(datas)
         //.toString()
       }).then(response => response.json()).then(data => {
-        console.log(data);
-        setUrl(data.redirectUrl);
+        setUrl(data);
       }).catch(error => console.log(error));
     } else {
       console.log(' on fait rien on attend...');
     }
   }, [token]);
-  const keys = new FormData();
-  keys.append("client_id", "a0fead5a1ba4404eacf4b9de755fb3b9");
-  keys.append("client_secret", "NOfvEhtPEa4CBhrom8Q6nkBIwcZOapxr");
-  keys.append("grant_type", "client_credentials");
   const startPaye = datas => {
     setData(datas);
   };
@@ -6704,6 +6721,11 @@ const useHello = () => {
    * Si datas est plein...
    * on appel l'api helloasso pour obtenir le token
    */
+
+  const keys = new FormData();
+  keys.append("client_id", "a0fead5a1ba4404eacf4b9de755fb3b9");
+  keys.append("client_secret", "NOfvEhtPEa4CBhrom8Q6nkBIwcZOapxr");
+  keys.append("grant_type", "client_credentials");
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (datas) {
       fetch("https://api.helloasso-sandbox.com/oauth2/token", {

@@ -37,7 +37,7 @@ const useDatas = () => {
         }
     } );
     
-        /**
+/**
      * @param selection []
      * Contient la liste des activités pour les licences
      * contient également les selections faites par l'adhérent
