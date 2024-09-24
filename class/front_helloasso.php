@@ -16,7 +16,7 @@ class front_helloasso {
 
         if( !is_page(['page-d-exemple']) ) return false;
 
-        $asset_file = HELLOASSO_ROOT.'build/index.asset.php';
+        $asset_file = HELLOASSO_ROOT.'front/build/index.asset.php';
 
         if ( ! file_exists( $asset_file ) ) {
             return;
@@ -24,11 +24,11 @@ class front_helloasso {
 
         $asset = include $asset_file;
 
-        wp_enqueue_style( 'helloasso-css', HELLOASSO_URL . 'build/index.css',array(),$asset['version'],'all' );
+        wp_enqueue_style( 'helloasso-css', HELLOASSO_URL . 'front/build/index.css',array(),$asset['version'],'all' );
 
         wp_enqueue_script(
             'helloasso-js',
-            HELLOASSO_URL.'build/index.js',
+            HELLOASSO_URL.'front/build/index.js',
             $asset['dependencies'],
             $asset['version'],
             array(

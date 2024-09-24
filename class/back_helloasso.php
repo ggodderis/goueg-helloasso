@@ -33,7 +33,7 @@ class back_helloasso {
 
         if( $hook !='toplevel_page_hello-asso' ) return false;
 
-        $asset_file = HELLOASSO_ROOT.'build/index.asset.php';
+        $asset_file = HELLOASSO_ROOT.'back/build/index.asset.php';
 
         if ( ! file_exists( $asset_file ) ) {
             return;
@@ -41,11 +41,11 @@ class back_helloasso {
 
         $asset = include $asset_file;
 
-        wp_enqueue_style( 'helloasso-css', HELLOASSO_URL . 'build/index.css',array(),$asset['version'],'all' );
+        wp_enqueue_style( 'helloasso-css', HELLOASSO_URL . 'back/build/index.css',array(),$asset['version'],'all' );
 
         wp_enqueue_script(
             'admin-helloasso-js',
-            HELLOASSO_URL.'build/index.js',
+            HELLOASSO_URL.'back/build/index.js',
             $asset['dependencies'],
             $asset['version'],
             array(

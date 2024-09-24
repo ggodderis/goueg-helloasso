@@ -1,6 +1,6 @@
 const Admin = () => {
     return(
-        <h1>Admin Back Office</h1>
+        <h1>React Admin Hello Asso back</h1>
     );
 }
 export default Admin;
