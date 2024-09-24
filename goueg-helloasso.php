@@ -25,10 +25,13 @@ define('HELLOASSO_URL', plugin_dir_url( __FILE__ ) );
 require 'vendor/autoload.php';
 
 if( is_admin() ){
-    //initBackHelloAsso();
+
+    if( class_exists('back_helloasso')){
+        $pluginInitBack = new back_helloasso();
+    }
 }else{
     if (class_exists('front_helloasso')) {
-        $pluginInit = new front_helloasso();
+        $pluginInitFront = new front_helloasso();
     }
 }
 

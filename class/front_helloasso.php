@@ -37,7 +37,8 @@ class front_helloasso {
         );
 
         wp_localize_script( 'helloasso-js' , 'the_ajax_script', 
-        array( 
+        array(
+            'where' => 'front',
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'nonce' => wp_create_nonce( 'wp_attachment_mail' ),
             'rootUrl' => esc_url_raw( rest_url() ),
