@@ -3,9 +3,9 @@
 class back_helloasso {
 
     public function __construct() {
-        $back_rest_route = new back_rest_route_helloasso();
         add_action( 'admin_menu', array(&$this,'init_my_menu') );
         add_action('admin_enqueue_scripts',array(&$this,'load_admin_css_js'));
+        //$back_rest_route = new back_rest_route_helloasso();
     }
 
     public function init_my_menu() {

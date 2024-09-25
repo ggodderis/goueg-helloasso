@@ -7,9 +7,13 @@ const useTarifs = () => {
     function handelTarifs () {
         console.log( BACK_URL_HELLOASSO );
         
-        /*
+        const toto = ['caca'];
+        const pipi = ['gros','zizi','poilu'];
+        
         const data = new FormData();
         data.append('nonce', the_ajax_script.nonce );
+        data.append('toto', JSON.stringify(toto) );
+        data.append('pipi', JSON.stringify(pipi) );
 
         fetch( 
             BACK_URL_HELLOASSO ,
@@ -25,7 +29,7 @@ const useTarifs = () => {
                 console.log( json );
             } )
             .catch( error => { console.log(error) } )
-            */
+            
 
     }
 

@@ -24,10 +24,17 @@ define('HELLOASSO_URL', plugin_dir_url( __FILE__ ) );
 
 require 'vendor/autoload.php';
 
-if( is_admin() ){
+/**
+ * Les rest routes en admin ne doivent pas être déclarer dans is_admin()
+ * ça marche pas...
+ */
+if( class_exists('back_rest_route_helloasso')){
+    $pluginInitBack = new back_rest_route_helloasso();
+}
 
-    if( class_exists('back_helloasso')){
-        $pluginInitBack = new back_helloasso();
+if( is_admin() ){
+    if (class_exists('back_helloasso')) {
+        $initback = new back_helloasso();
     }
 }else{
     if (class_exists('front_helloasso')) {
