@@ -54,7 +54,14 @@ class back_helloasso {
             )
         );
 
-        wp_localize_script( 'admin-helloasso-js' , 'the_ajax_script', array('where' => 'back', ) );
+        wp_localize_script( 'admin-helloasso-js' , 'the_ajax_script', 
+        array( 
+            'ajaxurl' => admin_url( 'admin-ajax.php' ),
+            'nonce' => wp_create_nonce( 'wp_attachment_mail' ),
+            'rootUrl' => esc_url_raw( rest_url() ),
+            'rootNonce' => wp_create_nonce( 'wp_rest' )
+            )
+        );
         
     }
 }
