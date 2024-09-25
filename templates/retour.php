@@ -4,6 +4,8 @@ require_once('config.php');
 
 // checkoutIntentId 29104 ok
 
+sleep(4);
+
 if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
 
     $table_name = 'wp_clients';
@@ -55,11 +57,6 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
         /**
          * Conversion du retour hello asso en array serializé pour mysql
          */
-        $retour_hello = serialize($retour_hello);
-
-        echo '<h3>Paiement accepté</h3>'.
-                '<p>Insert des informations dans la table</p>'.
-                '<button type="button">retour au site</button>';
 
         $conn = new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         /**
@@ -73,10 +70,21 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
          */
         $query = "SELECT * FROM {$table_name} WHERE `hello_id`={$checkoutIntentId}";
         $retour = $conn->query($query);
+
+        // echo '<pre>';
+        // print_r( $retour_hello );
+        // echo '</pre>';
+        // die;
         /**
          * Si $checkoutIntentId existe on l'update avec le retour d'infos hello asso
          */
-        if( !empty($retour) ){
+         if( $retour->num_rows ){
+
+            /**
+             * Serialization des metas et traitement pour les quotes avec mysqli_real_escape_string 
+             */
+            $retour_hello = serialize($retour_hello);
+            $retour_hello = mysqli_real_escape_string($conn,$retour_hello);
 
             $date = new DateTime('now',new DateTimeZone('Europe/Paris'));
             $date = (clone $date)->format('Y-m-d H:i:s');
@@ -84,6 +92,21 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
             $query_insert = "UPDATE {$table_name} SET `array`='{$retour_hello}' , `date_update`='{$date}' WHERE `hello_id`={$checkoutIntentId} ";
             $conn->query($query_insert);
 
+            echo '<h3>Paiement accepté</h3>'.
+                '<p>Insert des informations dans la table</p>'.
+                '<button type="button">retour au site</button>';
+
+            $query_test = "SELECT * FROM {$table_name} WHERE `hello_id`={$checkoutIntentId}";
+            $retour_test = $conn->query($query_test);
+            $row = $retour_test->fetch_array(MYSQLI_ASSOC);
+
+            echo '<pre>';
+            print_r(unserialize($row['array']));
+            echo '<pre>';
+            
+
+        }else{
+            echo '<h3>id client inexistant !</h3>';
         }
         $conn->close();
 

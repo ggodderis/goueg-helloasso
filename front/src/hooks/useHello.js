@@ -8,7 +8,7 @@ const useHello = () => {
 
   const ROOT_INSERT = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_session";
 
-  const [token,setToken] = useState( null );
+  const [token,setToken] = useState('');
   const [datas,setData] = useState( null );
   const [url,setUrl] = useState('');
 
@@ -18,11 +18,14 @@ const useHello = () => {
    */
   useEffect( () => {
 
+    console.log(url);
+    
+
     if( url.id ){
 
       const data = new FormData();
             data.append('datas',JSON.stringify(datas));
-            data.append('id_hello',JSON.stringify(url.id));
+            data.append('id_hello',url.id);
 
       fetch( 
         ROOT_INSERT ,
@@ -38,11 +41,12 @@ const useHello = () => {
             /**
              * Redirection vers le paiement Hello Asso checkout
              */
-              window.location.href = url.redirectUrl;
+            window.location.href = url.redirectUrl;
         } )
         .catch( error => { console.log(error) } )
 
     }
+    
     
     
   },[url]);

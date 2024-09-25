@@ -6,7 +6,6 @@ import useCotisations from './useCotisations';
 
 const useDatas = () => {
 
-    //const options = the_ajax_script.options_ffme.map( (item,i) => { item.checked = false; return item} );
     const [liste,handelCotisation] = useCotisations();
     const [payer,setPayer] = useState({});
     const [datas,setDatas] = useState( {
@@ -60,7 +59,7 @@ const useDatas = () => {
     );
 
     useEffect( () => {
-        console.log("Mise à jour selection");
+        //console.log("Mise à jour selection");
 
         let new_mur = 0;
         let activite_for_datas = null;
@@ -205,7 +204,7 @@ const getLicences = (dt,new_mur) => {
     useEffect( () => {
  
         if( payer.dateOfBirth != undefined ){
-            console.log( 'useEffect payer',payer );
+            //console.log( 'useEffect payer',payer );
             
             handelCotisation( payer.dateOfBirth );
 
@@ -226,7 +225,7 @@ const getLicences = (dt,new_mur) => {
         
         doTotal();
 
-        console.log('useEffect datas.metadata',datas);
+        //console.log('useEffect datas.metadata',datas);
         
         
     },[datas.metadata]);
@@ -350,7 +349,7 @@ const getLicences = (dt,new_mur) => {
                         
             break;
             case 'options':
-                console.log('useDatas options', event[1]);
+                //console.log('useDatas options', event[1]);
                 setDatas( {...datas, metadata:{
                     ...datas.metadata,
                     options_ffme: event[1]

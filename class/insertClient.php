@@ -6,14 +6,14 @@ class insertClient {
 
         global $wpdb;
         $table_name = 'wp_clients';
-        $return = [];
+        $return = ['insert'];
 
         /**
          * Si l'id est vide on ne fait rien !
          */
         if( $id === "" ) return false;
 
-        $retour = $wpdb->get_results( "SELECT `hello_id` FROM {$table_name} WHERE id={$id}" );
+       $retour = $wpdb->get_results( "SELECT `hello_id` FROM {$table_name} WHERE id={$id}" );
 
         if( empty($retour) ){
             
@@ -25,7 +25,7 @@ class insertClient {
         );
 
         $wpdb->close();
-
+        
         }else{
             $return = ['existe déjà'];
         }

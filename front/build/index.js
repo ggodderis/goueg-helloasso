@@ -6142,7 +6142,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const useDatas = () => {
-  //const options = the_ajax_script.options_ffme.map( (item,i) => { item.checked = false; return item} );
   const [liste, handelCotisation] = (0,_useCotisations__WEBPACK_IMPORTED_MODULE_1__["default"])();
   const [payer, setPayer] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
   const [datas, setDatas] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
@@ -6233,7 +6232,8 @@ const useDatas = () => {
     }
   });
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    console.log("Mise à jour selection");
+    //console.log("Mise à jour selection");
+
     let new_mur = 0;
     let activite_for_datas = null;
     if (selection.mur.checked) {
@@ -6354,7 +6354,8 @@ const useDatas = () => {
    */
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (payer.dateOfBirth != undefined) {
-      console.log('useEffect payer', payer);
+      //console.log( 'useEffect payer',payer );
+
       handelCotisation(payer.dateOfBirth);
       setDatas({
         ...datas,
@@ -6371,7 +6372,8 @@ const useDatas = () => {
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     doTotal();
-    console.log('useEffect datas.metadata', datas);
+
+    //console.log('useEffect datas.metadata',datas);
   }, [datas.metadata]);
 
   /**
@@ -6510,7 +6512,7 @@ const useDatas = () => {
         }
         break;
       case 'options':
-        console.log('useDatas options', event[1]);
+        //console.log('useDatas options', event[1]);
         setDatas({
           ...datas,
           metadata: {
@@ -6662,7 +6664,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const useHello = () => {
   const ROOT_INSERT = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_session";
-  const [token, setToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [token, setToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [datas, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const [url, setUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
 
@@ -6671,10 +6673,11 @@ const useHello = () => {
    * et on redirige vers l'API hello Asso
    */
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    console.log(url);
     if (url.id) {
       const data = new FormData();
       data.append('datas', JSON.stringify(datas));
-      data.append('id_hello', JSON.stringify(url.id));
+      data.append('id_hello', url.id);
       fetch(ROOT_INSERT, {
         method: 'POST',
         body: data,
