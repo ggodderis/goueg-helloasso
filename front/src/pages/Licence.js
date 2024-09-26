@@ -213,6 +213,7 @@ function handelClickPrecedente(event){
 
                             <label key={i} className="label_radio">
                                 <input type="checkbox" name={item.name} id={item.name} checked={ item.checked } onChange={handelCheckbox} />
+                                <span className="new_input"></span>
                                 {item.descriptif}
                             </label>
 
@@ -248,6 +249,7 @@ function handelClickPrecedente(event){
                             <div className="ligne_licence">
                                 <label key={item.id} className="label_radio">
                                     <input type="checkbox" name={item.name} id={item.name} checked={item.checked} value={item.titre} onClick={handelOptions} />
+                                    <span className="new_input"></span>
                                     {item.titre}&nbsp;<b>{item.plein_tarif/100}€</b>
                                 </label>
                             </div>
@@ -264,7 +266,9 @@ function handelClickPrecedente(event){
             <fieldset>
                 <legend>{mur.descriptif}</legend>
                 <label className="label_radio">
-                    <input type="checkbox" name={mur.name} checked={mur.checked} value={mur.plein_tarif} onChange={handelClickMur} />oui :&nbsp;<b>30€</b>
+                    <input type="checkbox" name={mur.name} checked={mur.checked} value={mur.plein_tarif} onChange={handelClickMur} />
+                    <span className="new_input"></span>
+                    oui :&nbsp;<b>30€</b>
                 </label>
             </fieldset>
         

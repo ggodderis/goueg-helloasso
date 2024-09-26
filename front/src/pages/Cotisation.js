@@ -133,6 +133,7 @@ const Cotisation = (props) => {
                             name="type_cotisation" value={obj.titre}
                             checked={ metadata.cotisation === obj.titre }
                             />
+                            <span className="new_input"></span>
                             {obj.descriptif} :&nbsp;<b>{obj.tarif/100}€</b>
                     </label>
                     )
@@ -141,7 +142,9 @@ const Cotisation = (props) => {
         }
             <h4 className="hello_h4">Voulez-vous ajouter une cotisation de soutien au club ?</h4>
                 <label className="label_radio">
-                    <input type="checkbox" name="soutien" checked={ metadata.soutien } value="1000" onChange={handelClickMurSoutien} />cotisation de soutien au club :&nbsp;<b>10€</b>
+                    <input type="checkbox" name="soutien" checked={ metadata.soutien } value="1000" onChange={handelClickMurSoutien} />
+                    <span className="new_input"></span>
+                    cotisation de soutien au club :&nbsp;<b>10€</b>
                     </label>
         </fieldset>
 

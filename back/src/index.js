@@ -9,6 +9,8 @@ domReady( () => {
         document.getElementById( 'admin_hello' )
     );
     root.render(
+        <BrowserRouter basename="/wp-admin">
             <Admin />
+        </BrowserRouter>
     );
 } );

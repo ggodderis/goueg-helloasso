@@ -84,16 +84,46 @@
     margin-bottom: 2rem;
 }
 .label_radio {
+    position: relative;
     display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
     padding: 0.5rem 0;
     cursor: pointer;
+    
     transition: background-color 0.3s linear;
 }
 .label_radio:hover {
     background-color: #efefef;
 }
 .label_radio > input {
+    position:absolute;
+    opacity: 0;
+	width: 0;
+	height: 0;
+}
+.new_input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    transform: scale(0.8);
+    border-radius: 50%;
     margin-right: 1rem;
+	background-color: #ccc;
+	transition: all 0.3s linear;
+}
+.label_radio > input:checked + .new_input {
+    transform: scale(1);
+    background-color: var(--bleu-foncer);
+}
+.label_radio > input:checked + .new_input::before {
+    display: block;
+    content: "\2714";
+    color: #ffffff;
+    font-size: 1.1rem;
 }
 .content_membre {
     display: grid;

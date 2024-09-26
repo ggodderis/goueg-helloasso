@@ -21,7 +21,11 @@ class back_rest_route_helloasso {
 
     public function goueg_get_tarifs( WP_REST_REQUEST $request ) {
         $datas = $request->get_params();
-        return rest_ensure_response($datas);
+        $cotisations = getAllTarifs::g('wp_cotisations_club');
+        $ffr = getAllTarifs::g('wp_licences_ffr');
+        $ffme = getAllTarifs::g('wp_licences_ffme');
+
+        return rest_ensure_response(['cotisations' => $cotisations,'ffr' => $ffr, 'ffme' => $ffme]);
     }
 
 }

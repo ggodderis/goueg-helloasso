@@ -4,7 +4,7 @@ require_once('config.php');
 
 // checkoutIntentId 29104 ok
 
-sleep(4);
+//sleep(4);
 
 if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
 
@@ -50,6 +50,11 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
 /**
  *  On test si items[0[state] et order[0][state] existe est si ils ont les bonnes valeurs
  *  pour savoir si on déclare la vente comme validée..
+ *  statut
+ *  1 - attente
+ *  2 - validée
+ *  3 - échec
+ *  4 - remboursée
  */
     if( isset($retour_hello['order']['items'][0]['state']) && $retour_hello['order']['items'][0]['state'] == 'Processed' &&
         isset($retour_hello['order']['payments'][0]['state']) && $retour_hello['order']['payments'][0]['state'] == 'Authorized' ){
@@ -89,7 +94,7 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
             $date = new DateTime('now',new DateTimeZone('Europe/Paris'));
             $date = (clone $date)->format('Y-m-d H:i:s');
 
-            $query_insert = "UPDATE {$table_name} SET `array`='{$retour_hello}' , `date_update`='{$date}' WHERE `hello_id`={$checkoutIntentId} ";
+            $query_insert = "UPDATE {$table_name} SET `array`='{$retour_hello}' , `statut`= 2 ,`date_update`='{$date}' WHERE `hello_id`={$checkoutIntentId} ";
             $conn->query($query_insert);
 
             echo '<h3>Paiement accepté</h3>'.
