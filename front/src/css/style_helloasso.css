@@ -64,7 +64,6 @@
 .form_inscription {
     position: relative;
     overflow: hidden;
-    max-width: 800px;
     margin: auto;
     transition: height 0.3s linear;
 }
@@ -73,10 +72,16 @@
     grid-template-columns: repeat(2,1fr);
     column-gap: 2rem;
 }
+.label_qs {
+    display: block;
+    text-align: center;
+    margin: 0 auto 2rem auto;
+    cursor: pointer;
+}
 .label_ligne {
     display: grid;
     grid-template-columns: repeat(2,1fr);
-    column-gap: 2rem;
+    column-gap: 4rem;
     margin-bottom: 2rem;
 }
 .label_adresse {
@@ -91,11 +96,10 @@
     align-items: center;
     padding: 0.5rem 0;
     cursor: pointer;
-    
     transition: background-color 0.3s linear;
 }
 .label_radio:hover {
-    background-color: #efefef;
+    background-color: #f6f6f6;
 }
 .label_radio > input {
     position:absolute;
@@ -107,8 +111,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 25px;
+    min-width: 25px;
     height: 25px;
+    flex-basis: 25px;
     transform: scale(0.8);
     border-radius: 50%;
     margin-right: 1rem;
@@ -126,8 +131,7 @@
     font-size: 1.1rem;
 }
 .content_membre {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
+    display: block;
 }
 
 /**
@@ -194,9 +198,9 @@
     min-width: 120px;
     text-decoration: none;
     color: #ffffff !important;
-    background-color: var(--bleu-clair-hover);
+    background-color: var(--bleu-foncer);
     border-radius: 999px;
-    transition: background-color 0.3s linear;
+    transition: all 0.3s linear;
 }
 
 .bt_modifier, .bt_ajouter {
@@ -214,12 +218,15 @@
     background-color: var(--black-color);
 }
 .bt_vert {
+    color: #ffffff !important;
     background-color: green;
 }
 .bt_vert:hover {
+    box-shadow: 0px 0px 0px 5px var(--orange-clair);
     background-color: rgb(0, 99, 0);
 }
 .bt_supprimer {
+    color: #ffffff;
     background-color: var(--grey-color);
 }
 .bt_supprimer:hover {
@@ -234,12 +241,17 @@
     background-color: var(--grey-light);
 }
 .bt_bleu:hover {
-    background-color: var(--bleu-foncer);
+    color: #ffffff !important;
+    box-shadow: 0px 0px 0px 5px var(--orange-color);
 }
 
 /**
 * Licences
 */
+.content_licences {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
 .ligne_licence {
     display: block;
 }
@@ -262,6 +274,7 @@ legend {
     color: var(--bleu-foncer);
 }
 .fieldset_grey {
+    padding: 2rem 3rem 2rem 3rem;
     background-color: #f8f8f8;
 }
 
@@ -293,10 +306,18 @@ legend {
 /**
 * Navigation bottom
 */
+.reset {
+    justify-content: space-between !important;
+}
 .navig_bottom {
     display: flex;
     justify-content: space-between;
     padding: 1rem 2rem;
+}
+.navig_bottom_form {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem 0;
 }
 .navig_bottom > * {
     margin: 0;

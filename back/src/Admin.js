@@ -10,13 +10,16 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Errors from './pages/Errors';
 import Tarifs from './pages/Tarifs';
+/**
+ * CSS
+ */
+import './css/style_back_helloasso.css';
 
 
 const Admin = () => {
 
     return(
         <>
-        <h1>Prochainement l'administration</h1>
         <Header />
         <Routes >
                 <Route exact path="/" element={ <Home /> } />

@@ -15,15 +15,32 @@ const FormFamille = (props) => {
 
   const handelSuppMembre = (id) => {
     let new_array = famille_supp.filter( item => item.id !== id );
+
+    let index = famille_supp.length-1;
     handelDatas('supp_membre',new_array);
    }
+
+  // useEffect( () => {
+  //   //let top = document.getElementById( 'rootHelloAsso' );
+  //   let index = famille_supp.length-1;
+  //   if( index >= 0 ){
+  //     let top = document.getElementById( famille_supp[index].id );
+  //     window.scrollTo({ top: top.offsetTop , behavior: 'smooth' });
+  //     console.log(top,famille_supp.length,famille_supp[index].id );
+  //   }
+    
+  // } ,[famille_supp]);
 
   const handelAddMembre = (event) => {
     let myref = uuidv4();
     let new_membre = {id:myref};
     handelDatas('add_membre',new_membre);
   }
-
+/**
+ * On regarde si tout les formulaires sont validés
+ * si c'est ok on passe setEtat à true dans la page cotisation
+ * ce qui affiche le bouton étape suivante...
+ */
   useEffect( () => {
 
     let etat = [];

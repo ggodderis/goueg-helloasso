@@ -41,7 +41,7 @@ useEffect( () => {
     });
     setSelectlicence(toto);
 
-    console.log('toto',toto);
+    //console.log('toto',toto);
     
 
 },[]);
@@ -177,9 +177,9 @@ const handelPaye = (event) => {
     startPaye(datas);
 
 }
-useEffect( () => {
-    console.log(token);
-},[token]);
+// useEffect( () => {
+//     console.log(token);
+// },[token]);
 
 
 function handelClickPrecedente(event){
@@ -202,7 +202,7 @@ function handelClickPrecedente(event){
         <div className="bandeau_haut">
             <span className="bandeau_haut_titre">Choix de la Licences / Assurances</span>
         </div>
-            <div className="content_membre">
+            <div className="content_licences">
                 <fieldset>
                         <legend>Cochez les activités que vous voulez pratiquer:</legend>
                         

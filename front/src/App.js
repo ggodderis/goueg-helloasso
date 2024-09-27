@@ -24,7 +24,7 @@ import './css/style_helloasso.css';
 
 const App = () => {
 
-    console.log( the_ajax_script.session_id );
+   // console.log( the_ajax_script.session_id );
     
     /**
      * @param adherent contient les infos de l'adhérent du club

@@ -61,7 +61,7 @@ const suppMembre = (event) => {
             {titre}
             </legend>
                 {
-                    monid ? (<input type="hidden" name="id" value={monid} />):('')
+                    monid ? (<input type="hidden" id={monid} name="id" value={monid} />):('')
                 }
                 <div className="label_ligne">
                     <label>Nom:
@@ -107,6 +107,10 @@ const suppMembre = (event) => {
                         </select>
                     </label>
                 </div>
+
+                <label className="label_qs">
+                    <input type="checkbox" name="questionnaire" value="oui" required />&nbsp;Avez vous répondu NON à toutes les questions du Questionnaire de santé <a target="_blank" href="https://www.formulaires.service-public.fr/gf/cerfa_15699.do">QS-SPORT ?</a>
+                </label>
             
                 <h4 className="hello_h4">Personne à prévenir en cas de problème:</h4>
 
@@ -119,7 +123,7 @@ const suppMembre = (event) => {
                         </label>
                     </div>
                 
-                <div className="navig_bottom">
+                <div className={ `navig_bottom_form ${etat === 'reset' ? "reset" : ""}` }>
                     {
                         etat === 'reset' ? ( <button type="button" onClick={suppMembre} className='bt_supprimer'>x Supprimer</button>):('')
                     }

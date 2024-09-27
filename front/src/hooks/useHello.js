@@ -18,7 +18,7 @@ const useHello = () => {
    */
   useEffect( () => {
 
-    console.log(url);
+    //console.log(url);
     
 
     if( url.id ){
@@ -77,7 +77,7 @@ const useHello = () => {
         
 
     }else{
-      console.log(' on fait rien on attend...');
+      //console.log(' on fait rien on attend...');
     }
 
 

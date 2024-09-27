@@ -1,5 +1,9 @@
 import { React, useEffect, useState } from 'react';
 /**
+ * Components
+ */
+import ModuleTarifs from '../components/ModuleTarifs';
+/**
  * Hooks
  */
 import useTarifs from '../hooks/useTarifs';
@@ -12,7 +16,7 @@ const Tarifs = () => {
     /**
      * Si @param cotisation est vide on appel le hook useTarifs pour avoir les infos
      */
-    console.log( tarifs?.cotisations , tarifs?.ffme , tarifs?.ffr  );
+    //console.log( tarifs?.cotisations , tarifs?.ffme , tarifs?.ffr  );
     
     useEffect( () => {
 
@@ -26,25 +30,25 @@ const Tarifs = () => {
 
     return(
         <div>
-        <h1>Gestion des tarifs</h1>
-            <h2>Tarif cotiations club</h2>
-            <ul>
-            {
-                tarifs?.cotisations.map( (item,i) => (<li key={item.id}>{item.titre}</li>))
-            }
-            </ul>
+            <h1>Gestion des tarifs</h1>
+            <h2>Tarifs Adhérents au Club</h2>
+            <div className="content_tarifs">
+                {
+                    tarifs?.cotisations && <ModuleTarifs tarifs={tarifs.cotisations} />
+                }
+            </div>
             <h2>Tarif FFME</h2>
-            <ul>
-            {
-                tarifs?.ffme.map( (item,i) => (<li key={item.id}>{item.titre}</li>))
-            }
-            </ul>
+            <div className="content_tarifs">
+                {
+                    tarifs?.cotisations && <ModuleTarifs tarifs={tarifs.ffme} />
+                }
+            </div>
             <h2>Tarif FFR</h2>
-            <ul>
-            {
-                tarifs?.ffr.map( (item,i) => (<li key={item.id}>{item.titre}</li>))
-            }
-            </ul>
+            <div className="content_tarifs">
+                {
+                    tarifs?.cotisations && <ModuleTarifs tarifs={tarifs.ffr} />
+                }
+            </div>
         </div>
     )
 }

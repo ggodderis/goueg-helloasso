@@ -110,9 +110,9 @@ const Cotisation = (props) => {
         startPaye(datas);
     }
 
-    useEffect( () => {
-        console.log("Retour de session",session,the_ajax_script.session_id);
-    },[token,session])
+    // useEffect( () => {
+    //     console.log("Retour de session",session,the_ajax_script.session_id);
+    // },[token,session])
 
     return(
     <div>
@@ -122,7 +122,7 @@ const Cotisation = (props) => {
         <div className="bandeau_haut">
             <span className="bandeau_haut_titre">Cotisation au club</span>
         </div>
-       <fieldset><legend>Choix de cotisation au club</legend>
+       <fieldset><legend>Choix de la cotisation au club</legend>
         {
             club ? (
             Object.entries(club).map( ([key,obj]) => (
@@ -134,7 +134,7 @@ const Cotisation = (props) => {
                             checked={ metadata.cotisation === obj.titre }
                             />
                             <span className="new_input"></span>
-                            {obj.descriptif} :&nbsp;<b>{obj.tarif/100}€</b>
+                            <span>{obj.descriptif} :&nbsp;<b>{obj.tarif/100}€</b></span>
                     </label>
                     )
                 )
@@ -144,7 +144,7 @@ const Cotisation = (props) => {
                 <label className="label_radio">
                     <input type="checkbox" name="soutien" checked={ metadata.soutien } value="1000" onChange={handelClickMurSoutien} />
                     <span className="new_input"></span>
-                    cotisation de soutien au club :&nbsp;<b>10€</b>
+                    <span>cotisation de soutien au club :&nbsp;<b>10€</b></span>
                     </label>
         </fieldset>
 
