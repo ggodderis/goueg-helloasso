@@ -63,6 +63,12 @@ if( is_admin() ){
         'top'
       );
 
+    add_rewrite_rule(
+        'wp-admin/hello_asso',
+        'wp-admin/admin.php?page=hello-asso',
+        'top'
+      );
+
     flush_rewrite_rules();
 
 }

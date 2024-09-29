@@ -24,7 +24,7 @@ const Admin = () => {
         <Routes >
                 <Route exact path="/" element={ <Home /> } />
                 <Route exact path="/tarifs" element={ <Tarifs /> } />
-                <Route exact path="*" element={ <Errors /> } />
+                <Route exact path="*" element={ <Home /> } />
         </Routes>
         </>
     );
