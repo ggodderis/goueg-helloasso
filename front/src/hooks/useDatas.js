@@ -264,9 +264,9 @@ const getLicences = (dt,new_mur) => {
             initialAmount: total});
     }
 
-    // useEffect( () => {
-    //     console.log('datas change',datas);
-    // },[datas]);
+    useEffect( () => {
+        console.log('datas change',datas);
+    },[datas]);
 /**
  * 
  * @param  {...any} event 
@@ -338,7 +338,7 @@ const getLicences = (dt,new_mur) => {
                 setDatas({...datas, metadata: {
                             ...datas.metadata,
                             licence: event[1][0].licence || '',
-                            licence_famille: event[1][0].type || '',
+                            licence_famille: event[1][0].type_licence || '',
                             type_licence: event[1][0].titre || '',
                             tarif_licence: Number(event[1][0].tarif) || 0,
                             options_ffme: event[1][1] || [],

@@ -14,7 +14,7 @@ class back_helloasso {
             'Hello Asso', 
             'Hello Asso', 
             'manage_options',
-            'hello-asso',
+            'hello_asso',
             array(&$this,'gda_helloasso'),
             'dashicons-cart',
             99
@@ -32,7 +32,7 @@ class back_helloasso {
     public function load_admin_css_js( $hook ){
 
 
-        if( $hook !='toplevel_page_hello-asso' ) return false;
+        if( $hook !='toplevel_page_hello_asso' ) return false;
 
         $asset_file = HELLOASSO_ROOT.'back/build/index.asset.php';
 

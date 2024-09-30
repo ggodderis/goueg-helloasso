@@ -65,7 +65,7 @@ if( is_admin() ){
 
     add_rewrite_rule(
         'wp-admin/hello_asso',
-        'wp-admin/admin.php?page=hello-asso',
+        'wp-admin/admin.php?page=hello_asso',
         'top'
       );
 

@@ -1,15 +1,15 @@
 import { useState } from 'react';
 
-const useTarifs = () => {
+const useSetTarifs = () => {
 
-    const BACK_URL_HELLOASSO = the_ajax_script.rootUrl + "back-helloasso/v1/get_tarifs";
+    const BACK_URL_HELLOASSO = the_ajax_script.rootUrl + "back-helloasso/v1/set_tarifs";
     const [tarifs,setTarifs] = useState();
         
-    function handelTarifs () {
-        console.log( BACK_URL_HELLOASSO );
+    function handelTarifs ( datas = '' ) {
         
         const data = new FormData();
         data.append('nonce', the_ajax_script.nonce );
+        data.append('data', JSON.stringify(datas) );
 
         fetch( 
             BACK_URL_HELLOASSO ,
@@ -22,7 +22,7 @@ const useTarifs = () => {
             })
             .then( res => res.json()  )
             .then( json => { 
-                setTarifs(json);
+                console.log(json);
             } )
             .catch( error => { console.log(error) } )
             
@@ -32,4 +32,4 @@ const useTarifs = () => {
     return[tarifs,handelTarifs];
 
 }
-export default useTarifs;
+export default useSetTarifs;

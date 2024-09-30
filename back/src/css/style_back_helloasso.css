@@ -6,10 +6,27 @@
     max-width: 90%;
 }
 .module_tarifs {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     border-radius: 1rem;
     padding: 1rem;
     margin-bottom: 1rem;
     background-color: #ffffff;
     box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+.module_tarifs > span,
+.module_tarifs > label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0.2rem 0;
+}
+.module_tarifs > label > span {
+    display: flex;
+    width: 150px;
+    flex-basis: 150px;
+}
+.module_tarifs input {
+    width: 100%;
 }
