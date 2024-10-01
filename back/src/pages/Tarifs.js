@@ -30,20 +30,19 @@ const Tarifs = () => {
 
     return(
         <div>
-            <h1>Gestion des tarifs</h1>
-            <h2>Tarifs Adhérents au Club</h2>
+            <h1>Tarifs Adhésions au Club</h1>
             <div className="content_tarifs">
                 {
                     tarifs?.cotisations && <ModuleTarifs tarifs={tarifs.cotisations} />
                 }
             </div>
-            <h2>Tarif FFME</h2>
+            <h1>Tarifs FFME</h1>
             <div className="content_tarifs">
                 {
                     tarifs?.cotisations && <ModuleTarifs tarifs={tarifs.ffme} />
                 }
             </div>
-            <h2>Tarif FFR</h2>
+            <h1>Tarifs FFR</h1>
             <div className="content_tarifs">
                 {
                     tarifs?.cotisations && <ModuleTarifs tarifs={tarifs.ffr} />

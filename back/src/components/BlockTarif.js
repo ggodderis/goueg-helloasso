@@ -3,7 +3,7 @@ import useSetTarifs from '../hooks/useSetTarifs';
 
 const BlockTarif = (props) => {
     /**
-     * Hook pour updater les informations
+     * Hook webservice pour updater les informations
      */
     const [tarifs,handelTarifs] = useSetTarifs();
     /**
@@ -12,7 +12,6 @@ const BlockTarif = (props) => {
      * dans le formulaire ça minimise les appels pour rien...
      */
     const [etat,setEtat] = useState(false);
-    const [change,setChange] = useState(false);
     /**
      * 
      */
@@ -37,21 +36,21 @@ const BlockTarif = (props) => {
         const new_infos = Object.fromEntries(champs);
 
         /**
-         * Ici il faut faire appel un webservice pour UPDATER les infos
-         * et au retour on met à jour les modifs avec setInfos
+         * Ici on teste si il y a un vrai changement sur es valeurs
+         * pour savoir si on UPDATE les infos ... évite les appels API pour rien..
          */
-        if( change ){      
+        if( new_infos.descriptif !=  infos.descriptif || 
+            new_infos.plein_tarif != infos.plein_tarif|| 
+            new_infos.demi_tarif != infos.demi_tarif ){
+
+            console.log("Y a une différence...on Update");
+            
             handelTarifs(new_infos);
             setInfos(new_infos);
-            setChange(false);
         }
         
         setEtat(false);
     }
-    const handelRealChange = (event) => {
-        setChange(true);
-    }
-
 
     return(
 <>
@@ -59,7 +58,7 @@ const BlockTarif = (props) => {
         etat ? (
         <div className="module_tarifs">
             <h4>{infos.titre}</h4>
-            <form onSubmit={handelSubmit} onChange={handelRealChange} >
+            <form onSubmit={handelSubmit}>
                 <input type="hidden" name="id" value={infos.id} />
                 <input type="hidden" name="titre" value={infos.titre} />
                 <input type="hidden" name="type_licence" value={infos.type_licence} />
@@ -69,7 +68,7 @@ const BlockTarif = (props) => {
             <p>ATTENTION!! les tarifs doivent être en centimes...</p>
             <label><span>Plein tarif:</span><input type="text" name="plein_tarif" defaultValue={infos.plein_tarif} /></label>
             <label><span>Demi tarif:</span><input type="text" name="demi_tarif" defaultValue={infos.demi_tarif} /></label>
-            <button type="submit">Valider</button>
+            <div className="nav_bottom"><button type="submit" className="bt_valider_modif">&#10004;&nbsp;Valider</button></div>
             </form>
         </div>
         )
@@ -77,10 +76,10 @@ const BlockTarif = (props) => {
         <div className="module_tarifs">
             <h4>{infos.titre}</h4>
             <span><b>{infos.descriptif}</b></span>
-            <span>Type d'adhésion: <b>{infos.type_licence}</b></span>
-            <span>Plein tarif: <b>{infos.plein_tarif/100}€</b></span>
-            <span>Demi tarif: <b>{infos.demi_tarif/100}€</b></span>
-            <button type="button" onClick={handelModif}>Modifier</button>
+            <span>Type d'adhésion:&nbsp;<b>{infos.type_licence}</b></span>
+            <span>Plein tarif:&nbsp;<b>{infos.plein_tarif/100}€</b></span>
+            <span>Demi tarif:&nbsp;<b>{infos.demi_tarif/100}€</b></span>
+            <div className="nav_bottom"><button type="button" className="bt_modifier" onClick={handelModif}>Modifier</button></div>
         </div>
         )
         }        

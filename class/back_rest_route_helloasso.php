@@ -13,7 +13,7 @@ class back_rest_route_helloasso {
             'methods' => ['POST'] ,
             'callback' => [$this,'goueg_get_tarifs'],
             'permission_callback' => function () {
-            return is_user_logged_in();
+                return current_user_can('delete_posts');
           },
       ]);
 
@@ -21,7 +21,7 @@ class back_rest_route_helloasso {
         'methods' => ['POST'] ,
         'callback' => [$this,'goueg_set_tarifs'],
         'permission_callback' => function () {
-        return is_user_logged_in();
+            return current_user_can('delete_posts');
       },
   ]);
       

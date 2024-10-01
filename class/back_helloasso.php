@@ -13,7 +13,7 @@ class back_helloasso {
         add_menu_page(
             'Hello Asso', 
             'Hello Asso', 
-            'manage_options',
+            'delete_posts',
             'hello_asso',
             array(&$this,'gda_helloasso'),
             'dashicons-cart',
