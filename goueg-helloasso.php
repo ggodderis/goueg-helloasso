@@ -75,6 +75,12 @@ if( is_admin() ){
         'top'
       );
 
+    add_rewrite_rule(
+        'wp-admin/adhesions',
+        'wp-admin/admin.php?page=hello_asso',
+        'top'
+      );
+
     flush_rewrite_rules();
 
 }
