@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 
-import useClients from "../hooks/usetClients";
+import useClients from "../hooks/useClients";
 import Loader from "../components/Loader";
 
 const Adhesions = () => {
@@ -10,7 +10,7 @@ const Adhesions = () => {
     
     useEffect( () => {
         if( clients ){
-            console.log( clients );
+            console.log( "Adhésions page", clients );
         }else{
             handelClients();
         }
@@ -20,18 +20,16 @@ const Adhesions = () => {
         <div className="hello_content_clients">
             <h1>ADHESIONS</h1>
             {
-                clients ? ( 
-                
+                clients ? (
                     clients.map( (item,i) => (
-                        <div key={item.id} className="ligne_client">
-                            id table:: {item.id}
-                            id hello:: {item.metas.id}
-                           {item.metas.metadata?.payer.firstName}
-                           {item.metas.metadata?.payer.lastName}
-                        </div>
-                    ))
-
-                ):( <Loader />)
+                    <div key={item.id} className="ligne_client">
+                        <span>{item.id}</span>
+                        <span>{item.statut}</span>
+                        {item.metas.metadata?.payer.firstName}
+                        {item.metas.metadata?.payer.lastName}
+                    </div>
+                ) )
+                ):(<Loader />)
             }
         </div>
     );

@@ -58,15 +58,17 @@ class back_rest_route_helloasso {
         $datas = $request->get_params();
         $clients = getClients::g();
 
-        $retour = [];
-        $cache = [];
+        // $retour = [];
+        // $cache = [];
         
-        foreach( $clients as $key => $value ){
+       /* foreach( $clients as $key => $value ){
           $cache = unserialize($clients[$key]->array);
           array_push($retour, ['id'=>$clients[$key]->id,'code'=>$clients[$key]->code,'metas'=>$cache]);
         }
+        
 
-        return rest_ensure_response($retour);
+        return rest_ensure_response($retour);*/
+        return rest_ensure_response($clients);
     }
 
 }
