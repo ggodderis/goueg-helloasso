@@ -24,9 +24,16 @@ const Adhesions = () => {
                     clients.map( (item,i) => (
                     <div key={item.id} className="ligne_client">
                         <span>{item.id}</span>
-                        <span>{item.statut}</span>
-                        {item.metas.metadata?.payer.firstName}
-                        {item.metas.metadata?.payer.lastName}
+                        <h3>{item.metas.metadata?.payer.lastName} - {item.metas.metadata?.payer.firstName}</h3>
+                        <span>Date du paiement: {item.date_create}</span>
+                        <span>Statut du paiement: {item.statut}</span>
+                        <span>Cotisation club: {item.metas.metadata?.cotisation}</span>
+                        <span>Type cotisation: {item.metas.metadata?.cotisation_famille}</span>
+                        {
+                            item.metas.metadata?.cotisation_famille == 'famille' ? (<b>Liste membres</b>):('')
+                        }
+                        <span>Licence: {item.metas.metadata?.type_licence}</span>
+                        <button type="button">Rafraîchir</button>
                     </div>
                 ) )
                 ):(<Loader />)

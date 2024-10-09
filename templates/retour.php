@@ -56,13 +56,38 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
  *  3 - échec
  *  4 - remboursée
  */
-    if( isset($retour_hello['order']['items'][0]['state']) && $retour_hello['order']['items'][0]['state'] == 'Processed' &&
-        isset($retour_hello['order']['payments'][0]['state']) && $retour_hello['order']['payments'][0]['state'] == 'Authorized' ){
-        
+$array_statut = ['attente','validée','échec','remboursée'];
+
+    if( isset($retour_hello['order']['items'][0]['state']) &&
+        isset($retour_hello['order']['payments'][0]['state']) ){
+
+            $statut = 1;
+
+            // echo $retour_hello['order']['items'][0]['state'];
+            // echo '<br>';
+            // echo $retour_hello['order']['payments'][0]['state'];
+
+
+            if( $retour_hello['order']['items'][0]['state'] == 'Processed' &&
+                $retour_hello['order']['payments'][0]['state'] == 'Authorized' ){
+
+                $statut = 2;
+
+            }
+            if( $retour_hello['order']['items'][0]['state'] == 'Canceled' &&
+                $retour_hello['order']['payments'][0]['state'] == 'Refunded' ){
+
+                $statut = 4;
+                
+            }
+
+    }else{
+        $statut = 3;
+    }
+
         /**
          * Conversion du retour hello asso en array serializé pour mysql
          */
-
         $conn = new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         /**
          * Connection à la base ou error
@@ -76,10 +101,6 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
         $query = "SELECT * FROM {$table_name} WHERE `hello_id`={$checkoutIntentId}";
         $retour = $conn->query($query);
 
-        // echo '<pre>';
-        // print_r( $retour_hello );
-        // echo '</pre>';
-        // die;
         /**
          * Si $checkoutIntentId existe on l'update avec le retour d'infos hello asso
          */
@@ -94,32 +115,33 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
             $date = new DateTime('now',new DateTimeZone('Europe/Paris'));
             $date = (clone $date)->format('Y-m-d H:i:s');
 
-            $query_insert = "UPDATE {$table_name} SET `array`='{$retour_hello}' , `statut`= 2 ,`date_update`='{$date}' WHERE `hello_id`={$checkoutIntentId} ";
+            $query_insert = "UPDATE {$table_name} SET `array`='{$retour_hello}' , `statut`='{$statut}' ,`date_update`='{$date}' WHERE `hello_id`={$checkoutIntentId} ";
             $conn->query($query_insert);
 
-            echo '<h3>Paiement accepté</h3>'.
-                '<p>Insert des informations dans la table</p>'.
-                '<button type="button">retour au site</button>';
+            echo '<h3>Paiement '.$array_statut[$statut-1].'</h3>'.
+                    '<button type="button">retour au site</button>';
 
+            /*
             $query_test = "SELECT * FROM {$table_name} WHERE `hello_id`={$checkoutIntentId}";
             $retour_test = $conn->query($query_test);
             $row = $retour_test->fetch_array(MYSQLI_ASSOC);
-
             echo '<pre>';
             print_r(unserialize($row['array']));
             echo '<pre>';
-            
+            */
+
+            $conn->close();
 
         }else{
             echo '<h3>id client inexistant !</h3>';
         }
-        $conn->close();
 
     }else{
         echo '<h3>Paiement Refusé</h3>';
+        // echo '<pre>';
+        // print_r($retour_hello);
+        // echo '</pre>';
     }
 
-
-}
 
 ?>
