@@ -36,7 +36,7 @@ const BlockTarif = (props) => {
         const new_infos = Object.fromEntries(champs);
 
         /**
-         * Ici on teste si il y a un vrai changement sur es valeurs
+         * Ici on test si il y a un vrai changement sur les valeurs
          * pour savoir si on UPDATE les infos ... évite les appels API pour rien..
          */
         if( new_infos.descriptif !=  infos.descriptif || 
@@ -84,7 +84,7 @@ const BlockTarif = (props) => {
             }
             <span>Plein tarif:&nbsp;<b>{infos.plein_tarif/100}€</b></span>
             {
-                 infos.secteur !="options" ? (<span>Demi tarif:&nbsp;<b>{infos.demi_tarif/100}€</b></span>):('')
+                 infos.secteur != "options" ? (<span>Demi tarif:&nbsp;<b>{infos.demi_tarif/100}€</b></span>):('')
             }
             <div className="nav_bottom"><button type="button" className="bt_modifier" onClick={handelModif}>Modifier</button></div>
         </div>

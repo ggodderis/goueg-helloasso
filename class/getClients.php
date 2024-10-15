@@ -2,7 +2,7 @@
 
 class getClients {
 
-    public static function g( $month = '' , $year = '' ):array{
+    public static function g( $year = '', $month = '' ):array{
 
         global $wpdb;
 
@@ -25,18 +25,42 @@ class getClients {
 
         $requete = "SELECT * FROM {$table_name} WHERE MONTH(date_create) = {$month} AND YEAR(date_create) = {$year}";
         $retour = $wpdb->get_results( $requete );
-        $wpdb->close();
+
         /**
          * On regarde si le champs array est plein ou vide
          * et on l'unserialize pour pouvoir le lire dans React
          */
+        $clients = [];
         foreach( $retour as $key => $value ){
             $cache = [];
             if( !empty($retour[$key]->array) ){
                 $cache = unserialize( $retour[$key]->array );
             }
-            array_push($return, ['id'=>$retour[$key]->id,'date_create' => $retour[$key]->date_create,'statut'=>$retour[$key]->statut,'metas'=>$cache]);
+            array_push($clients, ['id'=>$retour[$key]->id,'date_create' => $retour[$key]->date_create,'statut'=>$retour[$key]->statut,'metas'=>$cache]);
         }
+
+        $return['adherents'] = $clients;
+
+        /**
+         * Gestion des dates pour le select
+         */
+
+        $lesdates = "SELECT DISTINCT DATE_FORMAT(date_create,'%Y') as annees , DATE_FORMAT(date_create,'%m') as mois FROM wp_clients ORDER BY mois DESC";
+        $retourdates = $wpdb->get_results( $lesdates );
+
+        $mois = ['','janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+
+        foreach( $retourdates as $key => $value ){
+            if( $retourdates[$key]->annees == $year && $retourdates[$key]->mois == $month ){
+                $retourdates[$key]->checked = true;
+            }
+            $retourdates[$key]->option = $mois[intval($retourdates[$key]->mois)].' '.$retourdates[$key]->annees;
+            $retourdates[$key]->value = $retourdates[$key]->annees.'-'.$retourdates[$key]->mois;
+        }
+
+        $return['dates'] = $retourdates;
+
+        $wpdb->close();
 
         return $return;
     }

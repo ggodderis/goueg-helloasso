@@ -225,7 +225,7 @@ const getLicences = (dt,new_mur) => {
         
         doTotal();
 
-        //console.log('useEffect datas.metadata',datas);
+        console.log('useEffect datas.metadata',datas);
         
         
     },[datas.metadata]);

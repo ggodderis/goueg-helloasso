@@ -57,11 +57,23 @@ if( is_admin() ){
       'top'
     );
 
+    // add_rewrite_rule(
+    //     '^mon-test$',
+    //     'index.php?custom=1',
+    //     'top'
+    //   );
+
     add_rewrite_rule(
         'hello_return',
-        'wp-content/plugins/goueg-helloasso/templates/retour.php',
+        'index.php?custom=1',
         'top'
       );
+
+    // add_rewrite_rule(
+    //     'hello_return',
+    //     'wp-content/plugins/goueg-helloasso/templates/retour.php',
+    //     'top'
+    //   );
 
     add_rewrite_rule(
         'wp-admin/hello_asso',

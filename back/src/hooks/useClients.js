@@ -4,10 +4,16 @@ const useClients = () => {
     const BACK_URL_HELLOASSO = the_ajax_script.rootUrl + "back-helloasso/v1/get_clients";
     const [clients,setClients] = useState();
 
-    function handelClients () {
+    function handelClients ( year = '', month = '' ) {
+        /**
+         * Pour forcer l'affichage du load
+         */
+        setClients([]);
         
         const data = new FormData();
-        data.append('nonce', the_ajax_script.nonce );
+            data.append('nonce', the_ajax_script.nonce );
+            data.append('year', year);
+            data.append('month', month);
 
         fetch( 
             BACK_URL_HELLOASSO ,

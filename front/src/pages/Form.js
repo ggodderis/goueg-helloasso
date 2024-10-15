@@ -144,7 +144,7 @@ const Form = (props) => {
                     </fieldset>
 
                     <label className="label_qs">
-                    <input type="checkbox" name="questionnaire" value="oui" required />&nbsp;Avez vous répondu NON à toutes les questions du Questionnaire de santé <a target="_blank" href="https://www.formulaires.service-public.fr/gf/cerfa_15699.do">QS-SPORT ?</a>
+                    <input type="checkbox" name="questionnaire" value="oui" defaultChecked={user.questionnaire === 'oui'} required />&nbsp;Avez vous répondu NON à toutes les questions du Questionnaire de santé <a target="_blank" href="https://www.formulaires.service-public.fr/gf/cerfa_15699.do">QS-SPORT ?</a>
                     </label>
 
                     <fieldset>

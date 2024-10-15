@@ -56,7 +56,7 @@ class back_rest_route_helloasso {
 
     public function goueg_get_clients( WP_REST_REQUEST $request ) {
         $datas = $request->get_params();
-        $clients = getClients::g();
+        $clients = getClients::g( $datas['year'], $datas['month'] );
 
         // $retour = [];
         // $cache = [];

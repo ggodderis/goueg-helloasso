@@ -7,12 +7,17 @@ class front_helloasso {
         $rest_route = new rest_route_helloasso();
         add_action('wp_enqueue_scripts',array(&$this,'load_css_js'));
         add_shortcode('checkout_helloasso', array(&$this,'helloasso_shortcode') );
+
+        add_filter( 'query_vars',array(&$this,'query_vars') );
+        add_action( 'template_redirect',array(&$this,'helloasso_redirect') );
     }
 
 /**
  * Load des fichiers JS et CSS
  */
     public function load_css_js(){
+
+        wp_enqueue_style( 'helloasso-checkout-css', HELLOASSO_URL . 'templates/css/styles_checkout.css',array(),'0.011','all' );
 
         if( !is_page(['page-d-exemple']) ) return false;
 
@@ -58,6 +63,25 @@ class front_helloasso {
         return '<div id="rootHelloAsso">Loading...</div>';
     }
 
+/**
+ * Page virtuel pour le checkout
+ */
+    public function query_vars( $vars ){
+        $vars[] = 'custom';
+        return $vars;
+    }
+
+    public function helloasso_redirect(){
+
+        $custom = intval( get_query_var( 'custom', false ) );
+
+        if ( $custom ) {
+            include HELLOASSO_ROOT . 'templates/retour.php';
+            die;
+        }
+        
+        
+    }
 
 }
 

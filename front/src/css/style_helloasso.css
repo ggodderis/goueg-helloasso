@@ -345,6 +345,7 @@ legend {
 .hello_loader {
     position: absolute;
     display: flex;
+    z-index: 20;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -363,5 +364,5 @@ legend {
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
 }
-.hello_loader > p { color: var(--bleu-foncer); text-align: center; }
+.hello_loader > p { color: var(--bleu-foncer); text-align: center; font-weight: bold; }
 .hello_loader > p > img { margin: 1rem auto; }

@@ -1,0 +1,14 @@
+.content_checkout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: var(--size-medium);
+    margin: auto;
+}
+.content_checkout > h3 {
+    text-align: center;
+}
+.checkout_logo {
+    width: 100px;
+    margin: auto;
+}

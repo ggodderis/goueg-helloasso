@@ -14,7 +14,7 @@
     width: 90%;
     border-radius: 0.5rem;
 }
-.link_menu {
+.link_menu, .active {
     display: flex;
     align-items: center;
     padding: 0 2rem;
@@ -26,10 +26,12 @@
 }
 .link_menu:hover,
 .link_menu:active,
-.link_menu:focus {
-    color: #ffffff;
+.link_menu:focus,
+.active {
+    color: #ffffff !important;
     background-color: #3971a8;
 }
+
 /**
 * Tarifs
 */
@@ -89,6 +91,9 @@
 .ligne_client > span {
     display: block;
 }
+.navig_dates {
+    padding: 1rem 0;
+}
 /**
 * BOUTONS
 */
@@ -99,7 +104,7 @@
 }
 .bt_modifier, .bt_valider_modif {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     width: 80px;
     border: none;
