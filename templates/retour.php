@@ -130,6 +130,7 @@ class retourHello {
             /**
              * Serialization des metas et traitement pour les quotes avec mysqli_real_escape_string 
              */
+            $template_infos = $retour_hello;
             $retour_hello = serialize($retour_hello);
             $retour_hello = mysqli_real_escape_string($conn,$retour_hello);
 

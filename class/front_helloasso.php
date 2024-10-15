@@ -17,7 +17,7 @@ class front_helloasso {
  */
     public function load_css_js(){
 
-        wp_enqueue_style( 'helloasso-checkout-css', HELLOASSO_URL . 'templates/css/styles_checkout.css',array(),'0.011','all' );
+        wp_enqueue_style( 'helloasso-checkout-css', HELLOASSO_URL . 'templates/css/styles_checkout.css',array(),'0.013','all' );
 
         if( !is_page(['page-d-exemple']) ) return false;
 

@@ -3,9 +3,10 @@
     flex-direction: column;
     justify-content: center;
     max-width: var(--size-medium);
-    margin: auto;
+    margin: 4rem auto;
 }
-.content_checkout > h3 {
+.content_checkout > h1,
+.content_checkout > h4 {
     text-align: center;
 }
 .checkout_logo {
