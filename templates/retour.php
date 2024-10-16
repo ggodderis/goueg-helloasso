@@ -77,7 +77,7 @@ class retourHello {
          *  3 - échec
          *  4 - remboursée
          */
-        $array_statut = ['attente','validée','échec','remboursée'];
+        $array_statut = ['attente','validé','échec','remboursé'];
 
         if( isset($retour_hello['order']['items'][0]['state']) &&
             isset($retour_hello['order']['payments'][0]['state']) ){
@@ -171,7 +171,7 @@ class retourHello {
 
 $initRetour = new retourHello();
 
-get_footer();
+// get_footer();
 
 
 exit();
@@ -226,7 +226,7 @@ if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
  *  3 - échec
  *  4 - remboursée
  */
-$array_statut = ['attente','validée','échec','remboursée'];
+$array_statut = ['attente','validé','échec','remboursé'];
 
     if( isset($retour_hello['order']['items'][0]['state']) &&
         isset($retour_hello['order']['payments'][0]['state']) ){

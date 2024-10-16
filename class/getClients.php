@@ -23,7 +23,7 @@ class getClients {
         // SELECT DISTINCT(DATE_FORMAT(date_create,'%Y')) as annees FROM wp_clients;
         // SELECT DISTINCT DATE_FORMAT(date_create,'%Y') as annees , DATE_FORMAT(date_create,'%m') as mois FROM wp_clients ORDER BY date_create DESC;
 
-        $requete = "SELECT * FROM {$table_name} WHERE MONTH(date_create) = {$month} AND YEAR(date_create) = {$year}";
+        $requete = "SELECT * FROM {$table_name} WHERE MONTH(date_create) = {$month} AND YEAR(date_create) = {$year} ORDER BY date_create DESC";
         $retour = $wpdb->get_results( $requete );
 
         /**
@@ -36,7 +36,7 @@ class getClients {
             if( !empty($retour[$key]->array) ){
                 $cache = unserialize( $retour[$key]->array );
             }
-            array_push($clients, ['id'=>$retour[$key]->id,'date_create' => $retour[$key]->date_create,'statut'=>$retour[$key]->statut,'metas'=>$cache]);
+            array_push($clients, ['id'=>$retour[$key]->id,'hello_id'=>$retour[$key]->hello_id ,'date_create' => $retour[$key]->date_create,'statut'=>$retour[$key]->statut,'metas'=>$cache]);
         }
 
         $return['adherents'] = $clients;

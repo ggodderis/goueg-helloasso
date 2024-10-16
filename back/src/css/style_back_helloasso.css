@@ -84,15 +84,47 @@
     width: 90%;
 }
 .ligne_client {
+    display: block;
     background-color: #ffffff;
-    padding: 0.5rem;
+    padding: 0 2rem 2rem 2rem;
     margin-bottom: 0.5rem;
 }
-.ligne_client > span {
-    display: block;
-}
 .navig_dates {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     padding: 1rem 0;
+}
+.ligne_client h2 {
+    font-size: 1.5rem;
+}
+.ligne_client h3 {
+    font-size: 1.1rem;
+}
+.contant_cellules {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.cellule_client {
+    display: flex;
+    flex: 25%;
+    width: 25%;
+    flex-direction: column;
+}
+.cellule_titre {
+    display: flex;
+    flex-direction: column;
+}
+.cellule_statut b {
+    color: #1e3b60;
+}
+.export_csv {
+    min-height: 30px;
+}
+.hidde {
+    display: none;
 }
 /**
 * BOUTONS
