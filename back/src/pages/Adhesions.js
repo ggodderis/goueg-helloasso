@@ -10,12 +10,8 @@ const Adhesions = () => {
     const [clients,handelClients] = useClients();
     
     useEffect( () => {
-        if( clients ){
-            console.log( "Adhésions page", clients.adherents );
-        }else{
-            handelClients();
-        }
-    },[clients]);
+        handelClients();
+    },[]);
 
 
     return(

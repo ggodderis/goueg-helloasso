@@ -5,7 +5,8 @@ class back_helloasso {
     public function __construct() {
         add_action( 'admin_menu', array(&$this,'init_my_menu') );
         add_action('admin_enqueue_scripts',array(&$this,'load_admin_css_js'));
-        //$back_rest_route = new back_rest_route_helloasso();
+        add_action('admin_init', array(&$this,'helloasso_register_settings') );
+        // add_action('admin_menu', array(&$this,'google_admin_settings') );
     }
 
     public function init_my_menu() {
@@ -19,7 +20,109 @@ class back_helloasso {
             'dashicons-cart',
             99
         );
+       
+        add_submenu_page(
+            'hello_asso',
+            'Paramétres',
+            'Paramétres',
+            'manage_options',
+            'helloasso_parametres',
+            array(&$this,'helloasso_render_options_page'),
+        );
 
+        //remove_submenu_page('hello_asso','hello_asso');
+
+    }
+
+    public function helloasso_register_settings(){
+        register_setting('helloasso_settings_group', 'helloasso_settings');
+    }
+
+    public function helloasso_render_options_page() {
+
+        global $helloasso_settings;
+
+        echo '<div class="wrap">
+
+                <form method="post" action="options.php">';
+
+                settings_fields('helloasso_settings_group');
+
+        echo '
+
+            <h1>Réglages des paramétres Hello Asso Checkout</h1>
+
+            <table class="form-table">
+                <tbody>
+
+                    <tr valign="top">
+                        <th scope="row" valign="top">
+                            MODE DEV OU PROD ?
+                        </th>
+                        <td>
+                        <label class="description"> Dev
+                            <input id="helloasso_settings[mode]" '.( $helloasso_settings['mode'] == "dev" ? 'checked' : '' ).' name="helloasso_settings[mode]" type="radio" class="regular-text" value="dev"/>
+                        </label>
+                        &nbsp;&nbsp;
+                        <label class="description"> Prod
+                            <input id="helloasso_settings[mode]" '.( $helloasso_settings['mode'] == "prod" ? 'checked' : '' ).'name="helloasso_settings[mode]" type="radio" class="regular-text" value="prod"/>
+                        </label>
+                        </td>
+                    </tr>
+
+                    <tr valign="top">
+                        <th scope="row" valign="top">
+                            <h2>Paramétres de DEV</h2>
+                        </th>
+                        <td style="width:100">
+                        <hr />
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row" valign="top">
+                            TEST client_id
+                        </th>
+                        <td>
+                            <input id="helloasso_settings[test_client_id]" name="helloasso_settings[test_client_id]" type="text" class="regular-text" value="'.$helloasso_settings['test_client_id'].'"/>
+                            <label class="description" for="helloasso_settings[test_client_id]">Renseigner le client_id</label>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row" valign="top">
+                            TEST client_secret
+                        </th>
+                        <td>
+                            <input id="helloasso_settings[test_client_secret]" name="helloasso_settings[test_client_secret]" type="text" class="regular-text" value="'.$helloasso_settings['test_client_secret'].'"/>
+                            <label class="description" for="helloasso_settings[test_client_secret]">Renseigner le client_secret</label>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row" valign="top">
+                            TEST url token
+                        </th>
+                        <td>
+                            <input id="helloasso_settings[test_url_token]" name="helloasso_settings[test_url_token]" type="text" class="regular-text" value="'.$helloasso_settings['test_url_token'].'"/>
+                            <label class="description" for="helloasso_settings[test_url_token]">Renseigner url_token</label>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row" valign="top">
+                            TEST url checkout intents
+                        </th>
+                        <td>
+                            <input id="helloasso_settings[test_checkout_intents]" name="helloasso_settings[test_checkout_intents]" type="text" class="regular-text" value="'.$helloasso_settings['test_checkout_intents'].'"/>
+                            <label class="description" for="helloasso_settings[test_checkout_intents]">Renseigner l\'url checkout_intents</label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p class="submit">
+				<input type="submit" class="button-primary" value="Valider" />
+			</p>';
+
+        echo    '</form>
+            </div>';
     }
 
     public function gda_helloasso(){

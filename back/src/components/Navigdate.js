@@ -4,15 +4,12 @@ import { CSVLink, CSVDownload } from "react-csv";
 const Navigdate = (props) => {
 
     const {dates,clients,handelClients} = props;
-    const [loadcsv,setLoadcsv] = useState(0);
     const lien = useRef(null);
 
     const [datas,setDatas] = useState([]);
 
-
-    console.log(clients.adherents);
+    //console.log(clients.adherents);
     
-
     const handelSelect = (event) => {
 
         const {value} = event.target;

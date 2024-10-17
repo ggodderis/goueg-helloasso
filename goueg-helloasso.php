@@ -18,11 +18,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 session_start();
 
+/**
+ * @param helloasso_settings []
+ * client_id
+ * client_secret
+ * url pour obenir le token
+ * url pour intéroger le checkout-intents
+ */
+$helloasso_settings = get_option('helloasso_settings');
+
+if( isset($helloasso_settings['mode']) && !empty($helloasso_settings['mode']) ){
+
+    switch( $helloasso_settings['mode'] ){
+
+        case 'dev':
+        define('',$helloasso_settings['']);
+        define('',$helloasso_settings['']);
+        define('',$helloasso_settings['']);
+        define('',$helloasso_settings['']);
+        break;
+
+        case 'prod':
+            define('',$helloasso_settings['']);
+            define('',$helloasso_settings['']);
+            define('',$helloasso_settings['']);
+            define('',$helloasso_settings['']);
+        break;
+    }
+
+}
 
 define('HELLOASSO_ROOT', plugin_dir_path( __FILE__ ) );
 define('HELLOASSO_URL', plugin_dir_url( __FILE__ ) );
 
+
 require 'vendor/autoload.php';
+
 
 /**
  * Les rest routes en admin ne doivent pas être déclarer dans is_admin()

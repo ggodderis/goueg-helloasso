@@ -13,7 +13,7 @@ const useHello = () => {
   const [url,setUrl] = useState('');
 
   /**
-   * Si on l'url de checkout existe alors on lance l'insert dans la table wp_clients
+   * Si l'url de checkout existe alors on lance l'insert dans la table wp_clients
    * et on redirige vers l'API hello Asso
    */
   useEffect( () => {
@@ -110,6 +110,8 @@ const keys = new FormData();
         })
           .then((response) => response.json())
           .then((data) => {
+            console.log( 'useHello', data );
+            
             setToken(data.access_token);
           })
           .catch((error) => console.log(error));

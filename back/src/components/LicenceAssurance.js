@@ -1,11 +1,11 @@
 import { React, useEffect, useState } from 'react';
 
 const LicenceAssurance = (props) => {
-
+    
     return (
         <>
         {
-            props.type_licence != "" ? (
+            props?.type_licence != "" ? (
                 <>
                     <div className="cellule_client">
                     <h4>Licence / Assurance</h4>
