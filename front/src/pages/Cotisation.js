@@ -111,7 +111,7 @@ const Cotisation = (props) => {
     }
 
     // useEffect( () => {
-    //     console.log("Retour de session",session,the_ajax_script.session_id);
+    //     console.log("Retour de session",session,REACT_VARS.session_id);
     // },[token,session])
 
     return(

@@ -3,10 +3,10 @@ import { useState } from 'react';
 const useCotisations = () => {
 
     const [liste,setListe] = useState([]);
-    const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_cotisations";
+    const ROOT_URL_HELLOASSO = REACT_VARS.rootUrl + "goueg-helloasso/v1/set_cotisations";
     
     const data = new FormData();
-        data.append('nonce', the_ajax_script.nonce );
+        data.append('nonce', REACT_VARS.nonce );
         //data.append('metadata', JSON.stringify(metas) );
     
     function handelCotisation ( dateBirthday ) {
@@ -19,7 +19,7 @@ const useCotisations = () => {
             method: 'POST',
             body: data,
             headers: {
-                'X-WP-Nonce': the_ajax_script.rootNonce
+                'X-WP-Nonce': REACT_VARS.rootNonce
             }
             })
             .then( res => res.json()  )

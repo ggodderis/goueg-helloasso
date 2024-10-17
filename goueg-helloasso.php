@@ -32,17 +32,17 @@ if( isset($helloasso_settings['mode']) && !empty($helloasso_settings['mode']) ){
     switch( $helloasso_settings['mode'] ){
 
         case 'dev':
-        define('',$helloasso_settings['']);
-        define('',$helloasso_settings['']);
-        define('',$helloasso_settings['']);
-        define('',$helloasso_settings['']);
+            define('CLIENT_ID',$helloasso_settings['test_client_id']);
+            define('CLIENT_SECRET',$helloasso_settings['test_client_secret']);
+            define('URL_TOKEN',$helloasso_settings['test_url_token']);
+            define('URL_CHECKOUT_INTENTS',$helloasso_settings['test_checkout_intents']);
         break;
 
         case 'prod':
-            define('',$helloasso_settings['']);
-            define('',$helloasso_settings['']);
-            define('',$helloasso_settings['']);
-            define('',$helloasso_settings['']);
+            define('CLIENT_ID',$helloasso_settings['client_id']);
+            define('CLIENT_SECRET',$helloasso_settings['client_secret']);
+            define('URL_TOKEN',$helloasso_settings['url_token']);
+            define('URL_CHECKOUT_INTENTS',$helloasso_settings['checkout_intents']);
         break;
     }
 

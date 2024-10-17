@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 const useSession = () => {
 
-    const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_session";
+    const ROOT_URL_HELLOASSO = REACT_VARS.rootUrl + "goueg-helloasso/v1/set_session";
     const [session,setSession] = useState(null);
 
     const saveDatasSession = ( datas ) => {
@@ -16,7 +16,7 @@ const useSession = () => {
             method: 'POST',
             body: data,
             headers: {
-                'X-WP-Nonce': the_ajax_script.rootNonce
+                'X-WP-Nonce': REACT_VARS.rootNonce
             }
             })
             .then( res => res.json()  )

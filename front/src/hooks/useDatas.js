@@ -28,7 +28,7 @@ const useDatas = () => {
             type_licence: '',
             licence_famille: '',
             tarif_licence: 0,
-            options_ffme: the_ajax_script.options_ffme,
+            options_ffme: REACT_VARS.options_ffme,
             famille_adulte: {},
             famille_enfant: {},
             famille_supp: [],
@@ -212,7 +212,7 @@ const getLicences = (dt,new_mur) => {
                 payer: payer,
                 metadata: {
                     ...datas.metadata,
-                    session_id: the_ajax_script.session_id,
+                    session_id: REACT_VARS.session_id,
                     payer: payer
                 }
             });

@@ -41,7 +41,7 @@ class front_helloasso {
             )
         );
 
-        wp_localize_script( 'helloasso-js' , 'the_ajax_script', 
+        wp_localize_script( 'helloasso-js' , 'REACT_VARS', 
         array(
             'where' => 'front',
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
@@ -51,7 +51,11 @@ class front_helloasso {
             'logoutNonce' => wp_create_nonce('log-out'),
             'infosUser' => getUserInfos::g(),
             'options_ffme' => getAllTarifs::g('wp_options_ffme'),
-            'session_id' => getSession::g()
+            'session_id' => getSession::g(),
+            'client_id' => CLIENT_ID,
+            'client_secret' => CLIENT_SECRET,
+            'url_token' => URL_TOKEN,
+            'url_checkout_intents' => URL_CHECKOUT_INTENTS
         ) );
         
     }

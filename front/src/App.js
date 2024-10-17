@@ -24,14 +24,14 @@ import './css/style_helloasso.css';
 
 const App = () => {
 
-   // console.log( the_ajax_script.session_id );
+   // console.log( REACT_VARS.session_id );
     
     /**
      * @param adherent contient les infos de l'adhérent du club
      * @param nouveau pur savoir si c'est un nouvel adhérent 
      */
     const location = useLocation();
-    const adherent = the_ajax_script.infosUser;
+    const adherent = REACT_VARS.infosUser;
     const [nouveau,setNouveau] = useState('');
     const [datas,user,liste,metadata,selection,setSelection,handelDatas] = useDatas();
     

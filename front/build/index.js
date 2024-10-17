@@ -4982,14 +4982,14 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 const App = () => {
-  // console.log( the_ajax_script.session_id );
+  // console.log( REACT_VARS.session_id );
 
   /**
    * @param adherent contient les infos de l'adhérent du club
    * @param nouveau pur savoir si c'est un nouvel adhérent 
    */
   const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useLocation)();
-  const adherent = the_ajax_script.infosUser;
+  const adherent = REACT_VARS.infosUser;
   const [nouveau, setNouveau] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [datas, user, liste, metadata, selection, setSelection, handelDatas] = (0,_hooks_useDatas__WEBPACK_IMPORTED_MODULE_6__["default"])();
   const [nav, setNav] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([{
@@ -6127,9 +6127,9 @@ __webpack_require__.r(__webpack_exports__);
 
 const useCotisations = () => {
   const [liste, setListe] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_cotisations";
+  const ROOT_URL_HELLOASSO = REACT_VARS.rootUrl + "goueg-helloasso/v1/set_cotisations";
   const data = new FormData();
-  data.append('nonce', the_ajax_script.nonce);
+  data.append('nonce', REACT_VARS.nonce);
   //data.append('metadata', JSON.stringify(metas) );
 
   function handelCotisation(dateBirthday) {
@@ -6138,7 +6138,7 @@ const useCotisations = () => {
       method: 'POST',
       body: data,
       headers: {
-        'X-WP-Nonce': the_ajax_script.rootNonce
+        'X-WP-Nonce': REACT_VARS.rootNonce
       }
     }).then(res => res.json()).then(json => {
       //console.log( json );
@@ -6194,7 +6194,7 @@ const useDatas = () => {
       type_licence: '',
       licence_famille: '',
       tarif_licence: 0,
-      options_ffme: the_ajax_script.options_ffme,
+      options_ffme: REACT_VARS.options_ffme,
       famille_adulte: {},
       famille_enfant: {},
       famille_supp: [],
@@ -6392,7 +6392,7 @@ const useDatas = () => {
         payer: payer,
         metadata: {
           ...datas.metadata,
-          session_id: the_ajax_script.session_id,
+          session_id: REACT_VARS.session_id,
           payer: payer
         }
       });
@@ -6646,10 +6646,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 const useEmail = () => {
-  const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/user_email";
+  const ROOT_URL_HELLOASSO = REACT_VARS.rootUrl + "goueg-helloasso/v1/user_email";
   const [isexist, setIsexist] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const data = new FormData();
-  //data.append('nonce', the_ajax_script.nonce );
+  //data.append('nonce', REACT_VARS.nonce );
   //data.append('metadata', JSON.stringify(metas) );
 
   function handelUserEmail(userEmail = 'test@test.com') {
@@ -6659,7 +6659,7 @@ const useEmail = () => {
       method: 'POST',
       body: data,
       headers: {
-        'X-WP-Nonce': the_ajax_script.rootNonce
+        'X-WP-Nonce': REACT_VARS.rootNonce
       }
     }).then(res => res.json()).then(json => {
       setIsexist(json.email);
@@ -6691,7 +6691,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 const useHello = () => {
-  const ROOT_INSERT = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_session";
+  const ROOT_INSERT = REACT_VARS.rootUrl + "goueg-helloasso/v1/set_session";
   const [token, setToken] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const [datas, setData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const [url, setUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
@@ -6711,7 +6711,7 @@ const useHello = () => {
         method: 'POST',
         body: data,
         headers: {
-          'X-WP-Nonce': the_ajax_script.rootNonce
+          'X-WP-Nonce': REACT_VARS.rootNonce
         }
       }).then(res => res.json()).then(json => {
         /**
@@ -6793,7 +6793,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 
 const useSession = () => {
-  const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_session";
+  const ROOT_URL_HELLOASSO = REACT_VARS.rootUrl + "goueg-helloasso/v1/set_session";
   const [session, setSession] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const saveDatasSession = datas => {
     const data = new FormData();
@@ -6802,7 +6802,7 @@ const useSession = () => {
       method: 'POST',
       body: data,
       headers: {
-        'X-WP-Nonce': the_ajax_script.rootNonce
+        'X-WP-Nonce': REACT_VARS.rootNonce
       }
     }).then(res => res.json()).then(json => {
       console.log(json);
@@ -6942,7 +6942,7 @@ const Cotisation = props => {
   };
 
   // useEffect( () => {
-  //     console.log("Retour de session",session,the_ajax_script.session_id);
+  //     console.log("Retour de session",session,REACT_VARS.session_id);
   // },[token,session])
 
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, loader ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Loader__WEBPACK_IMPORTED_MODULE_3__["default"], null) : '', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -7285,7 +7285,7 @@ const Home = props => {
     className: "bandeau_haut_titre"
   }, "Bonjour, ", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("b", null, user.firstName, " ", user.lastName)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
     className: "hello_deconnexion",
-    href: "/wp-login.php?action=logout&_wpnonce=" + the_ajax_script.logoutNonce + "&redirect_to=page-d-exemple"
+    href: "/wp-login.php?action=logout&_wpnonce=" + REACT_VARS.logoutNonce + "&redirect_to=page-d-exemple"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("i", {
     className: "icon-close"
   }), "\xA0D\xE9connexion"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {

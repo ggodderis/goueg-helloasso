@@ -13,7 +13,7 @@ const Home = (props) => {
                 <>
                 <div className="bandeau_haut">
                     <span className="bandeau_haut_titre">Bonjour, <b>{user.firstName} {user.lastName}</b></span>
-                    <a className="hello_deconnexion" href={"/wp-login.php?action=logout&_wpnonce="+the_ajax_script.logoutNonce+"&redirect_to=page-d-exemple"}>
+                    <a className="hello_deconnexion" href={"/wp-login.php?action=logout&_wpnonce="+REACT_VARS.logoutNonce+"&redirect_to=page-d-exemple"}>
                     <span><i className="icon-close"></i>&nbsp;Déconnexion</span>
                     </a>
                 </div>

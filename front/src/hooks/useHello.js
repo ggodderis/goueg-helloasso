@@ -6,7 +6,7 @@ import { React, useState, useEffect } from "react";
 
 const useHello = () => {
 
-  const ROOT_INSERT = the_ajax_script.rootUrl + "goueg-helloasso/v1/set_session";
+  const ROOT_INSERT = REACT_VARS.rootUrl + "goueg-helloasso/v1/set_session";
 
   const [token,setToken] = useState('');
   const [datas,setData] = useState( null );
@@ -33,7 +33,7 @@ const useHello = () => {
         method: 'POST',
         body: data,
         headers: {
-            'X-WP-Nonce': the_ajax_script.rootNonce
+            'X-WP-Nonce': REACT_VARS.rootNonce
         }
         })
         .then( res => res.json()  )

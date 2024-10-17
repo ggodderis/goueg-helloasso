@@ -2,11 +2,11 @@ import { useState } from 'react';
 
 const useEmail = () => {
     
-    const ROOT_URL_HELLOASSO = the_ajax_script.rootUrl + "goueg-helloasso/v1/user_email";
+    const ROOT_URL_HELLOASSO = REACT_VARS.rootUrl + "goueg-helloasso/v1/user_email";
     const [isexist,setIsexist] = useState('');
     
     const data = new FormData();
-        //data.append('nonce', the_ajax_script.nonce );
+        //data.append('nonce', REACT_VARS.nonce );
         //data.append('metadata', JSON.stringify(metas) );
     
     function handelUserEmail ( userEmail = 'test@test.com' ) {
@@ -18,7 +18,7 @@ const useEmail = () => {
             method: 'POST',
             body: data,
             headers: {
-                'X-WP-Nonce': the_ajax_script.rootNonce
+                'X-WP-Nonce': REACT_VARS.rootNonce
             }
             })
             .then( res => res.json()  )
