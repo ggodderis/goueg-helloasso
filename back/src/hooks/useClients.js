@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const useClients = () => {
-    const BACK_URL_HELLOASSO = the_ajax_script.rootUrl + "back-helloasso/v1/get_clients";
+    const BACK_URL_HELLOASSO = REACT_VARS.rootUrl + "back-helloasso/v1/get_clients";
     const [clients,setClients] = useState();
 
     function handelClients ( year = '', month = '' ) {
@@ -11,7 +11,7 @@ const useClients = () => {
         setClients([]);
         
         const data = new FormData();
-            data.append('nonce', the_ajax_script.nonce );
+            data.append('nonce', REACT_VARS.nonce );
             data.append('year', year);
             data.append('month', month);
 
@@ -21,7 +21,7 @@ const useClients = () => {
             method: 'POST',
             body: data,
             headers: {
-                'X-WP-Nonce': the_ajax_script.rootNonce
+                'X-WP-Nonce': REACT_VARS.rootNonce
             }
             })
             .then( res => res.json()  )

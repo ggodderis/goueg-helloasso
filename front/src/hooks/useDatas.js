@@ -265,7 +265,7 @@ const getLicences = (dt,new_mur) => {
     }
 
     useEffect( () => {
-        console.log('datas change',datas);
+        //console.log('datas change',datas);
     },[datas]);
 /**
  * 

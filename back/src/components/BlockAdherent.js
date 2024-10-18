@@ -11,7 +11,7 @@ const BlockAdherent = (props) => {
     return (
         <div key={props.id} className="ligne_client">
             <div className="cellule_titre">
-                <span>{props.hello_id}</span>
+                {/* <span>{props.hello_id}</span> */}
                 <h2>{props.metas.metadata?.payer.lastName} - {props.metas.metadata?.payer.firstName}</h2>
                 <span>Date du paiement: {props.date_create}</span>
                 <span className="cellule_statut">Statut du paiement: <b>{props.statut}</b></span>

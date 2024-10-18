@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import Total from '../components/Total';
 import useHello from '../hooks/useHello';
 import Loader from '../components/Loader';
+import LicenceGuide from '../components/LicenceGuide';
 
 const Licence = (props) => {
     
@@ -29,21 +30,17 @@ const [selectlicence,setSelectlicence] = useState([]);
 
 useEffect( () => {
 
-    let toto = [];
+    let temp = [];
 
     activites.map( (item,i) => {
         if( item.checked ){
-            toto.push( item.name )
+            temp.push( item.name )
         }
         if( item.labelchecked ){
-            toto.push( item.labelname );
+            temp.push( item.labelname );
         }
     });
-    setSelectlicence(toto);
-
-    //console.log('toto',toto);
-    
-
+    setSelectlicence(temp);
 },[]);
 /** 
  * POUR LA NAVIGATION
@@ -144,7 +141,7 @@ const handelOptions = (event) => {
 
     const {name,checked} = event.target;
 
-   let new_options = options_ffme.map( (item,i) => {
+    let new_options = options_ffme.map( (item,i) => {
     
             if (item.name === name){
 
@@ -183,16 +180,16 @@ const handelPaye = (event) => {
 
 
 function handelClickPrecedente(event){
-        //console.log('validation', event.target, club );
-        nav.map( (item,i) => {
-            
-            if( item.label == 'Licence') {
-                let index = i-1;
-               navigate( nav[index].to );
-            }
-            
-        })
-    }
+    //console.log('validation', event.target, club );
+    nav.map( (item,i) => {
+        
+        if( item.label == 'Licence') {
+            let index = i-1;
+            navigate( nav[index].to );
+        }
+        
+    })
+}
 
     return(
         <>
@@ -202,6 +199,22 @@ function handelClickPrecedente(event){
         <div className="bandeau_haut">
             <span className="bandeau_haut_titre">Choix de la Licences / Assurances</span>
         </div>
+        <fieldset>
+         <legend>Pour choisir votre Licence / Assurance, voulez vous être guidé ou désirez vous choisir vous même?</legend>
+                <label className="label_radio">
+                    <input type="checkbox" name="guide" value="oui" />
+                    <span className="new_input"></span>
+                    Je préfére être guidé
+                </label>
+                <label className="label_radio" >
+                    <input type="checkbox" name="guide" value="non" />
+                    <span className="new_input"></span>
+                    Je veux choisir moi même
+                </label>
+        </fieldset>
+
+        {/* <LicenceGuide {...props} /> */}
+        
             <div className="content_licences">
                 <fieldset>
                         <legend>Cochez les activités que vous voulez pratiquer:</legend>
@@ -262,7 +275,8 @@ function handelClickPrecedente(event){
 
                 }
 
-            </div>
+            </div> 
+
             <fieldset>
                 <legend>{mur.descriptif}</legend>
                 <label className="label_radio">
@@ -271,6 +285,8 @@ function handelClickPrecedente(event){
                     oui :&nbsp;<b>30€</b>
                 </label>
             </fieldset>
+            
+           
         
         <Total datas={datas}/>
         <div className="navig_bottom">

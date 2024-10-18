@@ -4,7 +4,7 @@
 
 // checkoutIntentId 29104 ok
 
-// sleep(4);
+sleep(4);
 
 get_header();
 

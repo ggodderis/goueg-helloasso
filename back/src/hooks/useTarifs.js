@@ -2,14 +2,14 @@ import { useState } from 'react';
 
 const useTarifs = () => {
 
-    const BACK_URL_HELLOASSO = the_ajax_script.rootUrl + "back-helloasso/v1/get_tarifs";
+    const BACK_URL_HELLOASSO = REACT_VARS.rootUrl + "back-helloasso/v1/get_tarifs";
     const [tarifs,setTarifs] = useState();
         
     function handelTarifs () {
         console.log( BACK_URL_HELLOASSO );
         
         const data = new FormData();
-        data.append('nonce', the_ajax_script.nonce );
+        data.append('nonce', REACT_VARS.nonce );
 
         fetch( 
             BACK_URL_HELLOASSO ,
@@ -17,7 +17,7 @@ const useTarifs = () => {
             method: 'POST',
             body: data,
             headers: {
-                'X-WP-Nonce': the_ajax_script.rootNonce
+                'X-WP-Nonce': REACT_VARS.rootNonce
             }
             })
             .then( res => res.json()  )

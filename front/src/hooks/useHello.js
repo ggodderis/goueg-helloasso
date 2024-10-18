@@ -92,8 +92,8 @@ const useHello = () => {
  */
 
 const keys = new FormData();
-      keys.append("client_id","a0fead5a1ba4404eacf4b9de755fb3b9");
-      keys.append("client_secret","NOfvEhtPEa4CBhrom8Q6nkBIwcZOapxr");
+      keys.append("client_id",REACT_VARS.client_id);
+      keys.append("client_secret",REACT_VARS.client_secret);
       keys.append("grant_type","client_credentials");
 
     useEffect( () => {

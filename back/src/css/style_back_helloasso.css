@@ -121,7 +121,20 @@
     color: #1e3b60;
 }
 .export_csv {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     min-height: 30px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #8c8f94;
+    border-radius: 3px;
+    padding: 0.25rem 0.5rem;
+}
+.export_csv > img {
+    width: 25px;
+    height: 25px;
+    margin-right: 0.5rem;
 }
 .hidde {
     display: none;

@@ -122,7 +122,7 @@
 }
 .label_radio > input:checked + .new_input {
     transform: scale(1);
-    background-color: var(--bleu-foncer);
+    background-color: green;
 }
 .label_radio > input:checked + .new_input::before {
     display: block;

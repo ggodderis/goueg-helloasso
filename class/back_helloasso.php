@@ -157,12 +157,16 @@ class back_helloasso {
             )
         );
 
-        wp_localize_script( 'admin-helloasso-js' , 'the_ajax_script', 
+        wp_localize_script( 'admin-helloasso-js' , 'REACT_VARS', 
         array( 
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'nonce' => wp_create_nonce( 'wp_attachment_mail' ),
             'rootUrl' => esc_url_raw( rest_url() ),
-            'rootNonce' => wp_create_nonce( 'wp_rest' )
+            'rootNonce' => wp_create_nonce( 'wp_rest' ),
+            'client_id' => CLIENT_ID,
+            'client_secret' => CLIENT_SECRET,
+            'url_token' => URL_TOKEN,
+            'url_checkout_intents' => URL_CHECKOUT_INTENTS
             )
         );
         
