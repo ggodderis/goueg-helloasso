@@ -1,11 +1,14 @@
-import { React, useEffect, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import {ContextDatas} from "../hooks/useContextDatas"
 
 const Home = (props) => {
 
-    const {user,nouveau} = props;
+    const {nouveau} = props;
+    const {user} = useContext( ContextDatas );
 
-
+    console.log( nouveau, user );
+    
     return(
         <>
         {

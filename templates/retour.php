@@ -4,7 +4,7 @@
 
 // checkoutIntentId 29104 ok
 
-sleep(4);
+//sleep(4);
 
 get_header();
 
@@ -19,6 +19,7 @@ class retourHello {
 
     private $checkoutIntentId = '';
     private $table_name = 'wp_clients';
+    private $datas = [];
 
     private $token = '';
 
@@ -84,10 +85,6 @@ class retourHello {
 
             $statut = 1;
 
-            // echo $retour_hello['order']['items'][0]['state'];
-            // echo '<br>';
-            // echo $retour_hello['order']['payments'][0]['state'];
-
 
                 if( $retour_hello['order']['items'][0]['state'] == 'Processed' &&
                     $retour_hello['order']['payments'][0]['state'] == 'Authorized' ){
@@ -121,16 +118,19 @@ class retourHello {
          */
         $query = "SELECT * FROM {$this->table_name} WHERE `hello_id`={$this->checkoutIntentId}";
         $retour = $conn->query($query);
+        $infos_table = $retour->fetch_array(MYSQLI_ASSOC);
 
         /**
          * Si $checkoutIntentId existe on l'update avec le retour d'infos hello asso
          */
          if( $retour->num_rows ){
-
+            /**
+            * On stock les datas dans une Array
+            */
+            $this->datas = $retour_hello;
             /**
              * Serialization des metas et traitement pour les quotes avec mysqli_real_escape_string 
              */
-            $template_infos = $retour_hello;
             $retour_hello = serialize($retour_hello);
             $retour_hello = mysqli_real_escape_string($conn,$retour_hello);
 
@@ -144,10 +144,15 @@ class retourHello {
 
             $conn->query($query_insert);
 
-        /**
-         * Affichage du template checkout avec le graphisme
-         */
-           require_once(HELLOASSO_ROOT.'templates/tempCheckout.php');
+            /**
+             * Affichage du template checkout avec le graphisme
+             */
+            require_once(HELLOASSO_ROOT.'templates/tempCheckout.php');
+            /**
+             * Création ou update de l'adhérent et envoie email facture
+             * et email mot de passe inscription
+             */
+            self::createAndUpdateAdherent($infos_table['create']);
 
             /*
             $query_test = "SELECT * FROM {$table_name} WHERE `hello_id`={$checkoutIntentId}";
@@ -164,6 +169,50 @@ class retourHello {
             echo '<h3>id client inexistant !</h3>';
         }
 
+    }
+
+    private function createAndUpdateAdherent($create){
+        /**
+         * Si le champs create de la table wp_client
+         * est en "attente" on fait le travail si non on fait rien..
+         */
+        $metadata = $this->datas['metadata'];
+
+        if( $create == "attente" ){
+
+            echo '<pre>';
+            print_r($metadata['payer']);
+            echo '</pre>';
+
+            update_user_meta( $metadata['payer']['id'], 'gda_type_cotisation', 'A');
+            update_user_meta( $metadata['payer']['id'], 'gda_licence', 'FFR_FRA');
+            update_user_meta( $metadata['payer']['id'], 'gda_licence_speciale', ['BASE+']);
+            update_user_meta( $metadata['payer']['id'], 'gda_lieu_naissance', 'Croix');
+            update_user_meta( $metadata['payer']['id'], 'gda_saison', '2025');
+            
+            $password = wp_generate_password(6, false);
+
+            $user_datas = array(
+                "first_name" => 'Jojo',
+                "last_name" => 'le gros jojo',
+                "user_pass" => $password,
+                "user_email" => 'goueg4@gmail.com',
+                "role" => '',
+                "user_login" => str_replace(' ','',mb_strtolower('Jojo')).' '.str_replace(' ','',mb_strtolower('le gros jojo')),
+                "display_name" => str_replace(' ','',mb_strtolower('Jojo')).' '.str_replace(' ','',mb_strtolower('le gros jojo'))
+                // "user_login", CONCAT( LOWER(first_name)," ",LOWER(last_name)),
+                // "display_name", CONCAT(first_name ," ",last_name ) )
+            );
+
+            //$user_id = wp_insert_user($user_datas);
+
+            if (!is_wp_error($user_id)) { 
+                //echo $i.'we have Created an account for you.<br>';
+                //wp_new_user_notification( $user_id, null, 'both' );
+            }
+
+            //"création du user et envoie email facture et email mot de passe";
+        }
     }
 
 }

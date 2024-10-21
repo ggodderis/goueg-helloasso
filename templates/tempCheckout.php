@@ -1,22 +1,22 @@
 <?php
 
-$total_price        = isset($template_infos['order']['payments'][0]['amount']) ? intval($template_infos['order']['payments'][0]['amount'])/100 : '';
-$cotisation         = $template_infos['metadata']['cotisation'];
-$prix_cotisation    = intval($template_infos['metadata']['tarif_cotisation'])/100;
-$licence            = $template_infos['metadata']['licence'];
-$prix_licence       = intval($template_infos['metadata']['tarif_licence'])/100;
+$total_price        = isset($this->datas['order']['payments'][0]['amount']) ? intval($this->datas['order']['payments'][0]['amount'])/100 : '';
+$cotisation         = $this->datas['metadata']['cotisation'];
+$prix_cotisation    = intval($this->datas['metadata']['tarif_cotisation'])/100;
+$licence            = $this->datas['metadata']['licence'];
+$prix_licence       = intval($this->datas['metadata']['tarif_licence'])/100;
 $liste_membres      = '';
 $soutien            = '';
 $options            = '';
 $mur                = '';
-$adherent           = $template_infos['metadata']['payer']['firstName'].' '.$template_infos['metadata']['payer']['lastName'];
+$adherent           = $this->datas['metadata']['payer']['firstName'].' '.$this->datas['metadata']['payer']['lastName'];
 
 /**
  * Liste des membre de la famille si famille
  */
-if( isset($template_infos['metadata']['cotisation_famille']) &&  $template_infos['metadata']['cotisation_famille'] == "famille" ){
+if( isset($this->datas['metadata']['cotisation_famille']) &&  $this->datas['metadata']['cotisation_famille'] == "famille" ){
     
-    foreach( $template_infos['metadata'] as $key => $value ){
+    foreach( $this->datas['metadata'] as $key => $value ){
         // echo '<pre>';
         // print_r($key);
         // echo '</pre>';
@@ -41,13 +41,13 @@ if( isset($template_infos['metadata']['cotisation_famille']) &&  $template_infos
 /**
  * Cotisation de soutien si pas vide
  */
-if( isset($template_infos['metadata']['soutien']) &&  intval($template_infos['metadata']['soutien']) > 0  ){
-    $soutien = '<span>Soutien au club: <b>'.( intval($template_infos['metadata']['soutien'])/100 ).'€</b> </span>';
+if( isset($this->datas['metadata']['soutien']) &&  intval($this->datas['metadata']['soutien']) > 0  ){
+    $soutien = '<span>Soutien au club: <b>'.( intval($this->datas['metadata']['soutien'])/100 ).'€</b> </span>';
 }
 /**
  * Options FFME
  */
-$boucle_options = isset( $template_infos['metadata']['options_ffme'] ) ? $template_infos['metadata']['options_ffme'] : [];
+$boucle_options = isset( $this->datas['metadata']['options_ffme'] ) ? $this->datas['metadata']['options_ffme'] : [];
 
 foreach( $boucle_options as $key => $value ){
     // echo '<pre>';
@@ -61,8 +61,8 @@ foreach( $boucle_options as $key => $value ){
 /**
  * Mur d'escalade
  */
-if( isset($template_infos['metadata']['mur']) &&  intval($template_infos['metadata']['mur']) > 0 ){
-    $mur = '<span>Mur d\'escalade : <b>'.( intval($template_infos['metadata']['mur'])/100 ).'€</b> </span>';
+if( isset($this->datas['metadata']['mur']) &&  intval($this->datas['metadata']['mur']) > 0 ){
+    $mur = '<span>Mur d\'escalade : <b>'.( intval($this->datas['metadata']['mur'])/100 ).'€</b> </span>';
 }
 
 
@@ -80,7 +80,7 @@ switch( $array_statut[$statut-1] ){
                     <u>Voici le résumé de votre adhésion :</u>
                     <br />
                     <span>Adhésion de: <b>'.$adherent.'</b></span>
-                    <span>Cotisation club '.$template_infos['metadata']['cotisation_famille'].': '.$cotisation.'  <b>'.$prix_cotisation .' €</b></span>
+                    <span>Cotisation club '.$this->datas['metadata']['cotisation_famille'].': '.$cotisation.'  <b>'.$prix_cotisation .' €</b></span>
                     <span>Licence / Assurance: '.$licence.'  <b>'.$prix_licence.' €</b></span>
                     '.$soutien.'
                     '.$options.'
@@ -104,7 +104,7 @@ switch( $array_statut[$statut-1] ){
                     <u>Voici le résumé de votre adhésion :</u>
                     <br />
                     <span>Adhésion de: <b>'.$adherent.'</b></span>
-                    <span>Cotisation club '.$template_infos['metadata']['cotisation_famille'].': '.$cotisation.'  <b>'.$prix_cotisation .' €</b></span>
+                    <span>Cotisation club '.$this->datas['metadata']['cotisation_famille'].': '.$cotisation.'  <b>'.$prix_cotisation .' €</b></span>
                     <span>Licence / Assurance: '.$licence.'  <b>'.$prix_licence.' €</b></span>
                     '.$soutien.'
                     '.$options.'
@@ -150,7 +150,7 @@ switch( $array_statut[$statut-1] ){
 
 
     // echo '<pre>';
-    // print_r( $template_infos );
+    // print_r( $this->datas );
     // echo '<pre>';
 
 

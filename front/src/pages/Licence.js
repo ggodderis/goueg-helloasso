@@ -1,9 +1,10 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useContext } from 'react';
 import { useNavigate } from "react-router-dom"
 import Total from '../components/Total';
 import useHello from '../hooks/useHello';
 import Loader from '../components/Loader';
 import LicenceGuide from '../components/LicenceGuide';
+import { ContextDatas } from '../hooks/useContextDatas';
 
 const Licence = (props) => {
     
@@ -15,9 +16,11 @@ const Licence = (props) => {
  * Récupération en provenance de App.js
  * de @param selection []
  */
-    const {nav,setNav,liste,datas,handelDatas,selection,setSelection} = props;
+    const {datas,handelDatas,selection,setSelection} = useContext( ContextDatas );
+    const {activites,mur} = selection;
+    const {nav,setNav} = props;
     const {options_ffme} = datas.metadata;
-    const {activites,mur} = props.selection;
+
 
 /**
  * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
@@ -286,9 +289,8 @@ function handelClickPrecedente(event){
                 </label>
             </fieldset>
             
-           
-        
-        <Total datas={datas}/>
+        <Total/>
+
         <div className="navig_bottom">
                 <button type="button" className='bt_bleu_outline' onClick={handelClickPrecedente}>
                     <i className="icon-chevron-gauche"></i>&nbsp;Étape précédente

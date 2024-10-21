@@ -1,15 +1,12 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useContext } from 'react';
+import { ContextDatas } from '../hooks/useContextDatas';
 
-const Total = (props) => {
+const Total = () => {
 
-const {totalAmount} = props.datas;
-const {cotisation,tarif_cotisation,options_ffme,type_licence,tarif_licence,mur,soutien} = props.datas.metadata;
-// const [opt,setOpt] = useState(false);
-// cotisation: '',
-//             tarif_cotisation: '',
-//             licence: '',
-//             type_licence: '',
-//             tarif_licence: '',
+const {datas} = useContext( ContextDatas );
+
+const {totalAmount} = datas;
+const {cotisation,tarif_cotisation,options_ffme,type_licence,tarif_licence,mur,soutien} = datas.metadata;
 
 
 return(

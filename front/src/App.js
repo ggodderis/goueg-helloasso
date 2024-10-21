@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useContext, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 
 /**
@@ -13,18 +13,18 @@ import Cotisation from './pages/Cotisation';
  * Components
  */
 // import Header from './components/Header';
+import { ContextDatas } from './hooks/useContextDatas';
 /**
  * Hooks
  */
-import useDatas from './hooks/useDatas';
-/**
- * CSS
- */
-import './css/style_helloasso.css';
+//import useDatas from './hooks/useDatas';
+
 
 const App = () => {
 
    // console.log( REACT_VARS.session_id );
+    const {user,handelDatas} = useContext( ContextDatas );
+
     
     /**
      * @param adherent contient les infos de l'adhérent du club
@@ -33,31 +33,31 @@ const App = () => {
     const location = useLocation();
     const adherent = REACT_VARS.infosUser;
     const [nouveau,setNouveau] = useState('');
-    const [datas,user,liste,metadata,selection,setSelection,handelDatas] = useDatas();
+    //const [datas,user,liste,metadata,selection,setSelection,handelDatas] = useDatas();
     
     const [nav,setNav] = useState([
         { to: '/', label: 'Home'}
     ]);
 
-/**
- * Scroll to
- */
+    /**
+     * Scroll to
+     */
 
-useEffect( () => {
+    useEffect( () => {
 
-    let top = document.getElementById( 'rootHelloAsso' );
+        let top = document.getElementById( 'rootHelloAsso' );
 
-    if( location.pathname != "/"){
-        window.scrollTo({ top: top.offsetTop-20, behavior: 'smooth' });
-    }else{
-        window.scrollTo({ top: 200 , behavior: 'smooth' });
-    }
+        if( location.pathname != "/"){
+            window.scrollTo({ top: top.offsetTop-20, behavior: 'smooth' });
+        }else{
+            window.scrollTo({ top: 200 , behavior: 'smooth' });
+        }
 
-},[location]);
+    },[location]);
 
-/**
- * Si c'est une connection direct d'un déjà adhérent
- */
+    /**
+     * Si c'est une connection direct d'un déjà adhérent
+     */
 
     useEffect( () => {
         if( adherent.firstName ){
@@ -70,11 +70,11 @@ useEffect( () => {
         <>
         {/* <Header nav={nav} /> */}
             <Routes>
-                <Route exact path="/" element={ <Home nouveau={nouveau} user={user} /> } />
-                <Route exact path="/formulaire" element={ <Form setNouveau={setNouveau} nav={nav} setNav={setNav} user={user} handelDatas={handelDatas}/> } />
-                <Route exact path="/cotisation" element={ <Cotisation datas={datas} nav={nav} setNav={setNav} liste={liste} metadata={metadata} handelDatas={handelDatas} /> } />
-                <Route exact path="/licence" element={ <Licence datas={datas} handelDatas={handelDatas} nav={nav} liste={liste} setNav={setNav} selection={selection} setSelection={setSelection} /> } />
-                <Route exact path="*" element={ <Errors /> } />
+                <Route exact path="/" element={ <Home nouveau={nouveau} /> } />
+                <Route exact path="/formulaire" element={ <Form nav={nav} setNav={setNav} setNouveau={setNouveau} /> } />
+                <Route exact path="/cotisation" element={ <Cotisation nav={nav} setNav={setNav} /> } />
+                <Route exact path="/licence" element={ <Licence nav={nav} setNav={setNav} /> } />
+               <Route exact path="*" element={ <Errors /> } />
             </Routes>
             <div className="bandeau_bas">
                 <p className="hello_infos">

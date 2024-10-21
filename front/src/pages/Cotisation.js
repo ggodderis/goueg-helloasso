@@ -1,20 +1,21 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import FormFamille from '../components/FormFamille';
 import Total from '../components/Total';
 import Loader from '../components/Loader';
 import useHello from '../hooks/useHello';
-import useSession from '../hooks/useSession';
+// import useSession from '../hooks/useSession';
+import { ContextDatas } from '../hooks/useContextDatas';
 
 const Cotisation = (props) => {
 
     const [token,startPaye] = useHello();
-    const [session,saveDatasSession] = useSession();
+    // const [session,saveDatasSession] = useSession();
 
     const navigate = useNavigate();
 
-    
-    const {nav,setNav,liste,datas,metadata,handelDatas} = props;
+    const {liste,datas,metadata,handelDatas} = useContext( ContextDatas );
+    const {nav,setNav} = props;
     const [loader,setLoader] = useState(false);
     const [etat,setEtat] = useState(false);
 
@@ -23,11 +24,11 @@ const Cotisation = (props) => {
     //console.log('cotisation',club,user);
     
 
-/** 
- * POUR LA NAVIGATION
- * On regarde si le label Formulaire existe dans nav
- * si il n'existe pas on l'ajoute
- */
+    /** 
+     * POUR LA NAVIGATION
+     * On regarde si le label Formulaire existe dans nav
+     * si il n'existe pas on l'ajoute
+     */
     function trouve( name ){
         return nav.find( (nav) => nav.label === name );
     }
@@ -90,7 +91,7 @@ const Cotisation = (props) => {
         
     }
 
-    function handelClickPrecedente(event){
+    const handelClickPrecedente = (event) => {
         //console.log('validation', event.target, club );
         nav.map( (item,i) => {
             
@@ -101,9 +102,9 @@ const Cotisation = (props) => {
             
         })
     }
-/**
- * On paye !
- */
+    /**
+     * On paye !
+     */
     const handelPaye = (event) => {
         setLoader(true);
         //saveDatasSession(datas);
@@ -153,7 +154,8 @@ const Cotisation = (props) => {
                 metadata.cotisation === 'F/F2' ? ( <FormFamille datas={datas} setEtat={setEtat} handelDatas={handelDatas} /> ):('')
             }
 
-            <Total datas={datas}/>
+            <Total/>
+
             <div className="navig_bottom">
                 <button type="button" className='bt_bleu_outline' onClick={handelClickPrecedente}><i className="icon-chevron-gauche"></i>&nbsp;Étape précédente</button>
             {

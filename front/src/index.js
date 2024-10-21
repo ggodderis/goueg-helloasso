@@ -3,6 +3,9 @@ import { createRoot } from '@wordpress/element';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
+import { ContextDatasProvider } from './hooks/useContextDatas';
+
+import './css/style_helloasso.css';
 
 
 /**
@@ -15,8 +18,11 @@ domReady( () => {
         document.getElementById( 'rootHelloAsso' )
     );
     root.render(
-        <BrowserRouter basename="/page-d-exemple">
-            <App tab="home" />
-        </BrowserRouter>
+        
+            <BrowserRouter basename="/page-d-exemple">
+                <ContextDatasProvider>
+                    <App tab="home" />
+                </ContextDatasProvider>
+            </BrowserRouter>
     );
 } );

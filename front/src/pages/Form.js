@@ -1,14 +1,18 @@
-import { React, useEffect, useRef } from 'react';
+import { React, useContext, useEffect, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 
 import useEmail from '../hooks/useEmail';
 import { paysListe } from '../datas/paysListe';
 
+import { ContextDatas } from '../hooks/useContextDatas';
+
 const Form = (props) => {
+
+    const {user,handelDatas} = useContext( ContextDatas );
     /**
      * @param isexist Boolean pour savoir si l'email existe déjà dans les comptes adhérent
      */
-    const {nav,setNav,user,handelDatas,setNouveau} = props;
+    const {nav,setNav,setNouveau} = props;
     const [isexist,handelUserEmail] = useEmail();
     const navigate = useNavigate();
     const textInput = useRef(null);
@@ -143,9 +147,9 @@ const Form = (props) => {
 
                     </fieldset>
 
-                    <label className="label_qs">
+                    {/* <label className="label_qs">
                     <input type="checkbox" name="questionnaire" value="oui" defaultChecked={user.questionnaire === 'oui'} required />&nbsp;Avez vous répondu NON à toutes les questions du Questionnaire de santé <a target="_blank" href="https://www.formulaires.service-public.fr/gf/cerfa_15699.do">QS-SPORT ?</a>
-                    </label>
+                    </label> */}
 
                     <fieldset>
                         <legend>Personne à prévenir en cas de problème:</legend>
