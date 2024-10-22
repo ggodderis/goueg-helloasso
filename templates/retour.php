@@ -103,9 +103,6 @@ class retourHello {
                 $statut = 3;
             }
 
-        /**
-         * Conversion du retour hello asso en array serializé pour mysql
-         */
         $conn = new mysqli( DB_HOST, DB_USER, DB_PASSWORD, DB_NAME );
         /**
          * Connection à la base ou error
@@ -139,7 +136,8 @@ class retourHello {
 
             $query_insert = "UPDATE {$this->table_name} SET `array`='{$retour_hello}',
                             `statut`='{$statut}',
-                            `date_update`='{$date}' 
+                            `date_update`='{$date}',
+                            `create`= 2
                             WHERE `hello_id`={$this->checkoutIntentId} ";
 
             $conn->query($query_insert);
@@ -152,7 +150,7 @@ class retourHello {
              * Création ou update de l'adhérent et envoie email facture
              * et email mot de passe inscription
              */
-            self::createAndUpdateAdherent($infos_table['create']);
+            self::createAndUpdateAdherent( $infos_table['create'], $statut );
 
             /*
             $query_test = "SELECT * FROM {$table_name} WHERE `hello_id`={$checkoutIntentId}";
@@ -171,14 +169,14 @@ class retourHello {
 
     }
 
-    private function createAndUpdateAdherent($create){
+    private function createAndUpdateAdherent( $create, $statut ){
         /**
          * Si le champs create de la table wp_client
          * est en "attente" on fait le travail si non on fait rien..
          */
         $metadata = $this->datas['metadata'];
 
-        if( $create == "attente" ){
+        if( $create == "attente" && intval($statut) == 2 ){
 
             echo '<pre>';
             print_r($metadata['payer']);
@@ -197,7 +195,7 @@ class retourHello {
                 "last_name" => 'le gros jojo',
                 "user_pass" => $password,
                 "user_email" => 'goueg4@gmail.com',
-                "role" => '',
+                "role" => 'subscriber',
                 "user_login" => str_replace(' ','',mb_strtolower('Jojo')).' '.str_replace(' ','',mb_strtolower('le gros jojo')),
                 "display_name" => str_replace(' ','',mb_strtolower('Jojo')).' '.str_replace(' ','',mb_strtolower('le gros jojo'))
                 // "user_login", CONCAT( LOWER(first_name)," ",LOWER(last_name)),
@@ -206,10 +204,10 @@ class retourHello {
 
             //$user_id = wp_insert_user($user_datas);
 
-            if (!is_wp_error($user_id)) { 
-                //echo $i.'we have Created an account for you.<br>';
-                //wp_new_user_notification( $user_id, null, 'both' );
-            }
+            // if (!is_wp_error($user_id)) { 
+            //     //echo $i.'we have Created an account for you.<br>';
+            //     //wp_new_user_notification( $user_id, null, 'both' );
+            // }
 
             //"création du user et envoie email facture et email mot de passe";
         }

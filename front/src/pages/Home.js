@@ -6,8 +6,6 @@ const Home = (props) => {
 
     const {nouveau} = props;
     const {user} = useContext( ContextDatas );
-
-    console.log( nouveau, user );
     
     return(
         <>

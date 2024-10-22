@@ -5401,6 +5401,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _hooks_useContextDatas__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hooks/useContextDatas */ "./src/hooks/useContextDatas.js");
+
 
 
 const LicenceGuide = props => {
@@ -5409,14 +5411,14 @@ const LicenceGuide = props => {
     handelDatas,
     selection,
     setSelection
-  } = props;
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_hooks_useContextDatas__WEBPACK_IMPORTED_MODULE_1__.ContextDatas);
   const {
     options_ffme
   } = datas.metadata;
   const {
     activites,
     mur
-  } = props.selection;
+  } = selection;
 
   /**
    * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
@@ -5436,7 +5438,7 @@ const LicenceGuide = props => {
       }
     });
     setSelectlicence(temp);
-  }, []);
+  }, [activites]);
 
   /**
    * Mise à jour de selection [] dans useDatas.js
@@ -6308,9 +6310,11 @@ const ContextDatas = (0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)({
   liste: {},
   metadata: {},
   selection: {},
+  guide: '',
   setSelection: () => {},
   handelDatas: () => {},
-  setPayer: () => {}
+  setPayer: () => {},
+  setGuide: () => {}
 });
 function ContextDatasProvider({
   children
@@ -6346,6 +6350,7 @@ function ContextDatasProvider({
   const [payer, setPayer] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
   const user = datas.payer;
   const metadata = datas.metadata;
+  const [guide, setGuide] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('oui');
 
   /**
    * @param selection []
@@ -6777,9 +6782,11 @@ function ContextDatasProvider({
       metadata,
       payer,
       selection,
+      guide,
       setSelection,
       handelDatas,
-      setPayer
+      setPayer,
+      setGuide
     }
   }, children);
 }
@@ -7436,7 +7443,6 @@ const Home = props => {
   const {
     user
   } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_hooks_useContextDatas__WEBPACK_IMPORTED_MODULE_1__.ContextDatas);
-  console.log(nouveau, user);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, user.firstName ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "bandeau_haut"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
@@ -7511,27 +7517,15 @@ const Licence = props => {
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
   const [token, startPaye] = (0,_hooks_useHello__WEBPACK_IMPORTED_MODULE_2__["default"])();
   const [loader, setLoader] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  /**
-   * Récupération en provenance de App.js
-   * de @param selection []
-   */
   const {
     datas,
-    handelDatas,
-    selection,
-    setSelection
+    guide,
+    setGuide
   } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_hooks_useContextDatas__WEBPACK_IMPORTED_MODULE_5__.ContextDatas);
-  const {
-    activites,
-    mur
-  } = selection;
   const {
     nav,
     setNav
   } = props;
-  const {
-    options_ffme
-  } = datas.metadata;
 
   /**
    * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
@@ -7539,19 +7533,23 @@ const Licence = props => {
    * afin de savoir si c'est ffme ou ffr
    */
 
-  const [selectlicence, setSelectlicence] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    let temp = [];
-    activites.map((item, i) => {
-      if (item.checked) {
-        temp.push(item.name);
-      }
-      if (item.labelchecked) {
-        temp.push(item.labelname);
-      }
-    });
-    setSelectlicence(temp);
-  }, []);
+  // const [selectlicence,setSelectlicence] = useState([]);
+
+  // useEffect( () => {
+
+  //     let temp = [];
+
+  //     activites.map( (item,i) => {
+  //         if( item.checked ){
+  //             temp.push( item.name )
+  //         }
+  //         if( item.labelchecked ){
+  //             temp.push( item.labelname );
+  //         }
+  //     });
+  //     setSelectlicence(temp);
+  // },[]);
+
   /** 
    * POUR LA NAVIGATION
    * On regarde si le label Formulaire existe dans nav
@@ -7569,109 +7567,103 @@ const Licence = props => {
     }
   }, []);
 
-  /**
-   * Mise à jour de selection [] dans useDatas.js
-   */
-  const handelCheckbox = event => {
-    let {
-      name
-    } = event.target;
-    /**
-     * Si le mur d'escalade est selectionné on empêche
-     * le click sur escalade
-     */
-    if (selection.mur.checked && name === 'ESCA') return false;
-    let newselection = activites.map((item, index) => {
-      if (item.name === name) {
-        item.checked = !item.checked;
-        if (item.name == 'SKIR' || item.name == 'ALPI') {
-          item.show = !item.show;
-          if (!item.checked) {
-            item.labelchecked = false;
-          }
-        }
-      }
-      return item;
-    });
-    setSelection({
-      ...selection,
-      activites: newselection
-    });
-  };
-  /**
-   * Mise à jour du sous choix > à PD
-   */
-  const handelNiveau = event => {
-    let {
-      name
-    } = event.target;
-    let newselection = activites.map((item, index) => {
-      if (item.labelname === name) {
-        item.labelchecked = !item.labelchecked;
-      }
-      return item;
-    });
-    setSelection({
-      ...selection,
-      activites: newselection
-    });
-  };
-  /**
-   * 
-   */
+  // /**
+  //  * Mise à jour de selection [] dans useDatas.js
+  //  */
+  // const handelCheckbox = (event) => {
 
-  /**
-   * Choix du type de licence famille ou seul
-   */
-  // const handelFamille = (event) => {
-  //     const {value} = event.target;
-  //     setSelection({...selection,famille:value});
+  //     let {name} = event.target;
+  //     /**
+  //      * Si le mur d'escalade est selectionné on empêche
+  //      * le click sur escalade
+  //      */
+  //     if( selection.mur.checked && name === 'ESCA') return false;
+
+  //     let newselection = activites.map( (item,index) => {
+  //         if( item.name === name ){
+  //             item.checked = !item.checked;
+  //             if( item.name == 'SKIR' || item.name == 'ALPI'){
+  //                 item.show = !item.show;
+  //                 if( ! item.checked ){
+  //                     item.labelchecked = false;
+  //                 }
+  //             }
+  //         }
+  //         return item;
+  //     })
+
+  //     setSelection({...selection, activites: newselection });
+  // }
+  // /**
+  //  * Mise à jour du sous choix > à PD
+  //  */
+  // const handelNiveau = ( event ) => {
+
+  //     let {name} = event.target;
+
+  //     let newselection = activites.map( (item,index) => {
+  //         if( item.labelname === name ){
+  //             item.labelchecked = !item.labelchecked;
+  //         }
+  //         return item;
+  //     })
+
+  //     setSelection({...selection, activites: newselection });
+
   // }
 
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    /**
-     * On stock les informations de selection pour 
-     * savoir quelle licence proposer...
-     */
-    let el = [];
-    activites.forEach(element => {
-      if (element.checked && !element.labelchecked) {
-        el.push(element.name);
-      }
-      if (element.checked && element.labelchecked) {
-        el.push(element.labelname);
-      }
-    });
-    setSelectlicence(el);
-  }, [activites]);
-  /**
-   * Choix Options
-   */
-  const handelOptions = event => {
-    const {
-      name,
-      checked
-    } = event.target;
-    let new_options = options_ffme.map((item, i) => {
-      if (item.name === name) {
-        item.checked = checked;
-      }
-      return item;
-    });
-    handelDatas('options', new_options);
-  };
-  const handelClickMur = event => {
-    const {
-      checked
-    } = event.target;
-    setSelection({
-      ...selection,
-      mur: {
-        ...selection.mur,
-        checked: checked
-      }
-    });
-  };
+  // /**
+  //  * Choix du type de licence famille ou seul
+  //  */
+
+  // useEffect( () => {
+  //     /**
+  //      * On stock les informations de selection pour 
+  //      * savoir quelle licence proposer...
+  //      */
+  //     let el = [];
+
+  //     activites.forEach(element => {
+  //         if( element.checked && !element.labelchecked ){
+  //             el.push(element.name);
+  //         }
+  //         if( element.checked && element.labelchecked ){
+  //             el.push(element.labelname);
+  //         }
+  //     });
+  //     setSelectlicence(el);
+
+  // },[activites]);
+  // /**
+  //  * Choix Options
+  //  */
+  // const handelOptions = (event) => {
+
+  //     const {name,checked} = event.target;
+
+  //     let new_options = options_ffme.map( (item,i) => {
+
+  //             if (item.name === name){
+
+  //             item.checked = checked;
+
+  //             }
+  //             return item;
+
+  //             } 
+  //         );
+
+  //     handelDatas('options',new_options);
+
+  // }
+
+  // const handelClickMur = (event) => {
+
+  //     const {checked} = event.target;
+
+  //     setSelection({...selection, mur: {...selection.mur, checked: checked }  });
+
+  // }
 
   /**
    * On paye !
@@ -7697,71 +7689,25 @@ const Licence = props => {
     className: "bandeau_haut"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "bandeau_haut_titre"
-  }, "Choix de la Licences / Assurances")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("fieldset", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("legend", null, "Pour choisir votre Licence / Assurance, voulez vous \xEAtre guid\xE9 ou d\xE9sirez vous choisir vous m\xEAme?"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    className: "label_radio"
+  }, "Choix de la Licences / Assurances")), guide === 'oui' ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_LicenceGuide__WEBPACK_IMPORTED_MODULE_4__["default"], null) : '', (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("fieldset", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("legend", null, "Pour choisir votre Licence / Assurance, voulez vous \xEAtre guid\xE9 ou d\xE9sirez vous choisir vous m\xEAme?"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+    className: "label_radio",
+    key: "guide_oui"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "checkbox",
-    name: "guide",
-    value: "oui"
+    onChange: () => setGuide('oui'),
+    checked: guide === 'oui'
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "new_input"
   }), "Je pr\xE9f\xE9re \xEAtre guid\xE9"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    className: "label_radio"
+    className: "label_radio",
+    key: "guide_non"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "checkbox",
-    name: "guide",
-    value: "non"
+    onChange: () => setGuide('non'),
+    checked: guide === 'non'
   }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
     className: "new_input"
-  }), "Je veux choisir moi m\xEAme")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "content_licences"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("fieldset", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("legend", null, "Cochez les activit\xE9s que vous voulez pratiquer:"), activites.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "ligne_licence"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    key: i,
-    className: "label_radio"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "checkbox",
-    name: item.name,
-    id: item.name,
-    checked: item.checked,
-    onChange: handelCheckbox
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: "new_input"
-  }), item.descriptif), item.show ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "sous_ligne_licence"
-  }, item.label, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: "label_sous_ligne_licence"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "checkbox",
-    name: item.labelname,
-    checked: item.labelchecked,
-    onChange: handelNiveau
-  }), " oui")) : ''))), selectlicence.includes('ESCA') || selectlicence.includes('ALPI_SUP') || selectlicence.includes('SKIR_SUP') ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("fieldset", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("legend", null, "Options suppl\xE9mentaires (nom obligatoire)"), options_ffme.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "ligne_licence"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    key: item.id,
-    className: "label_radio"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "checkbox",
-    name: item.name,
-    id: item.name,
-    checked: item.checked,
-    value: item.titre,
-    onClick: handelOptions
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: "new_input"
-  }), item.titre, "\xA0", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("b", null, item.plein_tarif / 100, "\u20AC"))))) : ''), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("fieldset", null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("legend", null, mur.descriptif), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
-    className: "label_radio"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
-    type: "checkbox",
-    name: mur.name,
-    checked: mur.checked,
-    value: mur.plein_tarif,
-    onChange: handelClickMur
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {
-    className: "new_input"
-  }), "oui :\xA0", (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("b", null, "30\u20AC"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Total__WEBPACK_IMPORTED_MODULE_1__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }), "Je veux choisir moi m\xEAme")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_components_Total__WEBPACK_IMPORTED_MODULE_1__["default"], null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "navig_bottom"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     type: "button",

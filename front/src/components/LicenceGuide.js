@@ -1,11 +1,13 @@
-import { React, useState, useEffect } from 'react';
+import { React, useState, useEffect, useContext } from 'react';
+import { ContextDatas } from '../hooks/useContextDatas';
 
 const LicenceGuide = ( props ) => {
 
 
-    const {datas,handelDatas,selection,setSelection} = props;
+    const {datas,handelDatas,selection,setSelection} = useContext( ContextDatas );
     const {options_ffme} = datas.metadata;
-    const {activites,mur} = props.selection;
+    const {activites,mur} = selection;
+    
     
     /**
      * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
@@ -22,13 +24,15 @@ const LicenceGuide = ( props ) => {
         activites.map( (item,i) => {
             if( item.checked ){
                 temp.push( item.name )
-            }
+            }   
             if( item.labelchecked ){
                 temp.push( item.labelname );
             }
         });
         setSelectlicence(temp);
-    },[]);
+
+    },[activites]);
+
 
     /**
      * Mise à jour de selection [] dans useDatas.js

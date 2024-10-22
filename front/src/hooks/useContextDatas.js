@@ -11,9 +11,11 @@ export const ContextDatas = createContext({
     liste: {},
     metadata: {},
     selection: {},
+    guide: '',
     setSelection: () => {},
     handelDatas: () => {},
-    setPayer: () => {}
+    setPayer: () => {},
+    setGuide: () => {}
 });
 
 export function ContextDatasProvider ({children}) {
@@ -49,6 +51,7 @@ export function ContextDatasProvider ({children}) {
     const [payer,setPayer] = useState({});
     const user = datas.payer;
     const metadata = datas.metadata;
+    const [guide,setGuide] = useState('oui');
 
     /**
      * @param selection []
@@ -433,9 +436,11 @@ export function ContextDatasProvider ({children}) {
                                         metadata,
                                         payer,
                                         selection,
+                                        guide,
                                         setSelection,
                                         handelDatas,
-                                        setPayer }}>
+                                        setPayer,
+                                        setGuide }}>
             {children}
         </ContextDatas.Provider>
     )

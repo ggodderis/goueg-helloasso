@@ -12,161 +12,148 @@ const Licence = (props) => {
 
     const [token,startPaye] = useHello();
     const [loader,setLoader] = useState(false);
-/**
- * Récupération en provenance de App.js
- * de @param selection []
- */
-    const {datas,handelDatas,selection,setSelection} = useContext( ContextDatas );
-    const {activites,mur} = selection;
+    const {datas,guide,setGuide} = useContext( ContextDatas );
     const {nav,setNav} = props;
-    const {options_ffme} = datas.metadata;
-
-
-/**
- * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
- * contient la selection faite pour les licences
- * afin de savoir si c'est ffme ou ffr
- */
     
-const [selectlicence,setSelectlicence] = useState([]);
-
-
-useEffect( () => {
-
-    let temp = [];
-
-    activites.map( (item,i) => {
-        if( item.checked ){
-            temp.push( item.name )
-        }
-        if( item.labelchecked ){
-            temp.push( item.labelname );
-        }
-    });
-    setSelectlicence(temp);
-},[]);
-/** 
- * POUR LA NAVIGATION
- * On regarde si le label Formulaire existe dans nav
- * si il n'existe pas on l'ajoute
- */
-function trouve( name ){
-    return nav.find( (nav) => nav.label === name );
-}
-
-useEffect( () => {
-
-    if( trouve('Licence') === undefined ){
-        setNav([...nav,
-            { to: '/licence', label: 'Licence'}
-        ]);
-    }
-}, []);
-
-/**
- * Mise à jour de selection [] dans useDatas.js
- */
-    const handelCheckbox = (event) => {
-
-        let {name} = event.target;
-        /**
-         * Si le mur d'escalade est selectionné on empêche
-         * le click sur escalade
-         */
-        if( selection.mur.checked && name === 'ESCA') return false;
-        
-        let newselection = activites.map( (item,index) => {
-            if( item.name === name ){
-                item.checked = !item.checked;
-                if( item.name == 'SKIR' || item.name == 'ALPI'){
-                    item.show = !item.show;
-                    if( ! item.checked ){
-                        item.labelchecked = false;
-                    }
-                }
-            }
-            return item;
-        })
-
-        setSelection({...selection, activites: newselection });
-    }
     /**
-     * Mise à jour du sous choix > à PD
+     * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
+     * contient la selection faite pour les licences
+     * afin de savoir si c'est ffme ou ffr
      */
-    const handelNiveau = ( event ) => {
-
-        let {name} = event.target;
-
-        let newselection = activites.map( (item,index) => {
-            if( item.labelname === name ){
-                item.labelchecked = !item.labelchecked;
-            }
-            return item;
-        })
-
-        setSelection({...selection, activites: newselection });
         
-    }
-/**
- * 
- */
+    // const [selectlicence,setSelectlicence] = useState([]);
 
-/**
- * Choix du type de licence famille ou seul
- */
-    // const handelFamille = (event) => {
-    //     const {value} = event.target;
-    //     setSelection({...selection,famille:value});
-    // }
+
+    // useEffect( () => {
+
+    //     let temp = [];
+
+    //     activites.map( (item,i) => {
+    //         if( item.checked ){
+    //             temp.push( item.name )
+    //         }
+    //         if( item.labelchecked ){
+    //             temp.push( item.labelname );
+    //         }
+    //     });
+    //     setSelectlicence(temp);
+    // },[]);
+
+    /** 
+     * POUR LA NAVIGATION
+     * On regarde si le label Formulaire existe dans nav
+     * si il n'existe pas on l'ajoute
+     */
+    function trouve( name ){
+        return nav.find( (nav) => nav.label === name );
+    }
 
     useEffect( () => {
-        /**
-         * On stock les informations de selection pour 
-         * savoir quelle licence proposer...
-         */
-        let el = [];
 
-        activites.forEach(element => {
-            if( element.checked && !element.labelchecked ){
-                el.push(element.name);
-            }
-            if( element.checked && element.labelchecked ){
-                el.push(element.labelname);
-            }
-        });
-        setSelectlicence(el);
+        if( trouve('Licence') === undefined ){
+            setNav([...nav,
+                { to: '/licence', label: 'Licence'}
+            ]);
+        }
+    }, []);
+
+    // /**
+    //  * Mise à jour de selection [] dans useDatas.js
+    //  */
+    // const handelCheckbox = (event) => {
+
+    //     let {name} = event.target;
+    //     /**
+    //      * Si le mur d'escalade est selectionné on empêche
+    //      * le click sur escalade
+    //      */
+    //     if( selection.mur.checked && name === 'ESCA') return false;
+        
+    //     let newselection = activites.map( (item,index) => {
+    //         if( item.name === name ){
+    //             item.checked = !item.checked;
+    //             if( item.name == 'SKIR' || item.name == 'ALPI'){
+    //                 item.show = !item.show;
+    //                 if( ! item.checked ){
+    //                     item.labelchecked = false;
+    //                 }
+    //             }
+    //         }
+    //         return item;
+    //     })
+
+    //     setSelection({...selection, activites: newselection });
+    // }
+    // /**
+    //  * Mise à jour du sous choix > à PD
+    //  */
+    // const handelNiveau = ( event ) => {
+
+    //     let {name} = event.target;
+
+    //     let newselection = activites.map( (item,index) => {
+    //         if( item.labelname === name ){
+    //             item.labelchecked = !item.labelchecked;
+    //         }
+    //         return item;
+    //     })
+
+    //     setSelection({...selection, activites: newselection });
+        
+    // }
+
+    // /**
+    //  * Choix du type de licence famille ou seul
+    //  */
+
+    // useEffect( () => {
+    //     /**
+    //      * On stock les informations de selection pour 
+    //      * savoir quelle licence proposer...
+    //      */
+    //     let el = [];
+
+    //     activites.forEach(element => {
+    //         if( element.checked && !element.labelchecked ){
+    //             el.push(element.name);
+    //         }
+    //         if( element.checked && element.labelchecked ){
+    //             el.push(element.labelname);
+    //         }
+    //     });
+    //     setSelectlicence(el);
  
-    },[activites]);
-/**
- * Choix Options
- */
-const handelOptions = (event) => {
+    // },[activites]);
+    // /**
+    //  * Choix Options
+    //  */
+    // const handelOptions = (event) => {
 
-    const {name,checked} = event.target;
+    //     const {name,checked} = event.target;
 
-    let new_options = options_ffme.map( (item,i) => {
-    
-            if (item.name === name){
+    //     let new_options = options_ffme.map( (item,i) => {
+        
+    //             if (item.name === name){
 
-               item.checked = checked;
+    //             item.checked = checked;
 
-            }
-             return item;
+    //             }
+    //             return item;
 
-            } 
-        );
-    
-    handelDatas('options',new_options);
+    //             } 
+    //         );
+        
+    //     handelDatas('options',new_options);
 
-}
+    // }
 
-const handelClickMur = (event) => {
+    // const handelClickMur = (event) => {
 
-    const {checked} = event.target;
+    //     const {checked} = event.target;
 
-    setSelection({...selection, mur: {...selection.mur, checked: checked }  });
-    
-}
+    //     setSelection({...selection, mur: {...selection.mur, checked: checked }  });
+        
+    // }
 
 /**
  * On paye !
@@ -202,23 +189,26 @@ function handelClickPrecedente(event){
         <div className="bandeau_haut">
             <span className="bandeau_haut_titre">Choix de la Licences / Assurances</span>
         </div>
+
+        {
+            guide === 'oui' ?( <LicenceGuide /> ):('')
+        }
+
         <fieldset>
-         <legend>Pour choisir votre Licence / Assurance, voulez vous être guidé ou désirez vous choisir vous même?</legend>
-                <label className="label_radio">
-                    <input type="checkbox" name="guide" value="oui" />
+            <legend>Pour choisir votre Licence / Assurance, voulez vous être guidé ou désirez vous choisir vous même?</legend>
+                <label className="label_radio" key="guide_oui">
+                    <input type="checkbox" onChange={ () => setGuide('oui')} checked={ guide === 'oui'} />
                     <span className="new_input"></span>
                     Je préfére être guidé
                 </label>
-                <label className="label_radio" >
-                    <input type="checkbox" name="guide" value="non" />
+                <label className="label_radio" key="guide_non">
+                    <input type="checkbox" onChange={ () => setGuide('non')}  checked={ guide === 'non'} />
                     <span className="new_input"></span>
                     Je veux choisir moi même
                 </label>
         </fieldset>
-
-        {/* <LicenceGuide {...props} /> */}
         
-            <div className="content_licences">
+            {/* <div className="content_licences">
                 <fieldset>
                         <legend>Cochez les activités que vous voulez pratiquer:</legend>
                         
@@ -287,7 +277,7 @@ function handelClickPrecedente(event){
                     <span className="new_input"></span>
                     oui :&nbsp;<b>30€</b>
                 </label>
-            </fieldset>
+            </fieldset> */}
             
         <Total/>
 
