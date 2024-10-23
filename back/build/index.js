@@ -5110,7 +5110,7 @@ var SvgTelechargement = function SvgTelechargement(props) {
   })));
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iQ2FscXVlXzEiIGRhdGEtbmFtZT0iQ2FscXVlIDEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDMwIDMwIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjZmZmOwogICAgICB9CgogICAgICAuY2xzLTEsIC5jbHMtMiB7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiAwcHg7CiAgICAgIH0KCiAgICAgIC5jbHMtMiB7CiAgICAgICAgZmlsbDogZ3JlZW47CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxjaXJjbGUgY2xhc3M9ImNscy0yIiBjeD0iMTUiIGN5PSIxNSIgcj0iMTUiLz4KICA8Zz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE0LjI5LDE4LjNjLjIuMi40NS4yOS43MS4yOXMuNTEtLjEuNzEtLjI5bDQuNjMtNC42M2MuMzktLjM5LjM5LTEuMDIsMC0xLjQxcy0xLjAyLS4zOS0xLjQxLDBsLTIuOTMsMi45M1Y2Ljc4YzAtLjU1LS40NS0xLTEtMXMtMSwuNDUtMSwxdjguNGwtMi45My0yLjkzYy0uMzktLjM5LTEuMDItLjM5LTEuNDEsMHMtLjM5LDEuMDIsMCwxLjQxbDQuNjMsNC42M1oiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTIwLjY4LDIwLjAxaC0xMS4zN2MtLjU1LDAtMSwuNDUtMSwxcy40NSwxLDEsMWgxMS4zN2MuNTUsMCwxLS40NSwxLTFzLS40NS0xLTEtMVoiLz4KICA8L2c+Cjwvc3ZnPg==");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4NCjxzdmcgaWQ9IkNhbHF1ZV8xIiBkYXRhLW5hbWU9IkNhbHF1ZSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAzMCI+DQogIDxkZWZzPg0KICAgIDxzdHlsZT4NCiAgICAgIC5jbHMtMSB7DQogICAgICAgIGZpbGw6ICNmZmY7DQogICAgICB9DQoNCiAgICAgIC5jbHMtMSwgLmNscy0yIHsNCiAgICAgICAgc3Ryb2tlLXdpZHRoOiAwcHg7DQogICAgICB9DQoNCiAgICAgIC5jbHMtMiB7DQogICAgICAgIGZpbGw6IGdyZWVuOw0KICAgICAgfQ0KICAgIDwvc3R5bGU+DQogIDwvZGVmcz4NCiAgPGNpcmNsZSBjbGFzcz0iY2xzLTIiIGN4PSIxNSIgY3k9IjE1IiByPSIxNSIvPg0KICA8Zz4NCiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNC4yOSwxOC4zYy4yLjIuNDUuMjkuNzEuMjlzLjUxLS4xLjcxLS4yOWw0LjYzLTQuNjNjLjM5LS4zOS4zOS0xLjAyLDAtMS40MXMtMS4wMi0uMzktMS40MSwwbC0yLjkzLDIuOTNWNi43OGMwLS41NS0uNDUtMS0xLTFzLTEsLjQ1LTEsMXY4LjRsLTIuOTMtMi45M2MtLjM5LS4zOS0xLjAyLS4zOS0xLjQxLDBzLS4zOSwxLjAyLDAsMS40MWw0LjYzLDQuNjNaIi8+DQogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjAuNjgsMjAuMDFoLTExLjM3Yy0uNTUsMC0xLC40NS0xLDFzLjQ1LDEsMSwxaDExLjM3Yy41NSwwLDEtLjQ1LDEtMXMtLjQ1LTEtMS0xWiIvPg0KICA8L2c+DQo8L3N2Zz4=");
 
 /***/ }),
 
@@ -5511,9 +5511,7 @@ const Navigdate = props => {
   } = props;
   const lien = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   const [datas, setDatas] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-
-  //console.log(clients.adherents);
-
+  console.log(clients);
   const handelSelect = event => {
     const {
       value
@@ -5522,11 +5520,13 @@ const Navigdate = props => {
     handelClients(dates[0], dates[1]);
   };
   const handelCsv = event => {
-    let csv = [["firstname", "lastname", "email", "cotisation", "cotisation_tarif", "mur", "soutien", "licence", "licence_tarif", "base+", "base++", "ski piste", "skatline", "trail", "vtt"]];
+    let csv = [["date", "firstname", "lastname", "email", "cotisation", "cotisation_tarif", "mur", "soutien", "licence", "licence_tarif", "base+", "base++", "ski piste", "skatline", "trail", "vtt", "total"]];
     let toto = [];
     clients.adherents.map((item, i) => {
-      toto = [item.metas.metadata?.payer.lastName, item.metas.metadata?.payer.firstName, item.metas.metadata?.payer.email, item.metas.metadata?.cotisation, item.metas.metadata?.tarif_cotisation / 100, item.metas.metadata?.mur / 100, item.metas.metadata?.soutien / 100, item.metas.metadata?.type_licence, item.metas.metadata?.tarif_licence / 100, item.metas.metadata?.options_ffme[0].checked ? item.metas.metadata?.options_ffme[0].plein_tarif / 100 : '', item.metas.metadata?.options_ffme[1].checked ? item.metas.metadata?.options_ffme[1].plein_tarif / 100 : '', item.metas.metadata?.options_ffme[2].checked ? item.metas.metadata?.options_ffme[2].plein_tarif / 100 : '', item.metas.metadata?.options_ffme[3].checked ? item.metas.metadata?.options_ffme[3].plein_tarif / 100 : '', item.metas.metadata?.options_ffme[4].checked ? item.metas.metadata?.options_ffme[4].plein_tarif / 100 : '', item.metas.metadata?.options_ffme[5].checked ? item.metas.metadata?.options_ffme[5].plein_tarif / 100 : ''];
-      csv.push(toto);
+      if (item.statut === 'validée') {
+        toto = [item.date_create, item.metas.metadata?.payer.lastName, item.metas.metadata?.payer.firstName, item.metas.metadata?.payer.email, item.metas.metadata?.cotisation, item.metas.metadata?.tarif_cotisation / 100, item.metas.metadata?.mur / 100, item.metas.metadata?.soutien / 100, item.metas.metadata?.type_licence, item.metas.metadata?.tarif_licence / 100, item.metas.metadata?.options_ffme[0].checked ? item.metas.metadata?.options_ffme[0].plein_tarif / 100 : '', item.metas.metadata?.options_ffme[1].checked ? item.metas.metadata?.options_ffme[1].plein_tarif / 100 : '', item.metas.metadata?.options_ffme[2].checked ? item.metas.metadata?.options_ffme[2].plein_tarif / 100 : '', item.metas.metadata?.options_ffme[3].checked ? item.metas.metadata?.options_ffme[3].plein_tarif / 100 : '', item.metas.metadata?.options_ffme[4].checked ? item.metas.metadata?.options_ffme[4].plein_tarif / 100 : '', item.metas.metadata?.options_ffme[5].checked ? item.metas.metadata?.options_ffme[5].plein_tarif / 100 : '', item.metas?.order ? item.metas.order?.amount.total / 100 : ''];
+        csv.push(toto);
+      }
     });
     setDatas(csv);
 
@@ -5551,6 +5551,7 @@ const Navigdate = props => {
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
     src: _assets_telechargement_svg__WEBPACK_IMPORTED_MODULE_2__["default"]
   }), "Export en CSV"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react_csv__WEBPACK_IMPORTED_MODULE_1__.CSVLink, {
+    separator: ";",
     data: datas,
     ref: lien,
     filename: "export_clients.csv",

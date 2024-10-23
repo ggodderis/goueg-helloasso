@@ -88,6 +88,12 @@ if( is_admin() ){
       'top'
     );
 
+    add_rewrite_rule(
+        'le-club/adherer-au-club/(.+)?',
+        '?post_type=le-club&name=adherer-au-club',
+        'top'
+      );
+
     // add_rewrite_rule(
     //     '^mon-test$',
     //     'index.php?custom=1',

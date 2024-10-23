@@ -25,7 +25,7 @@ export function ContextDatasProvider ({children}) {
         totalAmount: 0,
         initialAmount: 0,
         itemName: 'Adhésion au Club GDA',
-        backUrl: 'https://www.club-montagne.retipolons.eu/page-d-exemple/', 
+        backUrl: 'https://www.club-montagne.retipolons.eu/le-club/adherer-au-club', 
         errorUrl: 'https://www.club-montagne.retipolons.eu/hello_return', 
         returnUrl: 'https://www.club-montagne.retipolons.eu/hello_return', 
         containsDonation: true, 
@@ -61,15 +61,15 @@ export function ContextDatasProvider ({children}) {
     const [selection,setSelection] = useState({
         famille: '',
         activites: [
+        {descriptif:'Escalade', name: 'ESCA', checked: false },
+        {descriptif:'Alpinisme', name: 'ALPI', checked: false, label: 'Pratiquez vous l\'alpinisme à un niveau supérieur à PD en montée ?', labelname: 'ALPI_SUP', labelchecked: false, show: false },
+        {descriptif:'Ski de randonnée', name: 'SKIR', checked: false, label: 'Pratiquez vous le Ski de randonnée "engagé", ie difficulté montée supérieur à PD ?', labelname: 'SKIR_SUP',labelchecked: false, show: false },
         {descriptif:'Randonnée pédestre', name: 'RP', checked: false },
         {descriptif:'Raquette à neige', name: 'RN', checked: false },
         {descriptif:'Via ferrata', name: 'VF', checked: false },
         {descriptif:'Canyoning', name: 'CA', checked: false },
         {descriptif:'Ski alpin sur domaine station', name: 'SKIA', checked: false },
-        {descriptif:'VTT', name: 'VTT', checked: false },
-        {descriptif:'Escalade', name: 'ESCA', checked: false },
-        {descriptif:'Alpinisme', name: 'ALPI', checked: false, label: 'Pratiquez vous l\'alpinisme à un niveau supérieur à PD ?', labelname: 'ALPI_SUP', labelchecked: false, show: false },
-        {descriptif:'Ski de randonnée', name: 'SKIR', checked: false, label: 'Pratiquez vous le Ski de randonnée à un niveau supérieur à PD ?', labelname: 'SKIR_SUP',labelchecked: false, show: false },
+        {descriptif:'VTT', name: 'VTT', checked: false }
         ],
         mur: {descriptif:'Voulez-vous utiliser le mur d\'escalade au gymnase Berthe de Boissieux ?',name:'mur', checked: false, plein_tarif:3000}
     }
@@ -300,7 +300,7 @@ export function ContextDatasProvider ({children}) {
             case 'cotisation':
                 // console.log('cotisation', event[1].titre, event[1].tarif);
 
-                if( event[1].titre != 'ANP') {
+                if( event[1].titre != 'API') {
 
                     let options = datas.metadata.options_ffme.map( (item,i) => { item.checked = false; return item });
                     let licences = selection.activites.map( (item,i) => { item.checked = false, item.labelchecked = false; return item } );
@@ -321,7 +321,7 @@ export function ContextDatasProvider ({children}) {
                             } });
                 }else{
                     /**
-                     * Si c'est une adhésion ANP adhérent non pratiquant
+                     * Si c'est une adhésion API adhérent non pratiquant
                      * on reset toutes les infos..
                      */
                     let options = datas.metadata.options_ffme.map( (item,i) => { item.checked = false; return item });

@@ -1,5 +1,6 @@
 import { React, useState, useEffect, useContext } from 'react';
 import { ContextDatas } from '../hooks/useContextDatas';
+import InfosBulle from './InfosBulles';
 
 const LicenceGuide = ( props ) => {
 
@@ -8,7 +9,7 @@ const LicenceGuide = ( props ) => {
     const {options_ffme} = datas.metadata;
     const {activites,mur} = selection;
     
-    
+    const [bulle,setBulle] = useState(false);
     /**
      * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
      * contient la selection faite pour les licences
@@ -110,10 +111,22 @@ const LicenceGuide = ( props ) => {
         setSelection({...selection, mur: {...selection.mur, checked: checked }  });
         
     }
+    /**
+     * Infos bulle pour Alpinisme et Ski de randonnée
+     */
+    const handelBulle = (event) => {
+
+        setBulle( bulle ? false : true );
+        //setBulle( bulle )
+        
+    }
 
     return(
-
+        <>
         <div className="content_licences">
+            {
+                bulle ? ( <InfosBulle handelBulle={handelBulle} /> ):('')
+            }
                 <fieldset>
                         <legend>Cochez les activités que vous voulez pratiquer:</legend>
                         
@@ -126,15 +139,20 @@ const LicenceGuide = ( props ) => {
                                 <input type="checkbox" name={item.name} id={item.name} checked={ item.checked } onChange={handelCheckbox} />
                                 <span className="new_input"></span>
                                 {item.descriptif}
+                                {/* Cas pour les infos bulles */}
+                                { 
+                                    item.name === 'ALPI' || item.name === 'SKIR' ? (<button onClick={handelBulle} className="bt_bulle">+ d'infos</button>):('')
+                                }
                             </label>
 
                                 {
                                     item.show ? (
                                         <div className="sous_ligne_licence">
                                             {item.label}
-                                            <span className="label_sous_ligne_licence">
-                                                <input type="checkbox" name={item.labelname} checked={item.labelchecked} onChange={handelNiveau} /> oui
-                                            </span>
+                                            <label an className="label_radio">
+                                                <input type="checkbox" name={item.labelname} checked={item.labelchecked} onChange={handelNiveau} />
+                                                <span className="new_input"></span>oui
+                                            </label>
                                         </div>
                                 ):('')
                                 }
@@ -172,16 +190,16 @@ const LicenceGuide = ( props ) => {
                     ):('')
 
                 }
-            <fieldset>
-                <legend>{mur.descriptif}</legend>
-                <label className="label_radio">
-                    <input type="checkbox" name={mur.name} checked={mur.checked} value={mur.plein_tarif} onChange={handelClickMur} />
-                    <span className="new_input"></span>
-                    oui :&nbsp;<b>30€</b>
-                </label>
-            </fieldset>
-
             </div>
+            <fieldset>
+            <legend>{mur.descriptif}</legend>
+            <label className="label_radio">
+                <input type="checkbox" name={mur.name} checked={mur.checked} value={mur.plein_tarif} onChange={handelClickMur} />
+                <span className="new_input"></span>
+                oui :&nbsp;<b>30€</b>
+            </label>
+        </fieldset>
+        </>
     )
 
 }

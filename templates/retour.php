@@ -78,7 +78,6 @@ class retourHello {
          *  3 - échec
          *  4 - remboursée
          */
-        $array_statut = ['attente','validé','échec','remboursé'];
 
         if( isset($retour_hello['order']['items'][0]['state']) &&
             isset($retour_hello['order']['payments'][0]['state']) ){
@@ -151,15 +150,6 @@ class retourHello {
              * et email mot de passe inscription
              */
             self::createAndUpdateAdherent( $infos_table['create'], $statut );
-
-            /*
-            $query_test = "SELECT * FROM {$table_name} WHERE `hello_id`={$checkoutIntentId}";
-            $retour_test = $conn->query($query_test);
-            $row = $retour_test->fetch_array(MYSQLI_ASSOC);
-            echo '<pre>';
-            print_r(unserialize($row['array']));
-            echo '<pre>';
-            */
 
             $conn->close();
 

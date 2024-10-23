@@ -12,7 +12,7 @@ const useDatas = () => {
         totalAmount: 0,
         initialAmount: 0,
         itemName: 'Adhésion au Club GDA',
-        backUrl: 'https://www.club-montagne.retipolons.eu/page-d-exemple/', 
+        backUrl: 'https://www.club-montagne.retipolons.eu/le-club/adherer-au-club/', 
         errorUrl: 'https://www.club-montagne.retipolons.eu/hello_return', 
         returnUrl: 'https://www.club-montagne.retipolons.eu/hello_return', 
         containsDonation: true, 
@@ -283,7 +283,7 @@ const getLicences = (dt,new_mur) => {
             case 'cotisation':
                 // console.log('cotisation', event[1].titre, event[1].tarif);
 
-                if( event[1].titre != 'ANP') {
+                if( event[1].titre != 'API') {
 
                     let options = datas.metadata.options_ffme.map( (item,i) => { item.checked = false; return item });
                     let licences = selection.activites.map( (item,i) => { item.checked = false, item.labelchecked = false; return item } );
@@ -304,7 +304,7 @@ const getLicences = (dt,new_mur) => {
                             } });
                 }else{
                     /**
-                     * Si c'est une adhésion ANP adhérent non pratiquant
+                     * Si c'est une adhésion API adhérent non pratiquant
                      * on reset toutes les infos..
                      */
                     let options = datas.metadata.options_ffme.map( (item,i) => { item.checked = false; return item });

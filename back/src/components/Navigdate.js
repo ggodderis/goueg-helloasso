@@ -10,7 +10,7 @@ const Navigdate = (props) => {
 
     const [datas,setDatas] = useState([]);
 
-    //console.log(clients.adherents);
+    console.log(clients);
     
     const handelSelect = (event) => {
 
@@ -23,13 +23,15 @@ const Navigdate = (props) => {
 
     const handelCsv = (event) => {
 
-        let csv = [["firstname", "lastname", "email", "cotisation", "cotisation_tarif", "mur", "soutien", "licence", "licence_tarif","base+","base++","ski piste","skatline","trail","vtt"]];
+        let csv = [["date","firstname", "lastname", "email", "cotisation", "cotisation_tarif", "mur", "soutien", "licence", "licence_tarif","base+","base++","ski piste","skatline","trail","vtt","total"]];
 
         let toto = [];
 
         clients.adherents.map( (item,i) => {
 
+        if( item.statut === 'validée' ){
            toto = [
+                        item.date_create,
                         item.metas.metadata?.payer.lastName, 
                         item.metas.metadata?.payer.firstName,
                         item.metas.metadata?.payer.email,
@@ -45,8 +47,10 @@ const Navigdate = (props) => {
                         item.metas.metadata?.options_ffme[3].checked ? item.metas.metadata?.options_ffme[3].plein_tarif/100 : '',
                         item.metas.metadata?.options_ffme[4].checked ? item.metas.metadata?.options_ffme[4].plein_tarif/100 : '',
                         item.metas.metadata?.options_ffme[5].checked ? item.metas.metadata?.options_ffme[5].plein_tarif/100 : '',
+                        item.metas?.order ? item.metas.order?.amount.total/100 : '',
                     ]
             csv.push( toto );
+            }
         })
 
         setDatas( csv );
@@ -77,7 +81,7 @@ const Navigdate = (props) => {
                 <img src={telechargement} />
                 Export en CSV
             </button>
-            <CSVLink data={datas} ref={lien} filename={"export_clients.csv"} target="_blank" className="hidde"></CSVLink>
+            <CSVLink separator=";" data={datas} ref={lien} filename={"export_clients.csv"} target="_blank" className="hidde"></CSVLink>
             
         </div>
     )

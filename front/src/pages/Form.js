@@ -104,6 +104,15 @@ const Form = (props) => {
                         </div>
 
                         <div className="label_ligne">
+                            <label>Votre ville:
+                                <input type="text" name="city" id="city" placeholder="Votre ville" defaultValue={user.city} required />
+                            </label>
+                            <label>Votre code postal:
+                                <input type="text" name="zipCode" id="zipCode" placeholder="Votre code postal" defaultValue={user.zipCode} required />
+                            </label>
+                        </div>
+
+                        <div className="label_ligne">
                             <div>Votre genre:
                                 <div>
                                     <label key="1"><input type="radio" value="f" name="gda_genre" defaultChecked={user.gda_genre === 'f'} required />Femme</label>
@@ -133,15 +142,6 @@ const Form = (props) => {
                         <div className="label_adresse">
                             <label>Votre adresse:
                                 <input type="text" name="address" placeholder="Votre adresse" id="address" defaultValue={user.address} required />
-                            </label>
-                        </div>
-
-                        <div className="label_ligne">
-                            <label>Votre ville:
-                                <input type="text" name="city" id="city" placeholder="Votre ville" defaultValue={user.city} required />
-                            </label>
-                            <label>Votre code postal:
-                                <input type="text" name="zipCode" id="zipCode" placeholder="Votre code postal" defaultValue={user.zipCode} required />
                             </label>
                         </div>
 

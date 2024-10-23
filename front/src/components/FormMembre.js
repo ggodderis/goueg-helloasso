@@ -107,10 +107,6 @@ const suppMembre = (event) => {
                         </select>
                     </label>
                 </div>
-
-                <label className="label_qs">
-                    <input type="checkbox" name="questionnaire" value="oui" defaultChecked={infos.questionnaire === 'oui'} required/>&nbsp;Avez vous répondu NON à toutes les questions du Questionnaire de santé <a target="_blank" href="https://www.formulaires.service-public.fr/gf/cerfa_15699.do">QS-SPORT ?</a>
-                </label>
             
                 <h4 className="hello_h4">Personne à prévenir en cas de problème:</h4>
 

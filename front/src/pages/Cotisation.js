@@ -146,7 +146,8 @@ const Cotisation = (props) => {
                     <input type="checkbox" name="soutien" checked={ metadata.soutien } value="1000" onChange={handelClickMurSoutien} />
                     <span className="new_input"></span>
                     <span>cotisation de soutien au club :&nbsp;<b>10€</b></span>
-                    </label>
+                </label>
+
         </fieldset>
 
 
@@ -154,17 +155,25 @@ const Cotisation = (props) => {
                 metadata.cotisation === 'F/F2' ? ( <FormFamille datas={datas} setEtat={setEtat} handelDatas={handelDatas} /> ):('')
             }
 
+        <fieldset>
+            <label className="label_radio" key="rgpd">
+                <input type="checkbox" checked={ true } />
+                <span className="new_input"></span>
+                <small>J’accepte le traitement informatisé des données personnelles qui me concernent en conformité avec les dispositions de la loi n°2018-493 du 20 juin 2018 relative à la protection des données. J’ai noté que je pourrai exercer les droits qui me sont garantis par le RGPD en m’adressant à l’Association Les Grimpeurs des Alpes.</small>
+            </label>
+        </fieldset>
+
             <Total/>
 
             <div className="navig_bottom">
                 <button type="button" className='bt_bleu_outline' onClick={handelClickPrecedente}><i className="icon-chevron-gauche"></i>&nbsp;Étape précédente</button>
             {
-                metadata.cotisation === 'ANP' || etat === true ? 
+                metadata.cotisation === 'API' || etat === true ? 
                 (<button type="button" className='bt_vert' onClick={handelPaye}><i className="icon-valider"></i>&nbsp;Payer mon adhésion</button>):('') 
 
             }
             {
-                metadata.cotisation != 'ANP' && metadata.cotisation != '' && metadata.cotisation != 'F/F2' ? 
+                metadata.cotisation != 'API' && metadata.cotisation != '' && metadata.cotisation != 'F/F2' ? 
                 (<button type="button" className='bt_bleu' onClick={ handelClickValidation }>Étape suivante&nbsp;<i className="icon-chevron-droite"></i></button>):('')
             }
             </div>

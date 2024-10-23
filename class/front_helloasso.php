@@ -19,7 +19,7 @@ class front_helloasso {
 
         wp_enqueue_style( 'helloasso-checkout-css', HELLOASSO_URL . 'templates/css/styles_checkout.css',array(),'0.011','all' );
 
-        if( !is_page(['page-d-exemple']) ) return false;
+        if( !is_single(['adherer-au-club']) ) return false;
 
         $asset_file = HELLOASSO_ROOT.'front/build/index.asset.php';
 
