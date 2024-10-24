@@ -5,7 +5,7 @@ import useHello from '../hooks/useHello';
 import Loader from '../components/Loader';
 import LicenceGuide from '../components/LicenceGuide';
 import { ContextDatas } from '../hooks/useContextDatas';
-import LincenceFree from '../components/LincenceFree';
+import LicenceFree from '../components/LicenceFree';
 
 const Licence = (props) => {
     
@@ -68,7 +68,7 @@ const Licence = (props) => {
         </div>
 
         {
-            guide === 'oui' ?( <LicenceGuide /> ):( <LincenceFree /> )
+            guide === 'oui' ?( <LicenceGuide /> ):( <LicenceFree /> )
         }
 
         <fieldset>

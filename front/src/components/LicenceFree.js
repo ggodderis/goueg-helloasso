@@ -1,7 +1,7 @@
 import { React, useState, useEffect, useContext } from 'react';
 import { ContextDatas } from '../hooks/useContextDatas';
 
-const LincenceFree = (props) => {
+const LicenceFree = (props) => {
 
     const {liste} = useContext( ContextDatas );
     const {ffme,ffr} = liste;
@@ -53,4 +53,4 @@ const LincenceFree = (props) => {
     )
 
 }
-export default LincenceFree;
+export default LicenceFree;
