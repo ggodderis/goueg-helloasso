@@ -15,9 +15,9 @@ import Cotisation from './pages/Cotisation';
 // import Header from './components/Header';
 import { ContextDatas } from './hooks/useContextDatas';
 /**
- * Hooks
+ * Asset
  */
-//import useDatas from './hooks/useDatas';
+import hello from './assets/hello.png';
 
 
 const App = () => {
@@ -33,7 +33,7 @@ const App = () => {
     const location = useLocation();
     const adherent = REACT_VARS.infosUser;
     const [nouveau,setNouveau] = useState('');
-    //const [datas,user,liste,metadata,selection,setSelection,handelDatas] = useDatas();
+
     
     const [nav,setNav] = useState([
         { to: '/', label: 'Home'}
@@ -50,7 +50,7 @@ const App = () => {
         if( location.pathname != "/"){
             window.scrollTo({ top: top.offsetTop-20, behavior: 'smooth' });
         }else{
-            window.scrollTo({ top: 200 , behavior: 'smooth' });
+            //window.scrollTo({ top: 200 , behavior: 'smooth' });
         }
 
     },[location]);
@@ -62,7 +62,7 @@ const App = () => {
     useEffect( () => {
         if( adherent.firstName ){
             setNouveau('adherent');
-            handelDatas('adherent',adherent);
+            handelDatas('ADHERENT',adherent);
         }
     },[]);
 
@@ -80,6 +80,10 @@ const App = () => {
                 <p className="hello_infos">
                     <i className="icon-infos"></i>
                     &nbsp;Lors de la validation de votre adhésion, vous serez rediriger sur la page de paiement sécurisée HelloAsso.
+                </p>
+                <p className="hello_description">
+                <img src={hello} alt="Helloasso" />
+                <span>HelloAsso est une entreprise sociale et solidaire, qui fournit gratuitement ses technologies de paiement à l’organisme Association Les Grimpeurs des Alpes. <b>Une contribution au fonctionnement de HelloAsso, modifiable et facultative</b>, vous sera proposée avant la validation de votre paiement.</span>
                 </p>
             </div>
         </>

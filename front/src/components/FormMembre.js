@@ -16,13 +16,13 @@ const [modifier,setModifier] = useState(false);
 
 
 useEffect( () => {
-    if( legend === "adulte"){
+    if( legend === "ADULTE"){
         setInfos( famille_adulte );
     }
-    if( legend === 'enfant'){
+    if( legend === 'ENFANT'){
         setInfos( famille_enfant );
     }
-    if( legend === "membres" ){
+    if( legend === "MEMBRES" ){
         let new_infos = famille_supp.filter( item => item.id === monid );
         setInfos( new_infos[0] );
     }

@@ -64,7 +64,7 @@ const Licence = (props) => {
             loader ? (<Loader />):('')
         }
         <div className="bandeau_haut">
-            <span className="bandeau_haut_titre">Choix de la Licences / Assurances</span>
+            <span className="bandeau_haut_titre">Choix de la Licence / Assurance</span>
         </div>
 
         {
@@ -92,10 +92,10 @@ const Licence = (props) => {
                     <i className="icon-chevron-gauche"></i>&nbsp;Étape précédente
                 </button>
             {
-                datas.metadata.type_licence &&
+                datas.metadata.type_licence && datas.metadata.payer.question === true ? (
                 <button type="button" id="valider" className='bt_vert' onClick={handelPaye}>
                     <i className="icon-valider"></i>&nbsp;Payer mon adhésion
-                </button>
+                </button>):('')
             }
         </div>
         </>

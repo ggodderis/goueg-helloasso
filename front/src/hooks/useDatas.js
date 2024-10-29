@@ -72,7 +72,7 @@ const useDatas = () => {
         //let options_for_datas = selection.options.filter( item => item.checked );
         activite_for_datas = selection.activites.filter( item => item.checked );
 
-        handelDatas('licence', getLicences(activite_for_datas,new_mur) );
+        handelDatas('LICENCE', getLicences(activite_for_datas,new_mur) );
         
         
     },[selection]);

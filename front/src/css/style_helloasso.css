@@ -2,9 +2,9 @@
     padding: 0;
     position: relative;
     overflow: hidden;
-    border: 1px solid var(--bleu-foncer);
     border-radius: 0.5rem;
     margin-bottom: 3rem;
+    box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.3);
 }
 #rootHelloAsso h2 {
     padding: 1rem;
@@ -29,7 +29,12 @@
 .content_bouton_start {
     display: flex;
     justify-content: center;
-    margin: 3rem 0 3rem 0;
+    margin: 4rem 0 4rem 0;
+}
+.titre_welcome {
+    text-align: center;
+    font-style: italic;
+    font-size: 1rem;
 }
 /**
 * Formulaire
@@ -171,6 +176,15 @@
     background-color: #f8f8f8;
 }
 .hello_infos { text-align: center;}
+.hello_description {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--grey-light);
+    padding: 1rem 3rem;
+}
+.hello_description > span {
+    padding-left: 1.5rem;
+}
 .content_start {
     display: grid;
     grid-template-columns: repeat(2,1fr);

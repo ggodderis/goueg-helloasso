@@ -3,11 +3,17 @@ import { ContextDatas } from '../hooks/useContextDatas';
 
 const LicenceFree = (props) => {
 
-    const {liste} = useContext( ContextDatas );
+    const {liste,handelDatas} = useContext( ContextDatas );
     const {ffme,ffr} = liste;
 
     console.log( ffme.licences, ffr.licences );
-    
+
+    const handelLicence = (event) => {
+        const {name,value} = event.target;
+        //console.log(event.target);
+        
+        handelDatas('LICENCE_FREE', name, value );
+    }
 
     return(
         <div>
@@ -19,10 +25,10 @@ const LicenceFree = (props) => {
                     
                     if( obj.type_licence == 'seul'){
                         return(
-                            <label className="label_radio">
-                                <input type="checkbox" name={obj.name} id={obj.name} />
+                            <label key={`frr-${obj.id}`} className="label_radio">
+                                <input type="checkbox" name={obj.titre} value={obj.secteur} onClick={handelLicence} />
                                 <span className="new_input"></span>
-                                <div>{obj.descriptif}<br />{obj.titre}</div>
+                                <div>Licence / Assurance : {obj.descriptif}<br />{obj.titre}</div>
                             </label>
                             )
                     }
@@ -38,10 +44,10 @@ const LicenceFree = (props) => {
                             
                     if( obj.type_licence == 'seul'){
                         return(
-                            <label className="label_radio">
-                                <input type="checkbox" name={obj.name} id={obj.name} />
+                            <label key={`ffme-${obj.id}`} className="label_radio">
+                                <input type="checkbox" name={obj.titre} value={obj.secteur} onClick={handelLicence} />
                                 <span className="new_input"></span>
-                                <div>{obj.descriptif}<br />{obj.titre}</div>
+                                <div>Licence / Assurance : {obj.descriptif}<br />{obj.titre}</div>
                             </label>
                             )
                     }

@@ -10,6 +10,8 @@ const LicenceGuide = ( props ) => {
     const {activites,mur} = selection;
     
     const [bulle,setBulle] = useState(false);
+
+    console.log( datas.metadata.secteur );
     /**
      * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
      * contient la selection faite pour les licences
@@ -98,7 +100,7 @@ const LicenceGuide = ( props ) => {
                 } 
             );
         
-        handelDatas('options',new_options);
+        handelDatas('OPTIONS',new_options);
 
     }
     /**
@@ -120,6 +122,12 @@ const LicenceGuide = ( props ) => {
         //setBulle( bulle )
         
     }
+    /**
+     *  Question sante
+     */
+    const handelSante = (event) => {
+        handelDatas('SANTE', event.target.checked );
+    }
 
     return(
         <>
@@ -135,7 +143,7 @@ const LicenceGuide = ( props ) => {
                              
                             <div className="ligne_licence">
 
-                            <label key={i} className="label_radio">
+                                <label key={i} className="label_radio">
                                 <input type="checkbox" name={item.name} id={item.name} checked={ item.checked } onChange={handelCheckbox} />
                                 <span className="new_input"></span>
                                 {item.descriptif}
@@ -143,7 +151,7 @@ const LicenceGuide = ( props ) => {
                                 { 
                                     item.name === 'ALPI' || item.name === 'SKIR' ? (<button onClick={handelBulle} className="bt_bulle">+ d'infos</button>):('')
                                 }
-                            </label>
+                                </label>
 
                                 {
                                     item.show ? (
@@ -163,42 +171,61 @@ const LicenceGuide = ( props ) => {
                         }
                         
                     </fieldset>
+                <fieldset>
+                    {/* Si le secteur ffr ou ffme existe */}
+                    {
+                        datas.metadata.secteur !='' ? (
+                            <>
+                            <legend>Avez-vous pris connaissance des conditions médicales de la <b>{datas.metadata.secteur}</b> ?</legend>
+                            <label className="label_radio">
+                                <input type="checkbox" name="questionnaire" onChange={handelSante} defaultChecked={ datas.metadata.payer.question === true } />
+                                <span className="new_input"></span>
+                                oui&nbsp;&nbsp;<a href={`#sante_${datas.metadata.secteur}`} >Consulter les conditions</a>
+                            </label>
+                            <br />
+                            </>
 
-                {
+                        ):('')
+                    }
+
+                    {
                             
-                    selectlicence.includes('ESCA') ||
-                    selectlicence.includes('ALPI_SUP') ||
-                    selectlicence.includes('SKIR_SUP') ? (
-                    
-                    <fieldset>
-                        <legend>Options supplémentaires (nom obligatoire)</legend>
+                        selectlicence.includes('ESCA') ||
+                        selectlicence.includes('ALPI_SUP') ||
+                        selectlicence.includes('SKIR_SUP') ? (
                         
-                        {
-                        options_ffme.map( (item,i) => (
-                            <div className="ligne_licence">
-                                <label key={item.id} className="label_radio">
-                                    <input type="checkbox" name={item.name} id={item.name} checked={item.checked} value={item.titre} onClick={handelOptions} />
-                                    <span className="new_input"></span>
-                                    {item.titre}&nbsp;<b>{item.plein_tarif/100}€</b>
-                                </label>
-                            </div>
-                            ) )
-                        }
+                        <>
+                            <legend>Options supplémentaires (nom obligatoire)</legend>
+                            <br />
+                            {
+                            options_ffme.map( (item,i) => (
+                                <div className="ligne_licence">
+                                    <label key={item.id} className="label_radio">
+                                        <input type="checkbox" name={item.name} id={item.name} checked={item.checked} value={item.titre} onClick={handelOptions} />
+                                        <span className="new_input"></span>
+                                        {item.titre}&nbsp;<b>{item.plein_tarif/100}€</b>
+                                    </label>
+                                </div>
+                                ) )
+                            }
 
-                    </fieldset>
-                    
-                    ):('')
+                        </>
+                        
+                        ):('')
 
-                }
+                    }
+                </fieldset>
+                
             </div>
+
             <fieldset>
-            <legend>{mur.descriptif}</legend>
-            <label className="label_radio">
-                <input type="checkbox" name={mur.name} checked={mur.checked} value={mur.plein_tarif} onChange={handelClickMur} />
-                <span className="new_input"></span>
-                oui :&nbsp;<b>30€</b>
-            </label>
-        </fieldset>
+                <legend>{mur.descriptif}</legend>
+                <label className="label_radio">
+                    <input type="checkbox" name={mur.name} checked={mur.checked} value={mur.plein_tarif} onChange={handelClickMur} />
+                    <span className="new_input"></span>
+                    oui :&nbsp;<b>30€</b>
+                </label>
+            </fieldset>
         </>
     )
 

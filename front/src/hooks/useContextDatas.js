@@ -19,7 +19,10 @@ export const ContextDatas = createContext({
 });
 
 export function ContextDatasProvider ({children}) {
-
+    /**
+     * @function useCotisations => Hook qui fait un appel SQL pour avoir la liste des cotisations
+     * et des licences
+     */
     const [liste,handelCotisation] = useCotisations();
     const [datas,setDatas] = useState( {
         totalAmount: 0,
@@ -40,6 +43,7 @@ export function ContextDatasProvider ({children}) {
             licence: '',
             type_licence: '',
             licence_famille: '',
+            secteur: '',
             tarif_licence: 0,
             options_ffme: REACT_VARS.options_ffme,
             famille_adulte: {},
@@ -61,22 +65,22 @@ export function ContextDatasProvider ({children}) {
     const [selection,setSelection] = useState({
         famille: '',
         activites: [
-        {descriptif:'Escalade', name: 'ESCA', checked: false },
-        {descriptif:'Alpinisme', name: 'ALPI', checked: false, label: 'Pratiquez vous l\'alpinisme à un niveau supérieur à PD en montée ?', labelname: 'ALPI_SUP', labelchecked: false, show: false },
-        {descriptif:'Ski de randonnée', name: 'SKIR', checked: false, label: 'Pratiquez vous le Ski de randonnée "engagé", ie difficulté montée supérieur à PD ?', labelname: 'SKIR_SUP',labelchecked: false, show: false },
         {descriptif:'Randonnée pédestre', name: 'RP', checked: false },
         {descriptif:'Raquette à neige', name: 'RN', checked: false },
         {descriptif:'Via ferrata', name: 'VF', checked: false },
         {descriptif:'Canyoning', name: 'CA', checked: false },
         {descriptif:'Ski alpin sur domaine station', name: 'SKIA', checked: false },
-        {descriptif:'VTT', name: 'VTT', checked: false }
+        {descriptif:'VTT', name: 'VTT', checked: false },
+        {descriptif:'Escalade', name: 'ESCA', checked: false },
+        {descriptif:'Alpinisme', name: 'ALPI', checked: false, label: 'Pratiquez vous l\'alpinisme à un niveau supérieur à PD en montée ?', labelname: 'ALPI_SUP', labelchecked: false, show: false },
+        {descriptif:'Ski de randonnée', name: 'SKIR', checked: false, label: 'Pratiquez vous le Ski de randonnée "engagé", ie difficulté montée supérieur à PD ?', labelname: 'SKIR_SUP',labelchecked: false, show: false },
         ],
         mur: {descriptif:'Voulez-vous utiliser le mur d\'escalade au gymnase Berthe de Boissieux ?',name:'mur', checked: false, plein_tarif:3000}
     }
     );
 
     useEffect( () => {
-        //console.log("Mise à jour selection");
+        //console.log("Mise à jour selection",selection);
 
         let new_mur = 0;
         let activite_for_datas = null;
@@ -89,7 +93,7 @@ export function ContextDatasProvider ({children}) {
         //let options_for_datas = selection.options.filter( item => item.checked );
         activite_for_datas = selection.activites.filter( item => item.checked );
 
-        handelDatas('licence', getLicences(activite_for_datas,new_mur) );
+        handelDatas('LICENCE', getLicences(activite_for_datas,new_mur) );
         
         
     },[selection]);
@@ -280,10 +284,6 @@ export function ContextDatasProvider ({children}) {
             totalAmount: total,
             initialAmount: total});
     }
-
-    useEffect( () => {
-        //console.log('datas change',datas);
-    },[datas]);
     /**
      * 
      * @param  {...any} event 
@@ -291,13 +291,13 @@ export function ContextDatasProvider ({children}) {
      * @event[1] = object
      */
     const handelDatas = (...event) => {
-        //console.log( event[0] , event[1].firstName );
+        // console.log( event[0] , event );
         switch( event[0] ){
-            case 'adherent':
+            case 'ADHERENT':
                 //setDatas({...datas, payer: event[1] });
                 setPayer( event[1] );
                 break;
-            case 'cotisation':
+            case 'COTISATION':
                 // console.log('cotisation', event[1].titre, event[1].tarif);
 
                 if( event[1].titre != 'API') {
@@ -348,7 +348,24 @@ export function ContextDatasProvider ({children}) {
                 }
 
             break;
-            case 'licence':
+            case 'LICENCE_FREE':
+                //console.log( 'LICENCE_FREE', event[1], event[2], liste[ event[2] ]);
+                const { licences } = liste[ event[2] ];
+                let my_licence = {};
+                
+                Object.entries(licences).map( ([item,obj]) =>
+                {
+                    if( obj.titre === event[1] ){
+                        //console.log(obj.titre,obj.tarif);
+                        my_licence = obj;
+                    }     
+                }
+
+                )
+                console.log( my_licence );
+                
+            break;
+            case 'LICENCE':
                 //console.log('licence',event[1][0],'options',event[1][1]);
                 if( event[1][0] ){
 
@@ -359,13 +376,14 @@ export function ContextDatasProvider ({children}) {
                             type_licence: event[1][0].titre || '',
                             tarif_licence: Number(event[1][0].tarif) || 0,
                             options_ffme: event[1][1] || [],
+                            secteur: event[1][0].secteur || '',
                             mur: event[1][2] || 0
                         } });
 
                 }
                         
             break;
-            case 'options':
+            case 'OPTIONS':
                 //console.log('useDatas options', event[1]);
                 setDatas( {...datas, metadata:{
                     ...datas.metadata,
@@ -373,7 +391,7 @@ export function ContextDatasProvider ({children}) {
                 }});
 
             break;
-            case 'add_membre':
+            case 'ADD_MEMBRE':
                 let new_famille = datas.metadata.famille_supp;
                 let test = [...new_famille,event[1]];
                 setDatas( {...datas, metadata:{ 
@@ -381,37 +399,37 @@ export function ContextDatasProvider ({children}) {
                     famille_supp: test
                 }})
             break;
-            case 'supp_membre':
+            case 'SUPP_MEMBRE':
                 setDatas( {...datas, metadata:{ 
                     ...datas.metadata,
                     famille_supp: event[1]
                 }})
             break;
-            case 'mur':
+            case 'MUR':
                 setDatas( {...datas, metadata:{
                     ...datas.metadata,
                     mur: Number(event[1])
                 }})
             break;
-            case 'soutien':
+            case 'SOUTIEN':
                 setDatas( {...datas, metadata:{
                     ...datas.metadata,
                     soutien: Number(event[1])
                 }})
             break;
-            case 'adulte':
+            case 'ADULTE':
                 setDatas( {...datas, metadata:{
                     ...datas.metadata,
                     famille_adulte: event[1]
                 }})
             break;
-            case 'enfant':
+            case 'ENFANT':
                 setDatas( {...datas, metadata:{
                     ...datas.metadata,
                     famille_enfant: event[1]
                 }})
             break;
-            case 'membres':
+            case 'MEMBRES':
                 //console.log("Membres",event[1]);
                 let membres = datas.metadata.famille_supp.map( (item,i) => { 
                     if( item.id === event[1].id ){
@@ -424,6 +442,19 @@ export function ContextDatasProvider ({children}) {
                     ...datas.metadata,
                     famille_supp: membres
                 }})
+            break;
+            case 'SANTE':
+                // console.log( event );
+                setDatas(
+                    {...datas, metadata:{
+                        ...datas.metadata,
+                        payer: {
+                            ...metadata.payer,
+                            question: event[1]
+                        }
+                    }}
+                )
+                
             break;
         }
         

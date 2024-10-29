@@ -64,7 +64,7 @@ const Cotisation = (props) => {
             setEtat(false);
         }
         
-        handelDatas('cotisation',el);
+        handelDatas('COTISATION',el);
 
     }
 
@@ -75,16 +75,16 @@ const Cotisation = (props) => {
         switch (name) {
             case 'mur':
                 if( checked ){
-                    handelDatas('mur',value);
+                    handelDatas('MUR',value);
                 }else{
-                    handelDatas('mur',0);
+                    handelDatas('MUR',0);
                 }   
                 break;
             case 'soutien':
                 if( checked ){
-                    handelDatas('soutien',value);
+                    handelDatas('SOUTIEN',value);
                 }else{
-                    handelDatas('soutien',0);
+                    handelDatas('SOUTIEN',0);
                 }  
                 break;
         }
