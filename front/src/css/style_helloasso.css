@@ -334,6 +334,14 @@ legend {
     justify-content: flex-end;
     padding: 1rem 0;
 }
+.fade {
+    transform: scale(1);
+    transition: all 0.3s;
+  }
+  .fade.out {
+    transform: scale(0.8);
+    opacity: 0;
+  }
 
 /**
 * Total

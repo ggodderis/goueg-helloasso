@@ -1,6 +1,7 @@
 import { React, useState, useEffect, useContext } from 'react';
 import { ContextDatas } from '../hooks/useContextDatas';
 import InfosBulle from './InfosBulles';
+import Anim from './Anim';
 
 const LicenceGuide = ( props ) => {
 
@@ -132,9 +133,11 @@ const LicenceGuide = ( props ) => {
     return(
         <>
         <div className="content_licences">
-            {
-                bulle ? ( <InfosBulle handelBulle={handelBulle} /> ):('')
-            }
+            
+            <Anim visible={bulle} duration={300}>
+                <InfosBulle handelBulle={handelBulle} />
+            </Anim>
+
                 <fieldset>
                         <legend>Cochez les activités que vous voulez pratiquer:</legend>
                         
