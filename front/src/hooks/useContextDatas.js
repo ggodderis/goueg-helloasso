@@ -360,9 +360,19 @@ export function ContextDatasProvider ({children}) {
                         my_licence = obj;
                     }     
                 }
-
                 )
-                console.log( my_licence );
+
+                console.log(my_licence.secteur);
+                
+
+                setDatas({...datas, metadata: {
+                    ...datas.metadata,
+                    licence: my_licence.licence || '',
+                    licence_famille: my_licence.type_licence || '',
+                    type_licence: my_licence.titre || '',
+                    tarif_licence: Number(my_licence.tarif) || 0,
+                    secteur: my_licence.secteur || '',
+                } });
                 
             break;
             case 'LICENCE':

@@ -12,7 +12,6 @@ const LicenceGuide = ( props ) => {
     
     const [bulle,setBulle] = useState(false);
 
-    console.log( datas.metadata.secteur );
     /**
      * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
      * contient la selection faite pour les licences
