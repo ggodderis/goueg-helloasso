@@ -18,6 +18,8 @@ const LicenceGuide = ( props ) => {
      * afin de savoir si c'est ffme ou ffr
      */
     
+    //console.log( activites );
+    
     const [selectlicence,setSelectlicence] = useState([]);
 
     useEffect( () => {
@@ -52,7 +54,7 @@ const LicenceGuide = ( props ) => {
         let newselection = activites.map( (item,index) => {
             if( item.name === name ){
                 item.checked = !item.checked;
-                if( item.name == 'SKIR' || item.name == 'ALPI'){
+                if( item.name === 'SKIR' || item.name === 'ALPI'){
                     item.show = !item.show;
                     if( ! item.checked ){
                         item.labelchecked = false;
@@ -225,7 +227,7 @@ const LicenceGuide = ( props ) => {
                 <label className="label_radio">
                     <input type="checkbox" name={mur.name} checked={mur.checked} value={mur.plein_tarif} onChange={handelClickMur} />
                     <span className="new_input"></span>
-                    oui :&nbsp;<b>30€</b>
+                    oui :&nbsp;<b>{mur.plein_tarif/100}€</b>
                 </label>
             </fieldset>
         </>

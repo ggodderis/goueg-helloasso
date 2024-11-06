@@ -10,6 +10,8 @@ class setTarifs {
         if( !empty($data) ){
             switch( $data->secteur ){
                 case 'cotisation':
+                case 'mur':
+                case 'soutien':
                     $table = 'wp_cotisations_club';
                     break;
                 case 'ffme':

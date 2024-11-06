@@ -52,6 +52,8 @@ class front_helloasso {
             'infosUser' => getUserInfos::g(),
             'options_ffme' => getAllTarifs::g('wp_options_ffme'),
             'session_id' => getSession::g(),
+            'soutien' => getAllTarifs::soutien(),
+            'mur' => getAllTarifs::mur(),
             'client_id' => CLIENT_ID,
             'client_secret' => CLIENT_SECRET,
             'url_token' => URL_TOKEN,

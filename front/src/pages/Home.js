@@ -14,7 +14,7 @@ const Home = (props) => {
                 <>
                 <div className="bandeau_haut">
                     <span className="bandeau_haut_titre">Bonjour, <b>{user.firstName} {user.lastName}</b></span>
-                    <a className="hello_deconnexion" href={"/wp-login.php?action=logout&_wpnonce="+REACT_VARS.logoutNonce+"&redirect_to=le-club/adherer-au-club"}>
+                    <a className="hello_deconnexion" href={"/wp-login.php?action=logout&_wpnonce="+REACT_VARS.logoutNonce+"&redirect_to=le-club/adherer-au-club/#rootHelloAsso"}>
                     <span><i className="icon-close"></i>&nbsp;Déconnexion</span>
                     </a>
                 </div>
@@ -38,7 +38,7 @@ const Home = (props) => {
 
                     <div>
                         <h2 className='titre_adhesion'>Je suis déjà adhérent</h2>
-                        <a href="/member-login?redirect_to=le-club/adherer-au-club" className='bt_bleu'><span><i className="icon-valider"></i>&nbsp;Je m'identifie</span></a>
+                        <a href="/member-login?redirect_to=le-club/adherer-au-club/#rootHelloAsso" className='bt_bleu'><span><i className="icon-valider"></i>&nbsp;Je m'identifie</span></a>
                     </div>
 
                     <div>

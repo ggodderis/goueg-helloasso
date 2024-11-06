@@ -65,6 +65,7 @@ if( isset($this->datas['metadata']['mur']) &&  intval($this->datas['metadata']['
     $mur = '<span>Mur d\'escalade : <b>'.( intval($this->datas['metadata']['mur'])/100 ).'€</b> </span>';
 }
 
+$array_statut = ['attente','validée','échec','remboursée'];
 
 switch( $array_statut[$statut-1] ){
 
@@ -92,7 +93,7 @@ switch( $array_statut[$statut-1] ){
 
         break;
 
-    case 'validé':
+    case 'validée':
 
         echo '<div class="content_checkout">
                 <div class="checkout_logo">

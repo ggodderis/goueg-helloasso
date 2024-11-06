@@ -166,10 +166,16 @@ class rest_route_helloasso {
      *  COTISATION AU CLUB SELON DATE DE NAISSANCE
      */
     public function get_cotisation_club(){
+        /**
+         * On filtre la table cotisation et on prend que les infos cotisation et pas mur et soutien
+         */
+        $cotisations = array_filter( $this->general['club'], function($element) {
+            return $element->secteur == 'cotisation';
+        } );
 
         if( self::get_age_mois_septembre() < 25 ){
 
-            $array = array_filter($this->general['club'], function ($element) {
+            $array = array_filter( $cotisations , function ($element) {
                 //unset( $element->demi_tarif );
                 if( self::get_reduction_mai() == 'demi_tarif' && !empty($element->demi_tarif) ) {
                     $element->tarif = $element->demi_tarif;
@@ -185,7 +191,7 @@ class rest_route_helloasso {
 
         }else{
 
-            $array = array_filter($this->general['club'], function ($element) {
+            $array = array_filter( $cotisations , function ($element) {
                 //unset( $element->demi_tarif );
                 if( self::get_reduction_mai() == 'demi_tarif' && !empty($element->demi_tarif) ) {
                     $element->tarif = $element->demi_tarif;

@@ -49,14 +49,15 @@ export function ContextDatasProvider ({children}) {
             famille_adulte: {},
             famille_enfant: {},
             famille_supp: [],
-            payer: {}
+            payer: {},
+            activites: []
         }
     } );
     const [payer,setPayer] = useState({});
     const user = datas.payer;
     const metadata = datas.metadata;
     const [guide,setGuide] = useState('oui');
-
+    
     /**
      * @param selection []
      * Contient la liste des activités pour les licences
@@ -75,7 +76,7 @@ export function ContextDatasProvider ({children}) {
         {descriptif:'Alpinisme', name: 'ALPI', checked: false, label: 'Pratiquez vous l\'alpinisme à un niveau supérieur à PD en montée ?', labelname: 'ALPI_SUP', labelchecked: false, show: false },
         {descriptif:'Ski de randonnée', name: 'SKIR', checked: false, label: 'Pratiquez vous le Ski de randonnée "engagé", ie difficulté montée supérieur à PD ?', labelname: 'SKIR_SUP',labelchecked: false, show: false },
         ],
-        mur: {descriptif:'Voulez-vous utiliser le mur d\'escalade au gymnase Berthe de Boissieux ?',name:'mur', checked: false, plein_tarif:3000}
+        mur: {descriptif:REACT_VARS.mur[0].descriptif,name:'mur', checked: false, plein_tarif:REACT_VARS.mur[0].plein_tarif}
     }
     );
 
@@ -94,6 +95,8 @@ export function ContextDatasProvider ({children}) {
         activite_for_datas = selection.activites.filter( item => item.checked );
 
         handelDatas('LICENCE', getLicences(activite_for_datas,new_mur) );
+        
+        //console.log( selection );
         
         
     },[selection]);
@@ -303,7 +306,11 @@ export function ContextDatasProvider ({children}) {
                 if( event[1].titre != 'API') {
 
                     let options = datas.metadata.options_ffme.map( (item,i) => { item.checked = false; return item });
-                    let licences = selection.activites.map( (item,i) => { item.checked = false, item.labelchecked = false; return item } );
+                    let licences = selection.activites.map( (item,i) => { 
+                        item.checked = false;
+                        // item.labelchecked = false; 
+                        return item
+                     } );
                     selection.activites = licences;
                     selection.mur =  {...selection.mur, checked: false }
 
@@ -352,6 +359,7 @@ export function ContextDatasProvider ({children}) {
                 //console.log( 'LICENCE_FREE', event[1], event[2], liste[ event[2] ]);
                 const { licences } = liste[ event[2] ];
                 let my_licence = {};
+                let options = datas.metadata.options_ffme;
                 
                 Object.entries(licences).map( ([item,obj]) =>
                 {
@@ -362,7 +370,11 @@ export function ContextDatasProvider ({children}) {
                 }
                 )
 
-                console.log(my_licence.secteur);
+                //console.log(my_licence.secteur);
+
+                if( my_licence.secteur === 'ffr' ){
+                    options = datas.metadata.options_ffme.map( (item,i) => { item.checked = false; return item });
+                }
                 
 
                 setDatas({...datas, metadata: {
@@ -372,12 +384,17 @@ export function ContextDatasProvider ({children}) {
                     type_licence: my_licence.titre || '',
                     tarif_licence: Number(my_licence.tarif) || 0,
                     secteur: my_licence.secteur || '',
+                    options_ffme : options
                 } });
                 
             break;
             case 'LICENCE':
                 //console.log('licence',event[1][0],'options',event[1][1]);
+                let new_activites = [];
+
                 if( event[1][0] ){
+
+                    new_activites = selection.activites.filter( item => item.checked );
 
                 setDatas({...datas, metadata: {
                             ...datas.metadata,
@@ -387,11 +404,27 @@ export function ContextDatasProvider ({children}) {
                             tarif_licence: Number(event[1][0].tarif) || 0,
                             options_ffme: event[1][1] || [],
                             secteur: event[1][0].secteur || '',
-                            mur: event[1][2] || 0
+                            mur: event[1][2] || 0,
+                            activites: new_activites
                         } });
 
                 }
                         
+            break;
+            case 'RESET_LICENCE':
+                selection.mur =  {...selection.mur, checked: false }
+                //let options = datas.metadata.options_ffme.map( (item,i) => { item.checked = false; return item });
+                let newselection = selection.activites.map( (item,i) => { 
+                    item.checked = false;
+                        if( Object.keys(item).some( key => key === 'labelchecked') ){
+                            item.labelchecked = false;
+                            item.show= false;
+                        }
+                        return item;
+                    });
+                
+                setSelection({...selection, activites: newselection });
+
             break;
             case 'OPTIONS':
                 //console.log('useDatas options', event[1]);

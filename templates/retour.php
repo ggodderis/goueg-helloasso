@@ -162,7 +162,7 @@ class retourHello {
     private function createAndUpdateAdherent( $create, $statut ){
         /**
          * Si le champs create de la table wp_client
-         * est en "attente" et que le status est sur 2 = validé
+         * est en "attente" et que le status est sur 2 = validée
          * on fait le travail si non on fait rien..
          */
         $metadata = $this->datas['metadata'];

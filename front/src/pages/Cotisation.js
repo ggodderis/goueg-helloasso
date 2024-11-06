@@ -143,9 +143,9 @@ const Cotisation = (props) => {
         }
             <h4 className="hello_h4">Voulez-vous ajouter une cotisation de soutien au club ?</h4>
                 <label className="label_radio">
-                    <input type="checkbox" name="soutien" checked={ metadata.soutien } value="1000" onChange={handelClickMurSoutien} />
+                    <input type="checkbox" name="soutien" checked={ metadata.soutien } value={REACT_VARS.soutien[0].plein_tarif} onChange={handelClickMurSoutien} />
                     <span className="new_input"></span>
-                    <span>cotisation de soutien au club :&nbsp;<b>10€</b></span>
+                    <span>{REACT_VARS.soutien[0].descriptif} :&nbsp;<b>{ REACT_VARS.soutien[0].plein_tarif / 100 }€</b></span>
                 </label>
 
         </fieldset>

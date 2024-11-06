@@ -3,21 +3,24 @@ import { ContextDatas } from '../hooks/useContextDatas';
 
 const LicenceFree = (props) => {
 
-    const {liste,metadata,handelDatas} = useContext( ContextDatas );
+    const {liste,guide,metadata,selection,setSelection,handelDatas} = useContext( ContextDatas );
     const {options_ffme} = metadata;
     const {ffme,ffr} = liste;
+    const {mur} = selection;
 
     //console.log( ffme.licences, ffr.licences );
+    useEffect( () => {
+        handelDatas( 'RESET_LICENCE' );
+    },[]);
 
     useEffect( () => {
 
-        console.log( 'useEffect',metadata.type_licence,options_ffme );
+        console.log( 'useEffect',metadata.type_licence,options_ffme,guide,metadata.secteur );
         
     },[metadata]);
 
     const handelLicence = (event) => {
         const {name,value} = event.target;
-        // console.log(event.target.checked);
         handelDatas('LICENCE_FREE', name, value );
     }
     /**
@@ -47,6 +50,21 @@ const LicenceFree = (props) => {
      */
     const handelSante = (event) => {
         handelDatas('SANTE', event.target.checked );
+    }
+    /**
+     * Choix mur d'escalade
+     */
+    const handelClickMur = (event) => {
+
+        const {checked,value} = event.target;
+
+        if( checked ){
+            handelDatas('MUR',value);
+        }else{
+            handelDatas('MUR',0);
+        }
+        
+        
     }
 
     return(
@@ -89,20 +107,36 @@ const LicenceFree = (props) => {
                 })
             }
             </fieldset>
-            <fieldset>
-            <legend>FFME - Options supplémentaires (nom obligatoire)</legend>
             {
-                options_ffme.map( (item,i) => (
-                    <div className="ligne_licence">
-                        <label key={item.id} className="label_radio">
-                            <input type="checkbox" name={item.name} id={item.name} checked={item.checked} value={item.titre} onClick={handelOptions} />
-                            <span className="new_input"></span>
-                            {item.titre}&nbsp;<b>{item.plein_tarif/100}€</b>
-                        </label>
-                    </div>
-                    ) )
-                }
+                metadata.secteur === 'ffme' ? (
+                <fieldset>
+                <legend>FFME - Options supplémentaires (nom obligatoire)</legend>
+               
+                    {
+                        options_ffme.map( (item,i) => (
+                        <div className="ligne_licence">
+                            <label key={item.id} className="label_radio">
+                                <input type="checkbox" name={item.name} id={item.name} checked={item.checked} value={item.titre} onClick={handelOptions} />
+                                <span className="new_input"></span>
+                                {item.titre}&nbsp;<b>{item.plein_tarif/100}€</b>
+                            </label>
+                        </div>
+                        ) )
+                    }
+
+                </fieldset>
+            ):('')
+            }
+
+            <fieldset>
+                <legend>{mur.descriptif}</legend>
+                <label className="label_radio">
+                    <input type="checkbox" name={mur.name} value={mur.plein_tarif} onChange={handelClickMur} />
+                    <span className="new_input"></span>
+                    oui :&nbsp;<b>{mur.plein_tarif/100}€</b>
+                </label>
             </fieldset>
+
             <fieldset>
             {/* Si le secteur ffr ou ffme existe */}
             {
