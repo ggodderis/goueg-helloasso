@@ -226,23 +226,49 @@ class retourHello {
             $password = wp_generate_password(6, false);
 
             $user_datas = array(
-                "first_name" => 'Jojo',
-                "last_name" => 'le gros jojo',
+                "first_name" => $payer['lastName'],
+                "last_name" => $payer['firstName'],
                 "user_pass" => $password,
-                "user_email" => 'goueg4@gmail.com',
+                "user_email" => $payer['email'],
                 "role" => 'subscriber',
-                "user_login" => str_replace(' ','',mb_strtolower('Jojo')).' '.str_replace(' ','',mb_strtolower('le gros jojo')),
-                "display_name" => str_replace(' ','',mb_strtolower('Jojo')).' '.str_replace(' ','',mb_strtolower('le gros jojo'))
+                "user_login" => str_replace(' ','',mb_strtolower($payer['lastName'])).' '.str_replace(' ','',mb_strtolower($payer['firstName'])),
+                "display_name" => str_replace(' ','',mb_strtolower($payer['lastName'])).' '.str_replace(' ','',mb_strtolower($payer['firstName']))
                 // "user_login", CONCAT( LOWER(first_name)," ",LOWER(last_name)),
                 // "display_name", CONCAT(first_name ," ",last_name ) )
             );
 
-            //$user_id = wp_insert_user($user_datas);
+            $user_id = wp_insert_user($user_datas);
 
-            // if (!is_wp_error($user_id)) { 
-            //     //echo $i.'we have Created an account for you.<br>';
-            //     //wp_new_user_notification( $user_id, null, 'both' );
-            // }
+            if (!is_wp_error($user_id)) {
+
+                update_user_meta( $user_id, 'gda_genre', $payer['gda_genre'] );
+                update_user_meta( $user_id, 'gda_nee_le', $payer['dateOfBirth'] );
+                update_user_meta( $user_id, 'billing_address_1', $payer['address'] );
+                update_user_meta( $user_id, 'billing_postcode', $payer['zipCode'] );
+                update_user_meta( $user_id, 'billing_city', $payer['city'] );
+                update_user_meta( $user_id, 'billing_phone', $payer['billing_phone'] );
+                update_user_meta( $user_id, 'gda_personne', $payer['gda_personne'] );
+                update_user_meta( $user_id, 'gda_tel_personne', $payer['gda_tel_personne'] );
+                update_user_meta( $user_id, 'gda_type_cotisation', $metadata['cotisation'] );
+                update_user_meta( $user_id, 'gda_licence', $metadata['type_licence'] );
+                update_user_meta( $user_id, 'gda_licence_speciale', $options_liste );
+                /**
+                 * date d'adhésion
+                 */
+                $date_adhesion = new DateTime('now',new DateTimeZone('Europe/Paris'));
+                update_user_meta( $user_id, 'gda_date_adhesion', $date_adhesion->format('Y-m-d') );
+                update_user_meta( $user_id, 'gda_lieu_naissance', $payer['gda_lieu'] );
+                update_user_meta( $user_id, 'gda_saison', self::annee_saison_en_cours() );
+                update_user_meta( $user_id, 'gda_annee_admission', $date_adhesion->format('Y') );
+                /**
+                 * TODO 
+                 * Il faut créer une liste d'activitées pour l'adhérent !!!!
+                 * Pareil pour les famille réfléchir à un systéme de stockage des membres de la famille
+                 */
+
+                echo 'we have Created an account for you.<br>';
+                //wp_new_user_notification( $user_id, null, 'both' );
+            }
 
             //"création du user et envoie email facture et email mot de passe";
         }
