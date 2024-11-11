@@ -199,11 +199,14 @@ class retourHello {
                 $to = 'goueg4@gmail.com';
                 $subject = "Adhésion au Club Grimpeurs des Alpes";
 
-                // ob_start();
-                // include(get_stylesheet_directory() . '/email-template.php');//Template File Path
-                // $body = ob_get_contents();
-                // ob_end_clean();
-                $body = '<h1>Adhésion mise à jour...</h1>';
+                ob_start();
+                include(HELLOASSO_ROOT . '/templates/mailFacture.php');//Template File Path
+                $body = ob_get_contents();
+                ob_end_clean();
+                // $saison_date = self::annee_saison_en_cours();
+                // $body = "<h1>Adhésion au Club Grimpeurs des Alpes</h1>".
+                //         "<p>Bonjour, {$payer['lastName']}</p>".
+                //         "<p>Votre adhésion au Club Grimpeurs des Alpes est validée pour la saison {$saison_date}</p>";
 
                 $headers = array(
                         'Content-Type: text/html; charset=UTF-8',
@@ -265,6 +268,10 @@ class retourHello {
                  * Il faut créer une liste d'activitées pour l'adhérent !!!!
                  * Pareil pour les famille réfléchir à un systéme de stockage des membres de la famille
                  */
+                update_user_meta( $user_id, 'gda_abo_email_general', 'oui' );
+                update_user_meta( $user_id, 'gda_abo_email_escalade', 'oui' );
+                update_user_meta( $user_id, 'gda_abo_email_actualite', 'oui' );
+                update_user_meta( $user_id, 'gda_abo_email_sortie', 'oui' );
 
                 echo 'we have Created an account for you.<br>';
                 //wp_new_user_notification( $user_id, null, 'both' );
