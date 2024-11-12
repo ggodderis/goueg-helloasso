@@ -14,7 +14,8 @@ $adherent           = $this->datas['metadata']['payer']['firstName'].' '.$this->
 /**
  * Liste des membre de la famille si famille
  */
-if( isset($this->datas['metadata']['cotisation_famille']) &&  $this->datas['metadata']['cotisation_famille'] == "famille" ){
+if( isset($this->datas['metadata']['cotisation_famille']) && 
+    $this->datas['metadata']['cotisation_famille'] == "famille" ){
     
     foreach( $this->datas['metadata'] as $key => $value ){
         // echo '<pre>';
@@ -41,7 +42,8 @@ if( isset($this->datas['metadata']['cotisation_famille']) &&  $this->datas['meta
 /**
  * Cotisation de soutien si pas vide
  */
-if( isset($this->datas['metadata']['soutien']) &&  intval($this->datas['metadata']['soutien']) > 0  ){
+if( isset($this->datas['metadata']['soutien']) &&
+    intval($this->datas['metadata']['soutien']) > 0  ){
     $soutien = '<span>Soutien au club: <b>'.( intval($this->datas['metadata']['soutien'])/100 ).'€</b> </span>';
 }
 /**
