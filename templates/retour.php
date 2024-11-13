@@ -149,13 +149,147 @@ class retourHello {
              * Création ou update de l'adhérent et envoie email facture
              * et email mot de passe inscription
              */
-            self::createAndUpdateAdherent( $infos_table['create'], $statut );
+           self::createAndUpdateAdherent( $infos_table['create'], $statut );
 
             $conn->close();
 
         }else{
             echo '<h3>id client inexistant !</h3>';
         }
+
+    }
+
+    /**
+     * Retourne le résumer de la commande pour affichage checkout et mail
+     * 
+     */
+    private function getResumer(){
+
+        $total_price        = isset($this->datas['order']['payments'][0]['amount']) ? intval($this->datas['order']['payments'][0]['amount'])/100 : '';
+        $cotisation         = $this->datas['metadata']['cotisation'];
+        $prix_cotisation    = intval($this->datas['metadata']['tarif_cotisation'])/100;
+        $licence            = $this->datas['metadata']['type_licence'];
+        $prix_licence       = intval($this->datas['metadata']['tarif_licence'])/100;
+        $liste_membres      = '';
+        $soutien            = '';
+        $options            = '';
+        $mur                = '';
+        $adherent           = $this->datas['metadata']['payer']['firstName'].' '.$this->datas['metadata']['payer']['lastName'];
+
+        /**
+         * Liste des membres de la famille si famille
+         */
+        if( isset($this->datas['metadata']['cotisation_famille']) && 
+            $this->datas['metadata']['cotisation_famille'] == "famille" ){
+            
+            foreach( $this->datas['metadata'] as $key => $value ){
+                // echo '<pre>';
+                // print_r($key);
+                // echo '</pre>';
+                if( $key == 'famille_adulte' ){
+                    $liste_membres .= '<tr>
+                                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">Deuxième adulte</td>
+                                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9"></td>
+                                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.$value['firstName'].' '.$value['lastName'].'</td>
+                                        </tr>';
+                }
+                if( $key == 'famille_enfant' ){
+                    $liste_membres .= '<tr>
+                                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">Enfant</td>
+                                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9"></td>
+                                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.$value['firstName'].' '.$value['lastName'].'</td>
+                                        </tr>';
+                }
+                if( $key == 'famille_supp' ){
+                    for( $i = 0; $i < count($value); $i++ ){
+                        $liste_membres .= '<tr>
+                                                <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">Enfant</td>
+                                                <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9"></td>
+                                                <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.$value[$i]['firstName'].' '.$value[$i]['lastName'].'</td>
+                                            </tr>';
+                    }
+                }
+
+            }
+
+        }
+        /**
+         * Cotisation de soutien si pas vide
+         */
+        if( isset($this->datas['metadata']['soutien']) &&
+            intval($this->datas['metadata']['soutien']) > 0  ){
+            $soutien = '<tr>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">Soutien au club</td>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9"></td>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.( intval($this->datas['metadata']['soutien'])/100 ).' €</td>
+                        </tr>';
+        }
+        /**
+         * Options FFME
+         */
+        $boucle_options = isset( $this->datas['metadata']['options_ffme'] ) ? $this->datas['metadata']['options_ffme'] : [];
+
+        foreach( $boucle_options as $key => $value ){
+            // echo '<pre>';
+            // print_r($value['checked']);
+            // echo '</pre>';
+            if( $value['checked'] ){
+                $options .='<tr>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">Option '.$value['titre'].'</td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9"></td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.( intval($value['plein_tarif'])/100).'€</<td>
+                            </tr>';
+            }
+        }
+        /**
+         * Mur d'escalade
+         */
+        if( isset($this->datas['metadata']['mur']) && intval($this->datas['metadata']['mur']) > 0 ){
+            $mur = '<tr>
+                        <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">Mur d\'escalade</td>
+                        <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9"></td>
+                        <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.( intval($this->datas['metadata']['mur'])/100 ).'€</td>
+                    </tr>';
+        }
+
+        $array_statut = ['attente','validée','échec','remboursée'];
+
+        return  
+        '<table align="left" style="border-collapse: collapse; width: 100%; max-width: 600px; border: 1px solid #e9e9e9">
+                <thead>
+                    <tr>
+                        <td style="padding: 0.5rem"><b>Récapitulatif de l\'adhésion</b></th>
+                        <td style="padding: 0.5rem"></td>
+                        <td style="padding: 0.5rem"></td>
+                    </tr>
+                    </thead>    
+                    <tbody style="background-color: aliceblue;">
+                        <tr>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">Adhérent</td>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9"></td>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.$adherent.'</td>
+                        </tr>
+                        '.$liste_membres.'
+                        '.$mur.'
+                        <tr>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">Cotisation au club</td>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.$cotisation.'</td>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.$prix_cotisation.' €</td>
+                        </tr>
+                        '.$soutien.'
+                        <tr>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">Licence / Assurance</td>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.$licence.'</td>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.$prix_licence.' €</td>
+                        </tr>
+                        '.$options.'
+                        <tr>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">Total</td>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9"></td>
+                            <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.$total_price.' €</td>
+                        </tr>
+                    </tbody>
+                </table>';
 
     }
 
@@ -196,17 +330,19 @@ class retourHello {
                     // update_user_meta( $metadata['payer']['id'], 'gda_saison', self::annee_saison_en_cours());
                 }
             /**/
-                $to = 'goueg4@gmail.com';
+                $to ="{$payer['email']}";
                 $subject = "Adhésion au Club Grimpeurs des Alpes";
 
-                ob_start();
-                include(HELLOASSO_ROOT . '/templates/mailFacture.php');//Template File Path
-                $body = ob_get_contents();
-                ob_end_clean();
-                // $saison_date = self::annee_saison_en_cours();
-                // $body = "<h1>Adhésion au Club Grimpeurs des Alpes</h1>".
-                //         "<p>Bonjour, {$payer['lastName']}</p>".
-                //         "<p>Votre adhésion au Club Grimpeurs des Alpes est validée pour la saison {$saison_date}</p>";
+                // ob_start();
+                // include(HELLOASSO_ROOT . '/templates/mailFacture.php');//Template File Path
+                // $body = ob_get_contents();
+                // ob_end_clean();
+                $saison_date = self::annee_saison_en_cours();
+                $body = "<h1>Adhésion au Club Grimpeurs des Alpes</h1>".
+                         "<p>Bonjour, {$payer['lastName']}</p>".
+                         "<p>Votre adhésion au Club Grimpeurs des Alpes est validée pour la saison {$saison_date}</p>
+                         <br />
+                         <p style=\"text-align:left;\">".self::getResumer()."</p>";
 
                 $headers = array(
                         'Content-Type: text/html; charset=UTF-8',
@@ -274,13 +410,12 @@ class retourHello {
                 update_user_meta( $user_id, 'gda_abo_email_sortie', 'oui' );
 
                 echo 'we have Created an account for you.<br>';
-                //wp_new_user_notification( $user_id, null, 'both' );
+                wp_new_user_notification( $user_id, null, 'user' );
             }
 
             //"création du user et envoie email facture et email mot de passe";
         }
     }
-
 
     /**
     * Retourne l'année pour la zone compte et l'affichage de la saison en cours

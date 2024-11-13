@@ -14,13 +14,7 @@
     margin: auto;
 }
 .checkout_details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    margin: 1.5rem auto;
-}
-.checkout_details span {
-    display: block;
-    padding: 0.35rem 0;
+    max-width: 600px;
+    width: 100%;
+    margin: auto;
 }

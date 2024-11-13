@@ -41,7 +41,8 @@ const handelSubmit = (event) => {
     event.preventDefault();
     const champs = new FormData( event.target );
     const adherent = Object.fromEntries(champs);
-
+    console.log( legend, adherent );
+    
     handelDatas(legend,adherent);
 }
 

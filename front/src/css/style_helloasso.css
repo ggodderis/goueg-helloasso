@@ -46,9 +46,9 @@
     align-items: center;
     margin: 1rem 0;
     padding: 1.5rem;
-    max-height: 200px;
+    min-height: 220px;
     height: 100%;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid #ccc;
 }
 .close h3 {
     text-transform: capitalize;
@@ -217,15 +217,18 @@
     transition: all 0.3s linear;
 }
 
-.bt_modifier, .bt_ajouter {
+.bt_ajouter {
     display: flex;
     color: var(--black-color) !important;
     font-size: 0.9rem;
     background-color: var(--grey-color);
 }
-.bt_modifier:hover {
-    color: #ffffff !important;
-    background-color: green;
+.bt_modifier {
+    display: flex;
+    color: var(--black-color) !important;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
 }
 .bt_ajouter:hover {
     color: #ffffff !important;
