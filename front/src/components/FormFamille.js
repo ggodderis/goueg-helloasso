@@ -58,11 +58,11 @@ const FormFamille = (props) => {
     return(
       <div>
          <div className="content_membre">
-          <FormMembre legend="adulte" titre="2eme Parent" key={uuidv4()} handelDatas={handelDatas} famille_adulte={famille_adulte} monid={uuidv4()} />
-          <FormMembre legend="enfant" titre="Enfant 1" key={uuidv4()} handelDatas={handelDatas} famille_enfant={famille_enfant} monid={uuidv4()} />
+          <FormMembre legend="ADULTE" titre="2eme Parent" key={uuidv4()} handelDatas={handelDatas} famille_adulte={famille_adulte} monid={uuidv4()} />
+          <FormMembre legend="ENFANT" titre="Enfant 1" key={uuidv4()} handelDatas={handelDatas} famille_enfant={famille_enfant} monid={uuidv4()} />
           {
             famille_supp.map( (item,i) => (
-              <FormMembre legend="membres" titre={`Enfant ${i+2}`} famille_supp={famille_supp} monid={item.id} key={uuidv4()} handelDatas={handelDatas} handelSuppMembre={handelSuppMembre} isReset="reset" />
+              <FormMembre legend="MEMBRES" titre={`Enfant ${i+2}`} famille_supp={famille_supp} monid={item.id} key={uuidv4()} handelDatas={handelDatas} handelSuppMembre={handelSuppMembre} isReset="reset" />
             )
             )
           }
