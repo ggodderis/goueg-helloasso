@@ -60,7 +60,7 @@ const Cotisation = (props) => {
           return newObject;
         },{});
 
-        if( el.titre != "F/F2" ){
+        if( el.titre != "F" ){
             setEtat(false);
         }
         
@@ -152,7 +152,7 @@ const Cotisation = (props) => {
 
 
             {
-                metadata.cotisation === 'F/F2' ? ( <FormFamille datas={datas} setEtat={setEtat} handelDatas={handelDatas} /> ):('')
+                metadata.cotisation === 'F' ? ( <FormFamille datas={datas} setEtat={setEtat} handelDatas={handelDatas} /> ):('')
             }
 
         <fieldset>
@@ -173,7 +173,7 @@ const Cotisation = (props) => {
 
             }
             {
-                metadata.cotisation != 'API' && metadata.cotisation != '' && metadata.cotisation != 'F/F2' ? 
+                metadata.cotisation != 'API' && metadata.cotisation != '' && metadata.cotisation != 'F' ? 
                 (<button type="button" className='bt_bleu' onClick={ handelClickValidation }>Étape suivante&nbsp;<i className="icon-chevron-droite"></i></button>):('')
             }
             </div>

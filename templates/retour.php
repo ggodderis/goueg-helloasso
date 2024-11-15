@@ -304,8 +304,10 @@ class retourHello {
         if( $create == "attente" && intval($statut) == 2 ){
 
             $options    = $metadata['options_ffme'];
+            $activites    = $metadata['activites'];
             $payer      = $metadata['payer'];
             $options_liste = [];
+            $activites_liste = [];
 
             /**
              * On liste les options ffme si y'en a...
@@ -317,26 +319,33 @@ class retourHello {
                         }
                     }
                 }
-
+            /**
+             * On liste les activités de l'adhérent
+             */
+                if( isset( $activites ) &&  !empty( $activites ) ){
+                    foreach( $activites as $key => $value ){
+                        if( $value['checked'] ){
+                            array_push( $activites_liste, $value['name'] );
+                        }
+                    }
+                }
             /**
              * Si c'est déjà un adhérent
              * update des ses infos et mail de facture
              */
                 if( isset( $payer['id'] ) && !empty( $payer['id'] ) ){
-                    // update_user_meta( $metadata['payer']['id'], 'gda_inscript_escalade', intval($metadata['mur]) > 0 ? 'oui' : '' );
-                    // update_user_meta( $metadata['payer']['id'], 'gda_type_cotisation', $metadata['cotisation'] );
-                    // update_user_meta( $metadata['payer']['id'], 'gda_licence', $metadata['type_licence'] );
-                    // update_user_meta( $metadata['payer']['id'], 'gda_licence_speciale', $options_liste );
-                    // update_user_meta( $metadata['payer']['id'], 'gda_saison', self::annee_saison_en_cours());
+                    update_user_meta( $metadata['payer']['id'], 'gda_inscript_escalade', intval($metadata['mur']) > 0 ? 'oui' : '' );
+                    update_user_meta( $metadata['payer']['id'], 'gda_type_cotisation', $metadata['cotisation'] );
+                    update_user_meta( $metadata['payer']['id'], 'gda_soutien', intval($metadata['soutien']) > 0 ? 'oui' : '' );
+                    update_user_meta( $metadata['payer']['id'], 'gda_licence', $metadata['type_licence'] );
+                    update_user_meta( $metadata['payer']['id'], 'gda_licence_speciale', $options_liste );
+                    update_user_meta( $metadata['payer']['id'], 'gda_activites_adherent', $activites_liste );
+                    update_user_meta( $metadata['payer']['id'], 'gda_saison', self::annee_saison_en_cours());
                 }
             /**/
                 $to ="{$payer['email']}";
                 $subject = "Adhésion au Club Grimpeurs des Alpes";
 
-                // ob_start();
-                // include(HELLOASSO_ROOT . '/templates/mailFacture.php');//Template File Path
-                // $body = ob_get_contents();
-                // ob_end_clean();
                 $saison_date = self::annee_saison_en_cours();
                 $body = "<h1>Adhésion au Club Grimpeurs des Alpes</h1>".
                          "<p>Bonjour, {$payer['lastName']}</p>".
@@ -391,6 +400,7 @@ class retourHello {
                 update_user_meta( $user_id, 'gda_type_cotisation', $metadata['cotisation'] );
                 update_user_meta( $user_id, 'gda_licence', $metadata['type_licence'] );
                 update_user_meta( $user_id, 'gda_licence_speciale', $options_liste );
+                update_user_meta( $user_id, 'gda_activites_adherent', $activites_liste );
                 /**
                  * date d'adhésion
                  */
@@ -408,8 +418,6 @@ class retourHello {
                 update_user_meta( $user_id, 'gda_abo_email_escalade', 'oui' );
                 update_user_meta( $user_id, 'gda_abo_email_actualite', 'oui' );
                 update_user_meta( $user_id, 'gda_abo_email_sortie', 'oui' );
-
-                echo 'we have Created an account for you.<br>';
                 wp_new_user_notification( $user_id, null, 'user' );
             }
 

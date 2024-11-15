@@ -179,8 +179,12 @@
 .hello_description {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     border-top: 1px solid var(--grey-light);
     padding: 1rem 3rem;
+}
+.hello_description > img {
+    align-self: center;
 }
 .hello_description > span {
     padding-left: 1.5rem;
@@ -434,3 +438,85 @@ legend {
 }
 .hello_loader > p { color: var(--bleu-foncer); text-align: center; font-weight: bold; }
 .hello_loader > p > img { margin: 1rem auto; }
+
+
+/**
+* MOBILE
+*/
+@media screen and (max-width:1024px) {
+    #rootHelloAsso {
+        border-radius: unset;
+    }
+    .adherent_grid {
+        display: block;
+    }
+    .label_ligne {
+        margin-bottom: 1rem;
+    }
+
+}
+@media screen and (max-width:750px) {
+    .bandeau_haut {
+        flex-direction: column;
+        justify-content: center;
+    }
+    .bandeau_haut_titre {
+        text-transform: uppercase;
+        font-size: 1.4rem;
+    }
+    .hello_deconnexion {
+        margin-top: 1rem;
+    }
+    .hello_description {
+        flex-direction: column;
+        justify-content: center;
+        padding: 0;
+    }
+    .hello_description > img {
+        padding: 1rem 0;
+    }
+    .hello_description > span {
+        padding: 0;
+        text-align: justify;
+    }
+    .content_start {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+    }
+    .content_start > div {
+        margin-bottom: 2rem;
+    }
+    .content_start a {
+        width: 90%;
+    }
+    .adherent_grid {
+        padding: 0;
+    }
+    .label_ligne {
+        column-gap: 1rem;
+    }
+    fieldset, .fieldset_grey {
+        padding: 0;
+    }
+    legend {
+        margin-bottom: 1rem;
+    }
+    .navig_bottom {
+        flex-direction: column-reverse;
+        justify-content: center;
+    }
+    .navig_bottom button {
+        margin-bottom: 1rem;
+    }
+    .bt_bulle {
+        padding: 1rem;
+    }
+    .content_licences {
+        display: flex;
+        flex-direction: column;
+    }
+    .hello_total > span {
+        padding: 0.4rem 1rem;
+    }
+}
