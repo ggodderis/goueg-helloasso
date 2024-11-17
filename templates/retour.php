@@ -237,7 +237,7 @@ class retourHello {
                 $options .='<tr>
                                 <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">Option '.$value['titre'].'</td>
                                 <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9"></td>
-                                <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.( intval($value['plein_tarif'])/100).'€</<td>
+                                <td style="padding: 0.5rem; border-bottom: 1px solid #e9e9e9">'.( intval($value['plein_tarif'])/100).'€</td>
                             </tr>';
             }
         }
@@ -398,6 +398,8 @@ class retourHello {
                 update_user_meta( $user_id, 'gda_personne', $payer['gda_personne'] );
                 update_user_meta( $user_id, 'gda_tel_personne', $payer['gda_tel_personne'] );
                 update_user_meta( $user_id, 'gda_type_cotisation', $metadata['cotisation'] );
+                update_user_meta( $user_id, 'gda_inscript_escalade', intval($metadata['mur']) > 0 ? 'oui' : '' );
+                update_user_meta( $user_id, 'gda_soutien', intval($metadata['soutien']) > 0 ? 'oui' : '' );
                 update_user_meta( $user_id, 'gda_licence', $metadata['type_licence'] );
                 update_user_meta( $user_id, 'gda_licence_speciale', $options_liste );
                 update_user_meta( $user_id, 'gda_activites_adherent', $activites_liste );
