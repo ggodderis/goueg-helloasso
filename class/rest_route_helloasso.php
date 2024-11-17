@@ -259,7 +259,8 @@ class rest_route_helloasso {
                 }else{
                     $element->tarif = $element->plein_tarif;
                 }
-                if( $element->titre !== "FFR_IMPN" && $element->titre !== "FFR_IRA"){
+                if( $element->titre !== "FFR_IRA" ){
+                    //$element->titre !== "FFR_IMPN" &&
                     return $element;
                 }
                 //                   ↑

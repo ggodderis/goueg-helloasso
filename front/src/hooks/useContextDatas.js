@@ -173,7 +173,8 @@ export function ContextDatasProvider ({children}) {
                                     new_licence = obj;
                                 } 
                             }else{
-                                if( obj.titre == 'FFR_IMPN' || obj.titre == 'FFR_IMPNJ'){
+                                if( obj.titre == 'FFR_IMPN' ){
+                                    // || obj.titre == 'FFR_IMPNJ'
                                     new_licence = obj;
                                 }
                             }
@@ -240,7 +241,8 @@ export function ContextDatasProvider ({children}) {
                     payer: payer
                 }
             });
-        }
+
+        }    
 
     }, [payer]);
     /** */
@@ -297,7 +299,6 @@ export function ContextDatasProvider ({children}) {
         // console.log( event[0] , event );
         switch( event[0] ){
             case 'ADHERENT':
-                //setDatas({...datas, payer: event[1] });
                 setPayer( event[1] );
                 break;
             case 'COTISATION':
