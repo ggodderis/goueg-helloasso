@@ -2,7 +2,8 @@ import { React, useState, useEffect, useContext } from 'react';
 import { useNavigate } from "react-router-dom"
 import Total from '../components/Total';
 import useHello from '../hooks/useHello';
-import Loader from '../components/Loader';
+// import Loader from '../components/Loader';
+import useLoader from '../hooks/useLoader';
 import LicenceGuide from '../components/LicenceGuide';
 import { ContextDatas } from '../hooks/useContextDatas';
 import LicenceFree from '../components/LicenceFree';
@@ -10,9 +11,9 @@ import LicenceFree from '../components/LicenceFree';
 const Licence = (props) => {
     
     const navigate = useNavigate();
+    const [showLoader] = useLoader();
 
     const [token,startPaye] = useHello();
-    const [loader,setLoader] = useState(false);
     const {datas,guide,setGuide} = useContext( ContextDatas );
     const {nav,setNav} = props;
 
@@ -34,20 +35,12 @@ const Licence = (props) => {
         }
     }, []);
 
-
     /**
      * On paye !
      */
     const handelPaye = (event) => {
-        
-        //setLoader(true);
         startPaye(datas);
-        document.body.innerHTML += `<div class="hello_loader">
-            <p>Vous allez être rediriger sur la page de paiement<br />
-                <img src='${REACT_VARS.url_images}assets/hello.png' alt="Helloasso" />
-            </p>
-        </div>`;
-
+        showLoader();
     }
 
 
@@ -65,9 +58,6 @@ const Licence = (props) => {
 
     return(
         <>
-        {
-            loader ? (<Loader />):('')
-        }
         <div className="bandeau_haut">
             <span className="bandeau_haut_titre">Choix de la Licence / Assurance</span>
         </div>

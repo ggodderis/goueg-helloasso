@@ -2,9 +2,9 @@ import { React, useState, useEffect, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import FormFamille from '../components/FormFamille';
 import Total from '../components/Total';
-import Loader from '../components/Loader';
 import useHello from '../hooks/useHello';
 // import useSession from '../hooks/useSession';
+import useLoader from '../hooks/useLoader';
 import { ContextDatas } from '../hooks/useContextDatas';
 
 const Cotisation = (props) => {
@@ -13,10 +13,10 @@ const Cotisation = (props) => {
     // const [session,saveDatasSession] = useSession();
 
     const navigate = useNavigate();
+    const [showLoader] = useLoader();
 
     const {liste,datas,metadata,handelDatas} = useContext( ContextDatas );
     const {nav,setNav} = props;
-    const [loader,setLoader] = useState(false);
     const [etat,setEtat] = useState(false);
 
     const {club} = liste;
@@ -106,25 +106,13 @@ const Cotisation = (props) => {
      * On paye !
      */
     const handelPaye = (event) => {
-        //setLoader(true);
-        //saveDatasSession(datas);
         startPaye(datas);
-        document.body.innerHTML += `<div class="hello_loader">
-            <p>Vous allez être rediriger sur la page de paiement<br />
-                <img src='${REACT_VARS.url_images}assets/hello.png' alt="Helloasso" />
-            </p>
-        </div>`;
+        showLoader();
     }
 
-    // useEffect( () => {
-    //     console.log("Retour de session",session,REACT_VARS.session_id);
-    // },[token,session])
 
     return(
     <div>
-        {
-            loader ? (<Loader />):('')
-        }
         <div className="bandeau_haut">
             <span className="bandeau_haut_titre">Cotisation au club</span>
         </div>
