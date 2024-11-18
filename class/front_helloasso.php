@@ -57,7 +57,9 @@ class front_helloasso {
             'client_id' => CLIENT_ID,
             'client_secret' => CLIENT_SECRET,
             'url_token' => URL_TOKEN,
-            'url_checkout_intents' => URL_CHECKOUT_INTENTS
+            'url_checkout_intents' => URL_CHECKOUT_INTENTS,
+            'url_images' => HELLOASSO_URL,
+            'version' => $asset['version']
         ) );
         
     }
