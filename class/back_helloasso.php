@@ -78,6 +78,7 @@ class back_helloasso {
                         <hr />
                         </td>
                     </tr>
+
                     <tr valign="top">
                         <th scope="row" valign="top">
                             TEST client_id
@@ -114,6 +115,53 @@ class back_helloasso {
                             <label class="description" for="helloasso_settings[test_checkout_intents]">Renseigner l\'url checkout_intents</label>
                         </td>
                     </tr>
+
+                    <tr valign="top">
+                        <th scope="row" valign="top">
+                            <h2>Paramétres de PROD</h2>
+                        </th>
+                        <td style="width:100">
+                        <hr />
+                        </td>
+                    </tr>
+
+                    <tr valign="top">
+                        <th scope="row" valign="top">
+                            client_id
+                        </th>
+                        <td>
+                            <input id="helloasso_settings[client_id]" name="helloasso_settings[client_id]" type="text" class="regular-text" value="'.$helloasso_settings['client_id'].'"/>
+                            <label class="description" for="helloasso_settings[client_id]">Renseigner le client_id</label>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row" valign="top">
+                            client_secret
+                        </th>
+                        <td>
+                            <input id="helloasso_settings[client_secret]" name="helloasso_settings[client_secret]" type="text" class="regular-text" value="'.$helloasso_settings['client_secret'].'"/>
+                            <label class="description" for="helloasso_settings[client_secret]">Renseigner le client_secret</label>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row" valign="top">
+                            url token
+                        </th>
+                        <td>
+                            <input id="helloasso_settings[url_token]" name="helloasso_settings[url_token]" type="text" class="regular-text" value="'.$helloasso_settings['url_token'].'"/>
+                            <label class="description" for="helloasso_settings[url_token]">Renseigner url_token</label>
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <th scope="row" valign="top">
+                            url checkout intents
+                        </th>
+                        <td>
+                            <input id="helloasso_settings[checkout_intents]" name="helloasso_settings[checkout_intents]" type="text" class="regular-text" value="'.$helloasso_settings['checkout_intents'].'"/>
+                            <label class="description" for="helloasso_settings[checkout_intents]">Renseigner l\'url checkout_intents</label>
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
             

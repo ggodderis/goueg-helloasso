@@ -23,6 +23,8 @@ export function ContextDatasProvider ({children}) {
      * @function useCotisations => Hook qui fait un appel SQL pour avoir la liste des cotisations
      * et des licences
      */
+    // backUrl: `${REACT_VARS.siteUrl}/le-club/adherer-au-club`,
+    
     const [liste,handelCotisation] = useCotisations();
     const [datas,setDatas] = useState( {
         totalAmount: 0,

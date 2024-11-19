@@ -6559,6 +6559,8 @@ function ContextDatasProvider({
    * @function useCotisations => Hook qui fait un appel SQL pour avoir la liste des cotisations
    * et des licences
    */
+  // backUrl: `${REACT_VARS.siteUrl}/le-club/adherer-au-club`,
+
   const [liste, handelCotisation] = (0,_useCotisations__WEBPACK_IMPORTED_MODULE_1__["default"])();
   const [datas, setDatas] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     totalAmount: 0,
@@ -7782,6 +7784,7 @@ const Home = props => {
   const {
     user
   } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_hooks_useContextDatas__WEBPACK_IMPORTED_MODULE_1__.ContextDatas);
+  console.log(REACT_VARS.siteUrl);
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, user.firstName ? (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "bandeau_haut"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", {

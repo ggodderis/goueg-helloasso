@@ -46,6 +46,7 @@ class front_helloasso {
             'where' => 'front',
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'nonce' => wp_create_nonce( 'wp_attachment_mail' ),
+            'siteUrl' => site_url(),
             'rootUrl' => esc_url_raw( rest_url() ),
             'rootNonce' => wp_create_nonce( 'wp_rest' ),
             'logoutNonce' => wp_create_nonce('log-out'),

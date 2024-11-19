@@ -330,13 +330,19 @@ class retourHello {
                     }
                 }
             /**
+             *  On formate la cotisation selon si il y a une cotisation de soutien ou pas
+             */
+                if( intval($metadata['soutien']) > 0  ){
+                    $cotisation = $metadata['cotisation'].'_S';
+                }
+            /**
              * Si c'est déjà un adhérent
              * update des ses infos et mail de facture
              */
                 if( isset( $payer['id'] ) && !empty( $payer['id'] ) ){
                     update_user_meta( $metadata['payer']['id'], 'gda_inscript_escalade', intval($metadata['mur']) > 0 ? 'oui' : '' );
-                    update_user_meta( $metadata['payer']['id'], 'gda_type_cotisation', $metadata['cotisation'] );
-                    update_user_meta( $metadata['payer']['id'], 'gda_soutien', intval($metadata['soutien']) > 0 ? 'oui' : '' );
+                    update_user_meta( $metadata['payer']['id'], 'gda_type_cotisation', $cotisation );
+                    //update_user_meta( $metadata['payer']['id'], 'gda_soutien', intval($metadata['soutien']) > 0 ? 'oui' : '' );
                     update_user_meta( $metadata['payer']['id'], 'gda_licence', $metadata['type_licence'] );
                     update_user_meta( $metadata['payer']['id'], 'gda_licence_speciale', $options_liste );
                     update_user_meta( $metadata['payer']['id'], 'gda_activites_adherent', $activites_liste );
@@ -397,9 +403,9 @@ class retourHello {
                 update_user_meta( $user_id, 'billing_phone', $payer['billing_phone'] );
                 update_user_meta( $user_id, 'gda_personne', $payer['gda_personne'] );
                 update_user_meta( $user_id, 'gda_tel_personne', $payer['gda_tel_personne'] );
-                update_user_meta( $user_id, 'gda_type_cotisation', $metadata['cotisation'] );
+                update_user_meta( $user_id, 'gda_type_cotisation', $cotisation );
                 update_user_meta( $user_id, 'gda_inscript_escalade', intval($metadata['mur']) > 0 ? 'oui' : '' );
-                update_user_meta( $user_id, 'gda_soutien', intval($metadata['soutien']) > 0 ? 'oui' : '' );
+                //update_user_meta( $user_id, 'gda_soutien', intval($metadata['soutien']) > 0 ? 'oui' : '' );
                 update_user_meta( $user_id, 'gda_licence', $metadata['type_licence'] );
                 update_user_meta( $user_id, 'gda_licence_speciale', $options_liste );
                 update_user_meta( $user_id, 'gda_activites_adherent', $activites_liste );

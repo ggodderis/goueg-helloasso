@@ -6,6 +6,9 @@ const Home = (props) => {
 
     const {nouveau} = props;
     const {user} = useContext( ContextDatas );
+
+    console.log( REACT_VARS.siteUrl );
+    
     
     return(
         <>
