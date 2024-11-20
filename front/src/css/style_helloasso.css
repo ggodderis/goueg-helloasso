@@ -165,7 +165,7 @@
     padding: 0.5rem 1rem;
     color: #ffffff !important;
     border: 1px solid #ffffff;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     background: none;
 }
 .bandeau_bas {
@@ -217,7 +217,7 @@
     text-decoration: none;
     color: #ffffff !important;
     background-color: var(--bleu-foncer);
-    border-radius: 999px;
+    border-radius: 0.5rem;
     transition: all 0.3s linear;
 }
 
