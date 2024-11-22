@@ -116,7 +116,8 @@ const Cotisation = (props) => {
         <div className="bandeau_haut">
             <span className="bandeau_haut_titre">Cotisation au club</span>
         </div>
-       <fieldset><legend>Choix de la cotisation au club</legend>
+        <p className="champs_obligatoire"><span className="red">*</span>Selection obligatoire</p>
+       <fieldset><legend>Choix de la cotisation au club<span className="red">*</span></legend>
         {
             club ? (
             Object.entries(club).map( ([key,obj]) => (

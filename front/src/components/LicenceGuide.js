@@ -133,14 +133,14 @@ const LicenceGuide = ( props ) => {
 
     return(
         <>
+        <p className="champs_obligatoire"><span className="red">*</span>Sélection obligatoire</p>
         <div className="content_licences">
             
             <Anim visible={bulle} duration={300}>
                 <InfosBulle handelBulle={handelBulle} />
             </Anim>
-
                 <fieldset>
-                        <legend>Cochez les activités que vous voulez pratiquer:</legend>
+                        <legend>Cochez les activités que vous voulez pratiquer<span className="red">*</span></legend>
                         
                         {
                         activites.map( (item,i) => (
@@ -180,7 +180,7 @@ const LicenceGuide = ( props ) => {
                     {
                         datas.metadata.secteur !='' ? (
                             <>
-                            <legend>Avez-vous pris connaissance des conditions médicales de la <b>{datas.metadata.secteur}</b> ?</legend>
+                            <legend>Avez-vous pris connaissance des conditions médicales de la <b>{datas.metadata.secteur}</b> ?<span className="red">*</span></legend>
                             <label className="label_radio">
                                 <input type="checkbox" name="questionnaire" onChange={handelSante} defaultChecked={ datas.metadata.payer.question === true } />
                                 <span className="new_input"></span>

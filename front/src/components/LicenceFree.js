@@ -69,8 +69,9 @@ const LicenceFree = (props) => {
 
     return(
         <div>
+            <p className="champs_obligatoire"><span className="red">*</span>Sélection obligatoire</p>
             <fieldset>
-            <legend>FFR - Fédération Française de la Randonnée Pédestre</legend>
+            <legend>FFR - Fédération Française de la Randonnée Pédestre<span className="red">*</span></legend>
              {
                 
                 Object.entries(ffr.licences).map( ([item,obj]) => {
@@ -89,7 +90,7 @@ const LicenceFree = (props) => {
             }
             </fieldset>
             <fieldset>
-            <legend>FFME - Fédération Française de la Montagne et de l'Escalade</legend>
+            <legend>FFME - Fédération Française de la Montagne et de l'Escalade<span className="red">*</span></legend>
             {
                 
                 Object.entries(ffme.licences).map( ([item,obj]) => {
@@ -142,7 +143,7 @@ const LicenceFree = (props) => {
             {
                 metadata.secteur !='' ? (
                     <>
-                    <legend>Avez-vous pris connaissance des conditions médicales de la <b>{metadata.secteur}</b> ?</legend>
+                    <legend>Avez-vous pris connaissance des conditions médicales de la <b>{metadata.secteur}</b> ?<span className="red">*</span></legend>
                     <label className="label_radio">
                         <input type="checkbox" name="questionnaire" onChange={handelSante} defaultChecked={ metadata.payer.question === true } />
                         <span className="new_input"></span>
