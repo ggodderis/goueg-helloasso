@@ -5,11 +5,13 @@ class front_helloasso {
     public function __construct() {
         // add_action('admin_menu', array(&$this,'create_admin_menu') );
         $rest_route = new rest_route_helloasso();
-        add_action('wp_enqueue_scripts',array(&$this,'load_css_js'));
-        add_shortcode('checkout_helloasso', array(&$this,'helloasso_shortcode') );
 
-        add_filter( 'query_vars',array(&$this,'query_vars') );
-        add_action( 'template_redirect',array(&$this,'helloasso_redirect') );
+        add_shortcode('checkout_helloasso', array(&$this,'helloasso_shortcode') );
+        add_shortcode('retour_helloasso', array(&$this,'helloasso_retour') );
+
+        add_action('wp_enqueue_scripts',array(&$this,'load_css_js'));
+        // add_filter( 'query_vars',array(&$this,'query_vars') );
+        // add_action( 'template_redirect',array(&$this,'helloasso_redirect') );
     }
 
 /**
@@ -70,6 +72,15 @@ class front_helloasso {
  */
     public function helloasso_shortcode( $attributes = null ){
         return '<div id="rootHelloAsso">Loading...</div>';
+    }
+
+/**
+ * Shortcode page de retour Hello Asso
+ */
+    public function helloasso_retour(){
+        
+        $initRetour = new retour_Hello();
+
     }
 
 /**

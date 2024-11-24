@@ -6,7 +6,6 @@ class back_helloasso {
         add_action( 'admin_menu', array(&$this,'init_my_menu') );
         add_action('admin_enqueue_scripts',array(&$this,'load_admin_css_js'));
         add_action('admin_init', array(&$this,'helloasso_register_settings') );
-        // add_action('admin_menu', array(&$this,'google_admin_settings') );
     }
 
     public function init_my_menu() {

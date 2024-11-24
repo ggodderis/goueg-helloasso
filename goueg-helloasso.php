@@ -82,36 +82,55 @@ if( is_admin() ){
  */
  function myplugin_activate() {
 
-    add_rewrite_rule(
-      'page-d-exemple/(.+)?',
-      '?pagename=page-d-exemple',
-      'top'
-    );
+    $query = new WP_Query( 'pagename=hello_return' );
+
+    if ( ! $query->have_posts() ) {
+        // Ajoutez la page en utilisant les données du tableau ci-dessus
+
+        wp_insert_post(
+            array(
+                'post_content'   => '[retour_helloasso]',
+                'post_name'      => 'hello_return',
+                'post_title'     => 'hello_return',
+                'post_status'    => 'publish',
+                'post_type'      => 'page',
+                'ping_status'    => 'closed',
+                'comment_status' => 'closed',
+            )
+            );
+    }
+
+
+    // add_rewrite_rule(
+    //   'page-d-exemple/(.+)?',
+    //   '?pagename=page-d-exemple',
+    //   'top'
+    // );
 
     add_rewrite_rule(
         'le-club/adherer-au-club/(.+)?',
         '?post_type=le-club&name=adherer-au-club',
         'top'
       );
-
+/*
     // add_rewrite_rule(
     //     '^mon-test$',
     //     'index.php?custom=1',
     //     'top'
     //   );
 
-    add_rewrite_rule(
-        'hello_return',
-        'index.php?custom=1',
-        'top'
-      );
+    // add_rewrite_rule(
+    //     'hello_return',
+    //     'index.php?custom=1',
+    //     'top'
+    //   );
 
     // add_rewrite_rule(
     //     'hello_return',
     //     'wp-content/plugins/goueg-helloasso/templates/retour.php',
     //     'top'
     //   );
-
+*/
     add_rewrite_rule(
         'wp-admin/hello_asso',
         'wp-admin/admin.php?page=hello_asso',
