@@ -81,6 +81,8 @@ class front_helloasso {
         
         $initRetour = new retour_Hello();
 
+        //return $initRetour;
+
     }
 
 /**

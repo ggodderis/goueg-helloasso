@@ -23,7 +23,7 @@ const Navigdate = (props) => {
 
     const handelCsv = (event) => {
 
-        let csv = [["date","firstname", "lastname", "email", "cotisation", "cotisation_tarif", "mur", "soutien", "licence", "licence_tarif","base+","base++","ski piste","skatline","trail","vtt","total"]];
+        let csv = [["date","prénom", "nom", "email", "cotisation", "cotisation_tarif", "mur", "soutien", "licence", "licence_tarif","base+","base++","ski piste","skatline","trail","vtt","total"]];
 
         let toto = [];
 
