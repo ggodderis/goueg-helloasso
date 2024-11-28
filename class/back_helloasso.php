@@ -64,7 +64,7 @@ class back_helloasso {
                         </label>
                         &nbsp;&nbsp;
                         <label class="description"> Prod
-                            <input id="helloasso_settings[mode]" '.( $helloasso_settings['mode'] == "prod" ? 'checked' : '' ).'name="helloasso_settings[mode]" type="radio" class="regular-text" value="prod"/>
+                            <input id="helloasso_settings[mode]" '.( $helloasso_settings['mode'] == "prod" ? 'checked' : '' ).' name="helloasso_settings[mode]" type="radio" class="regular-text" value="prod"/>
                         </label>
                         </td>
                     </tr>

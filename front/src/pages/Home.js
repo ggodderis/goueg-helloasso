@@ -7,8 +7,10 @@ const Home = (props) => {
     const {nouveau} = props;
     const {user} = useContext( ContextDatas );
 
-    console.log( REACT_VARS.siteUrl );
-    
+    // console.log( REACT_VARS.siteUrl,
+    //             REACT_VARS.url_token,
+    //             REACT_VARS.url_checkout_intents
+    //         );
     
     return(
         <>
