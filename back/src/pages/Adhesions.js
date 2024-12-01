@@ -9,6 +9,7 @@ const Adhesions = () => {
 
     const [clients,handelClients] = useClients();
     
+    
     useEffect( () => {
         handelClients();
     },[]);

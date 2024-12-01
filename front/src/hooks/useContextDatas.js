@@ -23,16 +23,20 @@ export function ContextDatasProvider ({children}) {
      * @function useCotisations => Hook qui fait un appel SQL pour avoir la liste des cotisations
      * et des licences
      */
-    // backUrl: `${REACT_VARS.siteUrl}/le-club/adherer-au-club`,
+
+    const SITE_URL = REACT_VARS.siteUrl;
     
     const [liste,handelCotisation] = useCotisations();
     const [datas,setDatas] = useState( {
         totalAmount: 0,
         initialAmount: 0,
         itemName: 'Adhésion au Club GDA',
-        backUrl: 'https://www.club-montagne.retipolons.eu/le-club/adherer-au-club', 
-        errorUrl: 'https://www.club-montagne.retipolons.eu/hello_return', 
-        returnUrl: 'https://www.club-montagne.retipolons.eu/hello_return', 
+        backUrl: 'https://www.club-montagne.net/le-club/adherer-au-club', 
+        errorUrl: 'https://www.club-montagne.net/hello_return', 
+        returnUrl: 'https://www.club-montagne.net/hello_return', 
+        // backUrl: REACT_VARS.siteUrl+'/le-club/adherer-au-club', 
+        // errorUrl: REACT_VARS.siteUrl+'/hello_return', 
+        // returnUrl: REACT_VARS.siteUrl+'/hello_return', 
         containsDonation: true, 
         payer: {},
         metadata: {

@@ -53,6 +53,7 @@ private function getToken(){
 
 private function getCheckout(){
 
+
     $curl2 = curl_init( $this->urlinfos.$this->checkoutIntentId );
         
     curl_setopt($curl2, CURLOPT_HTTPHEADER, ["Authorization: Bearer $this->token"] );
@@ -291,6 +292,7 @@ private function createAndUpdateAdherent( $create, $statut ){
      * on fait le travail si non on fait rien..
      */
     $metadata = $this->datas['metadata'];
+    
 
     if( $create == "attente" && intval($statut) == 2 ){
 
@@ -325,6 +327,8 @@ private function createAndUpdateAdherent( $create, $statut ){
          */
             if( intval($metadata['soutien']) > 0  ){
                 $cotisation = $metadata['cotisation'].'_S';
+            }else{
+                $cotisation = $metadata['cotisation'];
             }
         /**
          * Si c'est déjà un adhérent
@@ -363,10 +367,13 @@ private function createAndUpdateAdherent( $create, $statut ){
          * création de l'adhérent
          * mail de facture et mail mot de passe
          */
+        if( isset( $_GET['debug'] ) ){
 
-        echo '<pre>';
-        print_r($metadata);
-        echo '</pre>';
+            echo '<pre>';
+            print_r($metadata);
+            echo '</pre>';
+
+        }
         
         $password = wp_generate_password(6, false);
 

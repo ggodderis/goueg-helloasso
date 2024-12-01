@@ -14,6 +14,7 @@ class getClients {
          */
 
          $lesdates = "SELECT DISTINCT DATE_FORMAT(date_create,'%Y') as annees , DATE_FORMAT(date_create,'%m') as mois FROM wp_clients ORDER BY mois DESC";
+
          $retourdates = $wpdb->get_results( $lesdates );
  
          $mois = ['','janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
@@ -47,6 +48,7 @@ class getClients {
         $requete = "SELECT * FROM {$table_name} WHERE MONTH(date_create) = {$month} AND YEAR(date_create) = {$year} ORDER BY date_create DESC";
         $retour = $wpdb->get_results( $requete );
 
+        if( empty($retour) ) return ['table vide'];
         /**
          * On regarde si le champs array est plein ou vide
          * et on l'unserialize pour pouvoir le lire dans React

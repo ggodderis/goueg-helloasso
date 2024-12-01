@@ -13,6 +13,7 @@ const useHello = () => {
   const CLIENT_SECRET = REACT_VARS.client_secret;
 
 
+
   const [token,setToken] = useState('');
   const [datas,setData] = useState( null );
   const [url,setUrl] = useState('');
@@ -34,7 +35,7 @@ const useHello = () => {
 
       if( datas ){
 
-        fetch( `${ROOT_TOKEN}` , {
+        fetch( ROOT_TOKEN, {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -58,10 +59,10 @@ const useHello = () => {
    * de paiement et l'id..
    */
   useEffect( () => {
- 
+
     if( token !== ''){
 
-      fetch( `${ROOT_CHECKOUT_INTENTS}` , {
+      fetch( ROOT_CHECKOUT_INTENTS , {
         method: "POST",
         headers: {
           "accept": "application/json",

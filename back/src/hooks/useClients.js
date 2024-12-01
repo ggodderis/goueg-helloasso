@@ -26,7 +26,7 @@ const useClients = () => {
             })
             .then( res => res.json()  )
             .then( json => { 
-                //console.log(json);
+                // console.log(json);
                 setClients(json);
             } )
             .catch( error => { console.log(error) } )
