@@ -56,8 +56,11 @@ class rest_route_helloasso {
         $data = $datas['datas'];
         $table_name = 'wp_clients';
 
+        // $setSession = getSession::setSession( $data );
+
         $data = json_decode($data);
         $id = $datas['id_hello'];
+
 
         $isexist = insertClient::g($id);
 

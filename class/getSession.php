@@ -10,6 +10,10 @@ class getSession {
 
         return [$_SESSION["session_id"]];
     }
+
+    public static function setSession( $datas ) {
+        $_SESSION["datas"] = $datas;
+    }
     
 }
 

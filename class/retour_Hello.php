@@ -15,6 +15,11 @@ private $datas = [];
 private $token = '';
 
 public function __construct(){
+
+    // echo '<pre>';
+    // print_r( json_decode($_SESSION["datas"]) );
+    // echo '</pre>';
+
     self::getToken();
 }
 

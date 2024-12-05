@@ -519,7 +519,21 @@ legend {
         padding: 0;
     }
     .label_ligne {
-        column-gap: 1rem;
+        display: block;
+    }
+    .label_ligne > label {
+        display: block;
+        margin-bottom: 1rem;
+    }
+    .label_ligne > label > input {
+        margin-top: 0.4rem;
+    }
+    .label_ligne > div > div {
+        display: flex;
+        justify-content: space-around;
+    }
+    .label_ligne > div > div > label {
+        margin: 1rem 0;
     }
     fieldset, .fieldset_grey {
         padding: 0;
