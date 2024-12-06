@@ -257,7 +257,7 @@ export function ContextDatasProvider ({children}) {
         
         doTotal();
 
-        console.log('useEffect datas.metadata',datas);
+        //console.log('useEffect datas.metadata',datas);
         
         
     },[datas.metadata]);

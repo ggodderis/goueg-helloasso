@@ -45,7 +45,7 @@ const useHello = () => {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log( 'useHello', data.access_token );
+            //console.log( 'useHello', data.access_token );
             setToken(data.access_token);
           })
           .catch((error) => console.log(error));
