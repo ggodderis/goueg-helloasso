@@ -102,15 +102,12 @@
     font-size: 1.1rem;
 }
 .contant_cellules {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 0.5rem;
 }
 .cellule_client {
     display: flex;
-    flex: 25%;
-    width: 25%;
     flex-direction: column;
 }
 .cellule_titre {

@@ -6,13 +6,12 @@ const BlockAdherent = (props) => {
 
     const {metadata} = props.metas;
 
-    //console.log( props , "metadata", metadata );
-
     return (
         <div key={props.id} className="ligne_client">
             <div className="cellule_titre">
                 {/* <span>{props.hello_id}</span> */}
                 <h2>{props.metas.metadata?.payer.lastName} - {props.metas.metadata?.payer.firstName}</h2>
+                <small>id hello asso: {props.hello_id}</small>
                 <span>Date du paiement: {props.date_create}</span>
                 <span className="cellule_statut">Statut du paiement: <b>{props.statut}</b></span>
             </div>
@@ -30,8 +29,8 @@ const BlockAdherent = (props) => {
                 {
                     metadata != undefined ? (
                         <>
-                            <ListeMembres {...metadata} />
                             <LicenceAssurance {...metadata} />
+                            <ListeMembres {...metadata} />
                         </>
                     ):('')
                 }
