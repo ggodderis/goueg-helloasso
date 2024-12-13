@@ -33,7 +33,7 @@ private function getToken(){
 
     if( isset($_GET['checkoutIntentId']) && !empty($_GET['checkoutIntentId']) ){
     
-        $this->checkoutIntentId = $_GET['checkoutIntentId'];
+        $this->checkoutIntentId = (int) $_GET['checkoutIntentId'];
 
         $curl = curl_init( $this->urltoken );
                 curl_setopt($curl, CURLOPT_POST, true );
@@ -419,7 +419,7 @@ private function createAndUpdateAdherent( $create, $statut ){
             update_user_meta( $user_id, 'gda_date_adhesion', $date_adhesion->format('Y-m-d') );
             update_user_meta( $user_id, 'gda_lieu_naissance', $payer['gda_lieu'] );
             update_user_meta( $user_id, 'gda_saison', self::annee_saison_en_cours() );
-            update_user_meta( $user_id, 'gda_annee_admission', $date_adhesion->format('Y') );
+            update_user_meta( $user_id, 'gda_annee_admission', self::annee_saison_en_cours() );
             /**
              * TODO 
              * Il faut créer une liste d'activitées pour l'adhérent !!!!
