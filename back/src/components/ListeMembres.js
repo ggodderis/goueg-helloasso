@@ -13,8 +13,6 @@ const ListeMembres = (props) => {
     const [handelPdf] = usePdfFamille();
 
     const handelToPdf = ( ) => {
-        //console.log( payer, famille_adulte,famille_enfant,famille_supp );
-        
         handelPdf( payer, famille_adulte,famille_enfant,famille_supp );
     }
 

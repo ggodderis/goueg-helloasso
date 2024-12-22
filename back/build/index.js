@@ -5432,8 +5432,6 @@ const ListeMembres = props => {
    */
   const [handelPdf] = (0,_hooks_usePdfFamille__WEBPACK_IMPORTED_MODULE_2__["default"])();
   const handelToPdf = () => {
-    //console.log( payer, famille_adulte,famille_enfant,famille_supp );
-
     handelPdf(payer, famille_adulte, famille_enfant, famille_supp);
   };
   if (Object.keys(famille_adulte).length === 0) return false;
