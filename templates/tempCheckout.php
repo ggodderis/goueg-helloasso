@@ -1,4 +1,8 @@
 <?php
+/**
+ * Affiche le resultat de la commande dur la page retour
+ * aprés la commande
+ */
 
 $array_statut = ['attente','validée','échec','remboursée'];
 

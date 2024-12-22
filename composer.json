@@ -11,5 +11,7 @@
             "email": "g.godderis@spartoo.com"
         }
     ],
-    "require": {}
+    "require": {
+        "mpdf/mpdf": "^8.2"
+    }
 }

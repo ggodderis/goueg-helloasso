@@ -5412,28 +5412,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _PopupFamille__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PopupFamille */ "./src/components/PopupFamille.js");
+/* harmony import */ var _hooks_usePdfFamille__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/usePdfFamille */ "./src/hooks/usePdfFamille.js");
+/* harmony import */ var _assets_telechargement_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../assets/telechargement.svg */ "./src/assets/telechargement.svg");
+
+
 
 
 
 const ListeMembres = props => {
   const {
+    payer,
     famille_adulte,
     famille_enfant,
     famille_supp
   } = props;
-  const [show, setShow] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  if (Object.keys(famille_adulte).length === 0) return false;
-  const handelShowMembre = event => {
-    let temp_show = !show;
-    setShow(temp_show);
+  // const [show,setShow] = useState(false);
+  /**
+   * Hook pour appeler la rest route PDF
+   */
+  const [handelPdf] = (0,_hooks_usePdfFamille__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  const handelToPdf = () => {
+    //console.log( payer, famille_adulte,famille_enfant,famille_supp );
+
+    handelPdf(payer, famille_adulte, famille_enfant, famille_supp);
   };
+  if (Object.keys(famille_adulte).length === 0) return false;
+
+  // const handelShowMembre = (event) => {
+  //     let temp_show = !show;
+  //     setShow(temp_show);
+  // }
+
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "cellule_client"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, "Membres de la famille"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, famille_adulte?.firstName, " ", famille_adulte?.lastName), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, famille_enfant?.firstName, " ", famille_enfant?.lastName), famille_supp.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, item?.firstName, " ", item?.lastName, " ")), show && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_PopupFamille__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    ...props
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    onClick: handelShowMembre
-  }, "voir les membres"));
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h4", null, "Membres de la famille"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, famille_adulte?.firstName, " ", famille_adulte?.lastName), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, famille_enfant?.firstName, " ", famille_enfant?.lastName), famille_supp.map((item, i) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("span", null, item?.firstName, " ", item?.lastName, " ")), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    className: "export_csv",
+    onClick: event => handelToPdf()
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("img", {
+    src: _assets_telechargement_svg__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }), "Infos membres (PDF)"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ListeMembres);
 
@@ -5585,14 +5602,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _hooks_usePdfFamille__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../hooks/usePdfFamille */ "./src/hooks/usePdfFamille.js");
+
 
 const PopupFamille = props => {
   const {
     famille_adulte,
     famille_enfant,
-    famille_supp
+    famille_supp,
+    payer
   } = props;
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Liste des membres"), Object.keys(famille_adulte).map((key, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, key, " - ", famille_adulte[key])), Object.keys(famille_enfant).map((key, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, key, " - ", famille_enfant[key])));
+  /**
+   * Hook pour appeler la rest route PDF
+   */
+  const [handelPdf] = (0,_hooks_usePdfFamille__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  const handelToPdf = () => {
+    //console.log( payer, famille_adulte,famille_enfant,famille_supp );
+    handelPdf(payer, famille_adulte, famille_enfant, famille_supp);
+  };
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Liste des membres"), Object.keys(famille_adulte).map((key, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, key, " - ", famille_adulte[key])), Object.keys(famille_enfant).map((key, index) => (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("li", null, key, " - ", famille_enfant[key])), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    onClick: event => handelToPdf()
+  }, "PDF"));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PopupFamille);
 
@@ -5640,6 +5670,56 @@ const useClients = () => {
   return [clients, handelClients];
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useClients);
+
+/***/ }),
+
+/***/ "./src/hooks/usePdfFamille.js":
+/*!************************************!*\
+  !*** ./src/hooks/usePdfFamille.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const usePdfFamille = () => {
+  const BACK_URL_PDF_FAMILLE = REACT_VARS.rootUrl + "back-pdf-helloasso/v1/get_pdf_famille";
+  function handelPdf(payer, famille_adulte, famille_enfant, famille_supp) {
+    const data = new FormData();
+    data.append('nonce', REACT_VARS.nonce);
+    data.append('payer', JSON.stringify(payer));
+    data.append('famille_adulte', JSON.stringify(famille_adulte));
+    data.append('famille_enfant', JSON.stringify(famille_enfant));
+    data.append('famille_supp', JSON.stringify(famille_supp));
+    fetch(BACK_URL_PDF_FAMILLE, {
+      method: 'POST',
+      body: data,
+      headers: {
+        'X-WP-Nonce': REACT_VARS.rootNonce
+      }
+    }).then(res =>
+    //res.json()
+    res.blob()).then(json => {
+      // console.log(payer.firstName,payer.lastName);
+      let nom = `Famille_de_${payer.firstName}_${payer.lastName}.pdf`;
+      downLoadPDF(json, nom);
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+  function downLoadPDF(pdf, nom) {
+    const url = window.URL.createObjectURL(pdf);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', nom);
+    document.body.appendChild(link);
+    link.click();
+  }
+  return [handelPdf];
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (usePdfFamille);
 
 /***/ }),
 

@@ -1,4 +1,7 @@
 <?php
+/**
+ * Corps du mail envoyé au client
+ */
 
 $saison_date = self::annee_saison_en_cours();
 

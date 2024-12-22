@@ -1,18 +1,30 @@
 import { React, useEffect, useState } from 'react';
 import PopupFamille from './PopupFamille';
+import usePdfFamille from "../hooks/usePdfFamille";
+import telechargement from '../assets/telechargement.svg';
 
 const ListeMembres = (props) => {
 
-    const {famille_adulte,famille_enfant,famille_supp} = props;
-    const [show,setShow] = useState(false);
+    const {payer,famille_adulte,famille_enfant,famille_supp} = props;
+    // const [show,setShow] = useState(false);
+    /**
+     * Hook pour appeler la rest route PDF
+     */
+    const [handelPdf] = usePdfFamille();
+
+    const handelToPdf = ( ) => {
+        //console.log( payer, famille_adulte,famille_enfant,famille_supp );
+        
+        handelPdf( payer, famille_adulte,famille_enfant,famille_supp );
+    }
 
     if( Object.keys(famille_adulte).length === 0 ) return false;
     
 
-    const handelShowMembre = (event) => {
-        let temp_show = !show;
-        setShow(temp_show);
-    }
+    // const handelShowMembre = (event) => {
+    //     let temp_show = !show;
+    //     setShow(temp_show);
+    // }
     
     return(
         <div className="cellule_client">
@@ -24,10 +36,15 @@ const ListeMembres = (props) => {
                     <span>{ item?.firstName } { item?.lastName } </span>
                 ))
             }
-            {
+            {/* {
                 show && <PopupFamille {...props} />
-            }
-            <button onClick={handelShowMembre}>voir les membres</button>
+            } */}
+            <br />
+            <button className="export_csv" onClick={ (event) => handelToPdf() }>
+                <img src={telechargement} />
+                Infos membres (PDF)
+            </button>
+            {/* <button onClick={handelShowMembre}>voir les membres</button> */}
         </div>
     )
 }

@@ -1,10 +1,11 @@
 <?php
 
-// require_once('config.php');
-
-// checkoutIntentId 29104 ok
-
-//sleep(4);
+/**
+ * 
+ * N'est plus utiliser.. le vrai fichier s'appel retour_Hello.php
+ * il est dans le dossier class
+ * 
+ */
 
 get_header();
 

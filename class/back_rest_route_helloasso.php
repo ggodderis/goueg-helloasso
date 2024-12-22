@@ -32,6 +32,14 @@ class back_rest_route_helloasso {
                     return current_user_can('delete_posts');
             },
         ]);
+
+        register_rest_route('back-pdf-helloasso/v1', '/get_pdf_famille',  [
+            'methods' => ['POST'] ,
+            'callback' => [$this,'goueg_get_pdf_famille'],
+            'permission_callback' => function () {
+                return current_user_can('delete_posts');
+            },
+        ]);
       
     }
 
@@ -69,6 +77,29 @@ class back_rest_route_helloasso {
 
         return rest_ensure_response($retour);*/
         return rest_ensure_response($clients);
+    }
+
+    public function goueg_get_pdf_famille( WP_REST_REQUEST $request ){
+
+        $datas = $request->get_params();
+        $payer          = json_decode($datas['payer']);
+        $famille_adulte = json_decode($datas['famille_adulte']);
+        $famille_enfant = json_decode($datas['famille_enfant']);
+        $famille_supp   = json_decode($datas['famille_supp']);
+
+        ob_start();
+        require( HELLOASSO_ROOT.'/templates/famillePDF.php' );
+        $contenu = ob_get_clean();
+
+        
+        $mpdf = new \Mpdf\Mpdf();
+        $mpdf->WriteHTML($contenu);
+        $pdfContent = $mpdf->Output('monsuperpdf.pdf','D'); //I
+        
+
+        return rest_ensure_response($pdfContent);
+
+        //return rest_ensure_response([$famille_adulte,$famille_enfant,$famille_supp]);
     }
 
 }

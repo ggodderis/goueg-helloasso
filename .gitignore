@@ -2,4 +2,5 @@ front/node_modules
 templates/config.php
 back/node_modules
 back/vendor
+vendor
 git
