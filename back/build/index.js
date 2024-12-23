@@ -5528,7 +5528,6 @@ const Navigdate = props => {
   } = props;
   const lien = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
   const [datas, setDatas] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
-  console.log(clients);
   const handelSelect = event => {
     const {
       value
@@ -5554,6 +5553,20 @@ const Navigdate = props => {
       lien.current.link.click();
     }
   }, [datas]);
+  const getTitre = () => {
+    /**
+     * Test si la date est vide ou pas pour récupérer la date
+     * et l'attribuer au titre du CSV
+     */
+    let titre_csv = 'defaut.csv';
+    let test_date = dates.filter(item => item.checked);
+    if (test_date.length > 0) {
+      titre_csv = `adherents_checkout_${test_date[0].mois}_${test_date[0].annees}.csv`;
+    } else {
+      titre_csv = `adherents_checkout_${dates[0].mois}_${dates[0].annees}.csv`;
+    }
+    return titre_csv;
+  };
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "navig_dates"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("select", {
@@ -5571,9 +5584,9 @@ const Navigdate = props => {
     separator: ";",
     data: datas,
     ref: lien,
-    filename: "export_clients.csv",
+    filename: getTitre(),
     target: "_blank",
-    className: "hidde"
+    className: "hidden"
   }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Navigdate);

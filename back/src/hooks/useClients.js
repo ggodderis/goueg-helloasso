@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 const useClients = () => {
+
     const BACK_URL_HELLOASSO = REACT_VARS.rootUrl + "back-helloasso/v1/get_clients";
     const [clients,setClients] = useState();
 
