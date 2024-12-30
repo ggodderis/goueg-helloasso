@@ -383,13 +383,13 @@ private function createAndUpdateAdherent( $create, $statut ){
         $password = wp_generate_password(6, false);
 
         $user_datas = array(
-            "first_name" => $payer['lastName'],
-            "last_name" => $payer['firstName'],
+            "first_name" => $payer['firstName'],
+            "last_name" => $payer['lastName'],
             "user_pass" => $password,
             "user_email" => $payer['email'],
             "role" => 'subscriber',
-            "user_login" => str_replace(' ','',mb_strtolower($payer['lastName'])).' '.str_replace(' ','',mb_strtolower($payer['firstName'])),
-            "display_name" => str_replace(' ','',mb_strtolower($payer['lastName'])).' '.str_replace(' ','',mb_strtolower($payer['firstName']))
+            "user_login" => str_replace(' ','',mb_strtolower($payer['firstName'])).' '.str_replace(' ','',mb_strtolower($payer['lastName'])),
+            "display_name" => str_replace(' ','',mb_strtolower($payer['firstName'])).' '.str_replace(' ','',mb_strtolower($payer['lastName']))
             // "user_login", CONCAT( LOWER(first_name)," ",LOWER(last_name)),
             // "display_name", CONCAT(first_name ," ",last_name ) )
         );
