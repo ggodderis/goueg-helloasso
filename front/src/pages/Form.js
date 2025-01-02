@@ -45,8 +45,8 @@ const Form = (props) => {
         }else if (isexist === '') {
             console.log('début …');
         }else{
-            textInput.current?.focus();
             alert(`l\'email ${user.email} existe déjà dans nos comptes d\'adhérents !!`);
+            textInput.current?.focus();
         }
         
     },[isexist]);

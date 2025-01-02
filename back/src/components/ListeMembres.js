@@ -6,7 +6,6 @@ import telechargement from '../assets/telechargement.svg';
 const ListeMembres = (props) => {
 
     const {payer,famille_adulte,famille_enfant,famille_supp} = props;
-    // const [show,setShow] = useState(false);
     /**
      * Hook pour appeler la rest route PDF
      */
@@ -18,12 +17,6 @@ const ListeMembres = (props) => {
 
     if( Object.keys(famille_adulte).length === 0 ) return false;
     
-
-    // const handelShowMembre = (event) => {
-    //     let temp_show = !show;
-    //     setShow(temp_show);
-    // }
-    
     return(
         <div className="cellule_client">
             <h4>Membres de la famille</h4>
@@ -34,15 +27,11 @@ const ListeMembres = (props) => {
                     <span>{ item?.firstName } { item?.lastName } </span>
                 ))
             }
-            {/* {
-                show && <PopupFamille {...props} />
-            } */}
             <br />
             <button className="export_csv" onClick={ (event) => handelToPdf() }>
                 <img src={telechargement} />
                 Infos membres (PDF)
             </button>
-            {/* <button onClick={handelShowMembre}>voir les membres</button> */}
         </div>
     )
 }

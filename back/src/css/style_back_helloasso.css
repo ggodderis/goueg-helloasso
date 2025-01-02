@@ -133,7 +133,7 @@
     height: 25px;
     margin-right: 0.5rem;
 }
-.hidde {
+.hidden {
     display: none;
 }
 /**
@@ -198,4 +198,13 @@
     border-radius: 50%;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
+}
+/**
+* VERSION MOBILE
+*/
+@media screen and (max-width:750px) {
+    
+    .header_back, .hello_content_clients { width: 95%; }
+    .content_tarifs { display: block; max-width: 95%; }
+    .contant_cellules { display: block; }
 }

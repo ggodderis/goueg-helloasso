@@ -464,7 +464,9 @@ legend {
 .hello_loader > p { color: var(--bleu-foncer); text-align: center; font-weight: bold; }
 .hello_loader > p > img { margin: 1rem auto; }
 
-
+#email:focus {
+    outline: solid red !important;
+}
 /**
 * MOBILE
 */
