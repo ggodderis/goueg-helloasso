@@ -13,7 +13,7 @@ class getClients {
          * Gestion des dates pour le select
          */
 
-         $lesdates = "SELECT DISTINCT DATE_FORMAT(date_create,'%Y') as annees , DATE_FORMAT(date_create,'%m') as mois FROM wp_clients ORDER BY mois DESC";
+         $lesdates = "SELECT DISTINCT DATE_FORMAT(date_create,'%Y') as annees , DATE_FORMAT(date_create,'%m') as mois FROM wp_clients ORDER BY annees DESC,mois DESC";
 
          $retourdates = $wpdb->get_results( $lesdates );
  
@@ -45,7 +45,7 @@ class getClients {
         // SELECT DISTINCT(DATE_FORMAT(date_create,'%Y')) as annees FROM wp_clients;
         // SELECT DISTINCT DATE_FORMAT(date_create,'%Y') as annees , DATE_FORMAT(date_create,'%m') as mois FROM wp_clients ORDER BY date_create DESC;
 
-        $requete = "SELECT * FROM {$table_name} WHERE MONTH(date_create) = {$month} AND YEAR(date_create) = {$year} ORDER BY date_create DESC";
+        $requete = "SELECT * FROM {$table_name} WHERE MONTH(date_create) = {$month} AND YEAR(date_create) = {$year} AND statut = 'validée' ORDER BY date_create DESC";
         $retour = $wpdb->get_results( $requete );
 
         if( empty($retour) ) return ['table vide'];
