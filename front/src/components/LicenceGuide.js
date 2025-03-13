@@ -12,6 +12,7 @@ const LicenceGuide = ( props ) => {
     
     const [bulle,setBulle] = useState(false);
 
+
     /**
      * @param selectlicence ['SKIR','ALPI','ESCA'] utiliser en local ici dans Licence.js
      * contient la selection faite pour les licences
@@ -221,15 +222,20 @@ const LicenceGuide = ( props ) => {
                 </fieldset>
                 
             </div>
+                {
+                    mur.active == 'oui' ? (
+                            <fieldset>
+                                <legend>{mur.descriptif}</legend>
+                                <label className="label_radio">
+                                    <input type="checkbox" name={mur.name} checked={mur.checked} value={mur.plein_tarif} onChange={handelClickMur} />
+                                    <span className="new_input"></span>
+                                    oui :&nbsp;<b>{mur.plein_tarif/100}€</b>
+                                </label>
+                        </fieldset>
 
-            <fieldset>
-                <legend>{mur.descriptif}</legend>
-                <label className="label_radio">
-                    <input type="checkbox" name={mur.name} checked={mur.checked} value={mur.plein_tarif} onChange={handelClickMur} />
-                    <span className="new_input"></span>
-                    oui :&nbsp;<b>{mur.plein_tarif/100}€</b>
-                </label>
-            </fieldset>
+                    ) : ('')
+                }
+
         </>
     )
 

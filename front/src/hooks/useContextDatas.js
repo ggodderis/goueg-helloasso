@@ -82,7 +82,7 @@ export function ContextDatasProvider ({children}) {
         {descriptif:'Alpinisme', name: 'ALPI', checked: false, label: 'Pratiquez vous l\'alpinisme à un niveau supérieur à PD en montée ?', labelname: 'ALPI_SUP', labelchecked: false, show: false },
         {descriptif:'Ski de randonnée', name: 'SKIR', checked: false, label: 'Pratiquez vous le Ski de randonnée "engagé", ie difficulté montée supérieur à PD ?', labelname: 'SKIR_SUP',labelchecked: false, show: false },
         ],
-        mur: {descriptif:REACT_VARS.mur[0].descriptif,name:'mur', checked: false, plein_tarif:REACT_VARS.mur[0].plein_tarif}
+        mur: {descriptif:REACT_VARS.mur[0].descriptif,name:'mur', checked: false, plein_tarif:REACT_VARS.mur[0].plein_tarif,active:REACT_VARS.mur[0].active}
     }
     );
 

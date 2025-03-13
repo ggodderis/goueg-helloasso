@@ -72,9 +72,27 @@
     width: 150px;
     flex-basis: 150px;
 }
-.module_tarifs input {
+.module_tarifs input[type="text"] {
     width: 100%;
 }
+.active_input_mur {
+    display: block;
+}
+.ct_input_active {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.5rem;
+}
+.ct_input_active > label {
+    display: block;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+.ct_input_active > label:last-child {
+    margin-left: 1rem;
+}
+.green { color: green; }
+.red { color: red; }
 /**
 * Page Adhesions
 */

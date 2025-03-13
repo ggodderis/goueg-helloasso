@@ -129,14 +129,19 @@ const LicenceFree = (props) => {
             ):('')
             }
 
-            <fieldset>
-                <legend>{mur.descriptif}</legend>
-                <label className="label_radio">
-                    <input type="checkbox" name={mur.name} value={mur.plein_tarif} onChange={handelClickMur} />
-                    <span className="new_input"></span>
-                    oui :&nbsp;<b>{mur.plein_tarif/100}€</b>
-                </label>
-            </fieldset>
+            {
+                mur.active == 'oui' ? (
+                        <fieldset>
+                            <legend>{mur.descriptif}</legend>
+                            <label className="label_radio">
+                                <input type="checkbox" name={mur.name} checked={mur.checked} value={mur.plein_tarif} onChange={handelClickMur} />
+                                <span className="new_input"></span>
+                                oui :&nbsp;<b>{mur.plein_tarif/100}€</b>
+                            </label>
+                    </fieldset>
+
+                ) : ('')
+            }
 
             <fieldset>
             {/* Si le secteur ffr ou ffme existe */}

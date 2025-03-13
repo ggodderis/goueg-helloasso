@@ -6,6 +6,7 @@ const BlockTarif = (props) => {
      * Hook webservice pour updater les informations
      */
     const [tarifs,handelTarifs] = useSetTarifs();
+    
     /**
      * @param etat pour afficher la vue modifiable ou non
      * @param change pour savoir si il y a eu vraiment un changement
@@ -23,7 +24,8 @@ const BlockTarif = (props) => {
             descriptif: item.descriptif,
             plein_tarif: item.plein_tarif,
             demi_tarif: item.demi_tarif,
-            secteur: item.secteur
+            secteur: item.secteur,
+            active: item.active
         });
 
     const handelModif = (event) => {
@@ -34,14 +36,15 @@ const BlockTarif = (props) => {
 
         const champs = new FormData( event.target );
         const new_infos = Object.fromEntries(champs);
-
+        
         /**
          * Ici on test si il y a un vrai changement sur les valeurs
          * pour savoir si on UPDATE les infos ... évite les appels API pour rien..
          */
         if( new_infos.descriptif !=  infos.descriptif || 
             new_infos.plein_tarif != infos.plein_tarif || 
-            new_infos.demi_tarif != infos.demi_tarif ){
+            new_infos.demi_tarif != infos.demi_tarif || 
+            new_infos.active != infos.active){
 
             console.log("Y a une différence...on Update");
             
@@ -51,6 +54,7 @@ const BlockTarif = (props) => {
         
         setEtat(false);
     }
+
 
     return(
 <>
@@ -63,6 +67,17 @@ const BlockTarif = (props) => {
             <input type="hidden" name="titre" value={infos.titre} />
             <input type="hidden" name="type_licence" value={infos.type_licence} />
             <input type="hidden" name="secteur" value={infos.secteur} />
+            {
+                infos.titre == 'mur' ? (
+                <label className="active_input_mur">
+                    <span>Activer le champs mur d'esclade:</span>
+                    <div className="ct_input_active">
+                        <label><input type="radio" name="active" value="oui" defaultChecked={infos.active == 'oui' ? 'checked' : ''} />oui</label>
+                        <label><input type="radio" name="active" value="non" defaultChecked={infos.active == 'non' ? 'checked' : ''} />non</label>
+                    </div>
+                </label>
+                ):('')
+            }
             <label><span>Description:</span><input type="text" name="descriptif" defaultValue={infos.descriptif} /></label>
             {/* <span>Type d'adhésion: {item.type_licence}</span> */}
             <p>ATTENTION!! les tarifs doivent être en centimes...</p>
@@ -77,6 +92,11 @@ const BlockTarif = (props) => {
         :(
         <div className="module_tarifs">
             <h4>{infos.titre}</h4>
+            {
+                infos.titre == 'mur' ? (
+                    ( infos.active == 'oui' )? <span className="green"><b>Activé</b></span> : <span className="red"><b>Désactivé</b></span>
+                ):('')
+            }
             <span><b>{infos.descriptif}</b></span>
             {
                 infos.type_licence ? ( <span>Type d'adhésion:&nbsp;<b>{infos.type_licence}</b></span> ) 

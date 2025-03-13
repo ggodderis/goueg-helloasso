@@ -6,7 +6,7 @@ const useSetTarifs = () => {
     const [tarifs,setTarifs] = useState();
         
     function handelTarifs ( datas = '' ) {
-        
+  
         const data = new FormData();
         data.append('nonce', REACT_VARS.nonce );
         data.append('data', JSON.stringify(datas) );
