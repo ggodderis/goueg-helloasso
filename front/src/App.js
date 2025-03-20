@@ -79,7 +79,7 @@ const App = () => {
             <div className="bandeau_bas">
                 <p className="hello_infos">
                     <i className="icon-infos"></i>
-                    &nbsp;Lors de la validation de votre adhésion, vous serez rediriger sur la page de paiement sécurisée HelloAsso.
+                    &nbsp;Lors de la validation de votre adhésion, vous serez redirigé sur la page de paiement sécurisée HelloAsso.
                 </p>
                 <p className="hello_description">
                 <img src={hello} alt="Helloasso" />
