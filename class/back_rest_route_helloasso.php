@@ -59,7 +59,7 @@ class back_rest_route_helloasso {
         $data = json_decode($datas['data']);
         $set = setTarifs::g($data);
 
-        return rest_ensure_response([$data->descriptif]);
+        return rest_ensure_response([$data]);
     }
 
     public function goueg_get_clients( WP_REST_REQUEST $request ) {
