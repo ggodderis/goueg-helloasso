@@ -54,16 +54,23 @@ const LicenceFree = (props) => {
     /**
      * Choix mur d'escalade
      */
+    // const handelClickMur = (event) => {
+
+    //     const {checked,value} = event.target;
+
+    //     if( checked ){
+    //         handelDatas('MUR',value);
+    //     }else{
+    //         handelDatas('MUR',0);
+    //     }
+        
+        
+    // }
     const handelClickMur = (event) => {
 
-        const {checked,value} = event.target;
-
-        if( checked ){
-            handelDatas('MUR',value);
-        }else{
-            handelDatas('MUR',0);
-        }
+        const {checked} = event.target;
         
+        setSelection({...selection, mur: {...selection.mur, checked: checked }  });
         
     }
 

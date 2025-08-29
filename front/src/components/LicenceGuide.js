@@ -181,7 +181,7 @@ const LicenceGuide = ( props ) => {
                     {
                         datas.metadata.secteur !='' ? (
                             <>
-                            <legend>Avez-vous pris connaissance des conditions médicales de la <b>{datas.metadata.secteur}</b> ?<span className="red">*</span></legend>
+                            <legend>Attestez-vous avoir pris connaissance des conditions médicales pour participer aux activités de la <b>{datas.metadata.secteur}</b> ?<span className="red">*</span></legend>
                             <label className="label_radio">
                                 <input type="checkbox" name="questionnaire" onChange={handelSante} defaultChecked={ datas.metadata.payer.question === true } />
                                 <span className="new_input"></span>

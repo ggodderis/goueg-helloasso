@@ -204,7 +204,8 @@ export function ContextDatasProvider ({children}) {
                                 }
                                 
                             }else{
-                                if( obj.titre == 'FFR_IRA' || obj.titre == 'FFR_IMPNJ'){
+                                if( obj.titre == 'FFR_IRA' || obj.titre == 'FFR_IRAJ'){
+                                    // FFR_IMPNJ
                                     new_licence = obj;
                                 }
                             }
@@ -222,6 +223,9 @@ export function ContextDatasProvider ({children}) {
             new_licence = [];
             ops = ops.map( (item,i) => { item.checked = false; return item });
         }
+
+        //console.log( new_licence, ops, new_mur );
+        
 
         return [new_licence,ops,new_mur];
 
@@ -456,6 +460,9 @@ export function ContextDatasProvider ({children}) {
                 }})
             break;
             case 'MUR':
+
+            console.log('MUR');
+            
                 setDatas( {...datas, metadata:{
                     ...datas.metadata,
                     mur: Number(event[1])
