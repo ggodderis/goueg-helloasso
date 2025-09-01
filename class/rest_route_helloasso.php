@@ -39,6 +39,41 @@ class rest_route_helloasso {
             'callback' => [$this,'goueg_user_email'],
             'permission_callback' => '__return_true'
         ]);
+        //goueg-helloasso/v1/paye_helloasso
+        register_rest_route('goueg-helloasso/v1', '/paye_helloasso', [
+            'methods' => ['POST'] ,
+            'callback' => [$this,'goueg_paye_helloasso'],
+            'permission_callback' => '__return_true'
+        ]);
+    }
+    /**
+     * Envoyer l'adhérent à Helloasso pour payer
+     */
+    public function goueg_paye_helloasso( WP_REST_REQUEST $request ){
+        
+        $datas = $request->get_params();
+
+        $token = $datas["token"];
+        $adherent = $datas["datas"];
+        $url = $datas["url"];
+
+       
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_POST, true );
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                        'accept: application/json',
+                        'Content-Type: application/json',
+                        'authorization: Bearer '.$token
+                        )
+        );
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $adherent );
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+        $retour_hello = curl_exec($curl);
+        $retour_hello = json_decode($retour_hello);
+        
+
+        return rest_ensure_response($retour_hello);
     }
     /**
      * On regarde si l'email du nouvel adhérent existe déjà dans les comptes..

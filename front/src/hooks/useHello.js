@@ -6,6 +6,7 @@ import { React, useState, useEffect } from "react";
 
 const useHello = () => {
 
+  const ROOT_URL_PAYE_HELLOASSO = REACT_VARS.rootUrl + "goueg-helloasso/v1/paye_helloasso";
   const ROOT_INSERT = REACT_VARS.rootUrl + "goueg-helloasso/v1/set_session";
   const ROOT_TOKEN = REACT_VARS.url_token;
   const ROOT_CHECKOUT_INTENTS = REACT_VARS.url_checkout_intents;
@@ -58,25 +59,48 @@ const useHello = () => {
    * Si on a un token on appel Hello pour obtenir l'url
    * de paiement et l'id..
    */
+  const all_infos = new FormData();
+
   useEffect( () => {
 
     if( token !== ''){
 
-      fetch( ROOT_CHECKOUT_INTENTS , {
-        method: "POST",
-        headers: {
-          "accept": "application/json",
-          "Content-Type": "application/json",
-          "authorization": "Bearer "+token
-        },
-        body: JSON.stringify(datas)
-        //.toString()
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setUrl( data );
-        })
-        .catch((error) => console.log(error));
+      all_infos.append("token" , token );
+      all_infos.append("datas" , JSON.stringify(datas) );
+      all_infos.append("url", ROOT_CHECKOUT_INTENTS );
+
+      fetch( 
+            ROOT_URL_PAYE_HELLOASSO ,
+            { 
+            method: 'POST',
+            body: all_infos,
+            headers: {
+                'X-WP-Nonce': REACT_VARS.rootNonce
+            }
+            })
+            .then( res => res.json()  )
+            .then( json => { 
+                console.log( json );
+                setUrl( json );
+                
+            } )
+            .catch( error => { console.log(error) } )
+
+      // fetch( ROOT_CHECKOUT_INTENTS , {
+      //   method: "POST",
+      //   headers: {
+      //     "accept": "application/json",
+      //     "Content-Type": "application/json",
+      //     "authorization": "Bearer "+token
+      //   },
+      //   body: JSON.stringify(datas)
+      //   //.toString()
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     setUrl( data );
+      //   })
+      //   .catch((error) => console.log(error));
         
 
     }else{
