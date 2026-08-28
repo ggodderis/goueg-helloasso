@@ -217,7 +217,31 @@ export function ContextDatasProvider ({children}) {
                          */
                         ops = ops.map( (item,i) => { item.checked = false; return item });
 
-                        Object.entries(licences).map( ([item,obj]) => {
+                        /**
+                         * Cas Adulte
+                         */
+                        if( metadata.cotisation == 'A' ){
+
+                                Object.entries(licences).map( ([item,obj]) => {
+                                    obj.titre === 'FFR_IRA' ? new_licence = obj : '';
+                                    
+                                } )
+
+                            
+                        }
+                         /**
+                         * Cas Jeune de - de 25ans
+                         */
+                        if( metadata.cotisation == 'J'){
+  
+                            Object.entries(licences).map( ([item,obj]) => {
+                                    obj.titre === 'FFR_IMPNJ' ? new_licence = obj : '';
+                                    
+                                } )
+                            
+                        }
+
+                        /*Object.entries(licences).map( ([item,obj]) => {
 
                             if( selection.famille === 'famille'){
 
@@ -232,7 +256,7 @@ export function ContextDatasProvider ({children}) {
                                 }
                             }
 
-                        })
+                        })*/
                     }
 
                 }
