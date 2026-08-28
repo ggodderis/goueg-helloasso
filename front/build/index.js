@@ -6765,18 +6765,34 @@ function ContextDatasProvider({
             item.checked = false;
             return item;
           });
-          Object.entries(licences).map(([item, obj]) => {
-            if (selection.famille === 'famille') {
-              if (obj.titre == 'FFR_FMPN') {
-                new_licence = obj;
+          /**
+           * Cas Adulte
+           */
+          if (metadata.cotisation == 'A') {
+            Object.entries(licences).map(([item, obj]) => {
+              obj.titre === 'FFR_IMPN' ? new_licence = obj : '';
+            });
+          }
+          /**
+          * Cas Jeune de - de 25ans
+          */
+          if (metadata.cotisation == 'J') {
+            Object.entries(licences).map(([item, obj]) => {
+              obj.titre === 'FFR_IMPNJ' ? new_licence = obj : '';
+            });
+          }
+          /*Object.entries(licences).map( ([item,obj]) => {
+               if( selection.famille === 'famille'){
+                   if( obj.titre == 'FFR_FMPN' ){
+                      new_licence = obj;
+                  } 
+              }else{
+                  if( obj.titre == 'FFR_IMPN' ){
+                      // || obj.titre == 'FFR_IMPNJ'
+                      new_licence = obj;
+                  }
               }
-            } else {
-              if (obj.titre == 'FFR_IMPN') {
-                // || obj.titre == 'FFR_IMPNJ'
-                new_licence = obj;
-              }
-            }
-          });
+           });*/
         } else {
           const {
             licences
@@ -6813,7 +6829,8 @@ function ContextDatasProvider({
       });
     }
 
-    //console.log( new_licence, ops, new_mur );
+    // console.log( new_licence, ops, new_mur );
+    // console.log(metadata.cotisation);
 
     return [new_licence, ops, new_mur];
   };

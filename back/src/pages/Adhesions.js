@@ -9,6 +9,8 @@ const Adhesions = () => {
 
     const [clients,handelClients] = useClients();
     
+    //console.log( clients );
+    
     
     useEffect( () => {
         handelClients();
@@ -24,11 +26,41 @@ const Adhesions = () => {
             
             {
                 clients?.adherents ? (
-                    clients.adherents.map( (item,i) => (
-                    <BlockAdherent { ...item } />
-                ) )
+
+                    clients.adherents.map( (item,i) => {
+
+                        //console.log( item.vide );
+
+                        if( item?.vide == 'vide' ){
+                            return <div className="ligne_client">
+                                        <div className="cellule_titre">
+                                            <h2>Pas d'adhésion ...</h2>
+                                        </div>
+                                    </div>
+                        }else{
+                            return <BlockAdherent { ...item } />
+                        }
+                        
+                        // if( item.length > 0 ){
+                        //     return <BlockAdherent { ...item } />
+                        // }
+
+                        }
+
+                    )
+
                 ):(<Loader />)
             }
+
+            {/* {
+                clients?.adherents ? (
+                    clients.adherents.map( (item,i) => (
+                        
+                    <BlockAdherent { ...item } />
+
+                ) )
+                ):(<Loader />)
+            } */}
         </div>
     );
 }

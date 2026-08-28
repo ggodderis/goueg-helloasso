@@ -210,6 +210,7 @@ class back_helloasso {
             'nonce' => wp_create_nonce( 'wp_attachment_mail' ),
             'rootUrl' => esc_url_raw( rest_url() ),
             'rootNonce' => wp_create_nonce( 'wp_rest' ),
+            'isAdmin' => current_user_can( 'manage_options' ),
             'client_id' => CLIENT_ID,
             'client_secret' => CLIENT_SECRET,
             'url_token' => URL_TOKEN,

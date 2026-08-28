@@ -48,7 +48,7 @@ class getClients {
         $requete = "SELECT * FROM {$table_name} WHERE MONTH(date_create) = {$month} AND YEAR(date_create) = {$year} AND statut = 'validée' ORDER BY date_create DESC";
         $retour = $wpdb->get_results( $requete );
 
-        if( empty($retour) ) return ['table vide'];
+        if( empty($retour) ) return ['dates' => $retourdates, 'adherents' => [['vide' => 'vide']] ];
         /**
          * On regarde si le champs array est plein ou vide
          * et on l'unserialize pour pouvoir le lire dans React

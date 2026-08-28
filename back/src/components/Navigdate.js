@@ -7,7 +7,7 @@ const Navigdate = (props) => {
 
     const {dates,clients,handelClients} = props;
     const lien = useRef(null);
-
+    
     const [datas,setDatas] = useState([]);
     
     const handelSelect = (event) => {
@@ -91,10 +91,15 @@ const Navigdate = (props) => {
                 ):('')
                 }
             </select>
-            <button onClick={handelCsv} className="export_csv">
-                <img src={telechargement} />
-                Export en CSV
-            </button>
+            {
+                clients.adherents[0].vide == 'vide' ? ('')
+                :(
+                    <button onClick={handelCsv} className="export_csv">
+                        <img src={telechargement} />
+                        Export en CSV
+                    </button>
+                )
+            }
             <CSVLink separator=";" data={datas} ref={lien} filename={getTitre()} target="_blank" className="hidden"></CSVLink>
             
         </div>
