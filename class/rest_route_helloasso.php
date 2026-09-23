@@ -95,9 +95,10 @@ class rest_route_helloasso {
 
         $data = json_decode($data);
         $id = $datas['id_hello'];
+        $email = $datas['email'];
 
 
-        $isexist = insertClient::g($id);
+        $isexist = insertClient::g($id,$email);
 
         //$test = json_decode($retour[0]->datas);
         // $wpdb->insert(

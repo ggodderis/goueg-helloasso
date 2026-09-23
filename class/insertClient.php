@@ -2,7 +2,7 @@
 
 class insertClient {
 
-    public static function g( $id = "" ):array{
+    public static function g( $id = "", $email = "" ):array{
 
         global $wpdb;
         $table_name = 'wp_clients';
@@ -20,7 +20,8 @@ class insertClient {
         $wpdb->insert(
             $table_name,
             array(
-                'hello_id' => $id
+                'hello_id' => $id,
+                'email' => $email
             )
         );
 

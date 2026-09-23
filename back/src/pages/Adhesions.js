@@ -19,7 +19,7 @@ const Adhesions = () => {
 
     return(
         <div className="hello_content_clients">
-            <h1>ADHESIONS</h1>
+            <h1>ADHESION(S) { clients?.adherents ? (<span>{clients?.adherents.length}</span>):('') }</h1>
             {
                 clients?.dates ? ( <Navigdate dates={clients.dates} clients={clients} handelClients={handelClients} /> ):('')
             }
@@ -29,7 +29,7 @@ const Adhesions = () => {
 
                     clients.adherents.map( (item,i) => {
 
-                        //console.log( item.vide );
+                        //console.log( i, item.vide );
 
                         if( item?.vide == 'vide' ){
                             return <div className="ligne_client">

@@ -1,0 +1,118 @@
+#phpmailer {
+    position: relative;
+    padding: 0 1rem 2rem 0;
+}
+input[type="text"] {
+    width: 100%;
+}
+.content-role-annee {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.content-role-annee > label {
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+.content-role-annee input {
+    margin-left: 0.5rem;
+} 
+.content_bouton, .content_objet {
+    padding: 1rem 0;
+}
+.rsw-editor {
+    background-color: #ffffff;
+    font-size: 1rem;
+}
+.rsw-ce {
+    min-height: 300px;
+}
+.content_bouton label {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    width: 180px;
+    padding: 0 0 0 0.5rem;
+    color: #ffffff;
+    background-color: #363636;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.content_bouton label > * {
+    pointer-events: none;
+}
+#file {
+    position: absolute;
+    opacity: 0;
+    width: 180px;
+    height: 40px;
+}
+.items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+.item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    margin-right: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #cccccc;
+}
+.img_close {
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+.bt_send {
+    font-size: 1.1rem;
+    color: #ffffff;
+    background-color: #f27e05;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s linear;
+}
+.bt_send:hover {
+    background-color: #363636;
+}
+.content_loader {
+    position: fixed;
+    z-index: 500;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.25);
+}
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #ffffff;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+@media (max-width: 700px){
+    .content-role-annee {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    .content-role-annee > label {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        margin: 1rem 0 0 0;
+    }
+    .content-role-annee input {
+        margin: 0 0.5rem 0 0;
+    }
+}

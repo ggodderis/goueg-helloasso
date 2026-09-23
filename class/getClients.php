@@ -62,7 +62,7 @@ class getClients {
                 $cache = unserialize( $retour[$key]->array );
             }
             $date_create = ( clone $date_create )->modify( "{$retour[$key]->date_create}" );
-            $new_date_create = $date_create->format('Y-m-d');
+            $new_date_create = $date_create->format('Y-m-d H:i:s');
 
             array_push($clients, ['id'=>$retour[$key]->id,'hello_id'=>$retour[$key]->hello_id ,'date_create' => $new_date_create,'statut'=>$retour[$key]->statut,'metas'=>$cache]);
         }

@@ -1,0 +1,17 @@
+{
+    "name": "goueg/testautoload",
+    "authors": [
+        {
+            "name": "Godderis gregory",
+            "email": "goueg@orange.fr"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "": "app/"
+        }
+    },
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}
