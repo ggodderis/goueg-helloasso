@@ -19,7 +19,7 @@ const LicenceGuide = ( props ) => {
      * afin de savoir si c'est ffme ou ffr
      */
     
-    //console.log( activites );
+    //console.log( datas.payer.email );
     
     const [selectlicence,setSelectlicence] = useState([]);
 

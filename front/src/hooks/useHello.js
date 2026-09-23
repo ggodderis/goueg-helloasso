@@ -117,12 +117,14 @@ const useHello = () => {
 useEffect( () => {
 
   //console.log(url);
+  //console.log( datas.payer.email );
 
     if( url.id ){
 
       const data = new FormData();
             data.append('datas',JSON.stringify(datas));
             data.append('id_hello',url.id);
+            data.append('email', datas.payer.email);
 
       fetch( 
         ROOT_INSERT ,

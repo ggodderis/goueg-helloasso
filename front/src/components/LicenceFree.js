@@ -15,7 +15,10 @@ const LicenceFree = (props) => {
 
     useEffect( () => {
 
-        console.log( 'useEffect',metadata.type_licence,options_ffme,guide,metadata.secteur );
+        //console.log( 'useEffect',metadata.type_licence,options_ffme,guide,metadata.secteur );
+        console.log( ffr.licences );
+        
+
         
     },[metadata]);
 
@@ -83,16 +86,34 @@ const LicenceFree = (props) => {
                 
                 Object.entries(ffr.licences).map( ([item,obj]) => {
                     
-                    if( obj.type_licence == 'seul'){
-                        return(
-                            <label key={`frr-${obj.id}`} className="label_radio">
-                                <input type="checkbox" name={obj.titre} value={obj.secteur} checked={ obj.titre === metadata.type_licence } onChange={handelLicence} />
-                                <span className="new_input"></span>
-                                <div>Licence / Assurance : {obj.descriptif}<br />{obj.titre}</div>
-                            </label>
-                            )
+                    if( obj.type_licence == 'seul' && metadata.cotisation == 'J' ){
+
+                        if( obj.titre != 'FFR_IMPN' &&  obj.titre != 'FFR_IRAJ' ){
+                            return(
+                                <label key={`frr-${obj.id}`} className="label_radio">
+                                    <input type="checkbox" name={obj.titre} value={obj.secteur} checked={ obj.titre === metadata.type_licence } onChange={handelLicence} />
+                                    <span className="new_input"></span>
+                                    <div>Licence / Assurance : {obj.descriptif}<br />{obj.titre}</div>
+                                </label>
+                                )
+                        }
                     }
-                })
+
+                    if( obj.type_licence == 'seul' && metadata.cotisation == 'A' ){
+
+                        if( obj.titre != 'FFR_IMPNJ' &&  obj.titre != 'FFR_IRAJ' ){
+                            return(
+                                <label key={`frr-${obj.id}`} className="label_radio">
+                                    <input type="checkbox" name={obj.titre} value={obj.secteur} checked={ obj.titre === metadata.type_licence } onChange={handelLicence} />
+                                    <span className="new_input"></span>
+                                    <div>Licence / Assurance : {obj.descriptif}<br />{obj.titre}</div>
+                                </label>
+                                )
+                        }
+                    }
+
+                    }
+                )
 
             }
             </fieldset>
